@@ -28,7 +28,9 @@ designs/
       02-<step-slug>.html
 manifest.json          # the catalog the viewer reads
 index.html             # the viewer app (vanilla JS, no build step)
+scripts/flatten_claude_export.py  # Claude Design export -> true static HTML
 scripts/promote.py     # promotion tool
+_incoming/             # staging area for exports + receipts (working dir)
 ```
 
 ## Data model
@@ -66,6 +68,44 @@ verifies it matches the hash of the HTML being promoted. A mismatch means the fi
 artifact that passed provenance, and promotion is refused (override with
 `--allow-sha-mismatch`).
 
+## Flatten a Claude Design export (before promoting)
+
+Claude Design's "Export → Standalone HTML" is **not** static HTML — it's a
+JS-runtime preview doc. An "omelette"/Babel runtime boots at load, reads an
+embedded asset map, and injects the DOM (images resolve to `blob:` URLs at
+runtime). Opened with JS disabled it renders blank, and Klaviyo can't ingest it.
+`flatten_claude_export.py` bakes it into true static HTML:
+
+```bash
+python3 scripts/flatten_claude_export.py \
+  --in _incoming/mustard-seed-v8-standalone-export.html \
+  --out _incoming/mustard-seed-v8-flattened.html \
+  --expect-sha 18c546…   --parity-png _incoming/mustard-seed-v8-parity-render.png
+```
+
+**How it works (and why it isn't a headless DOM scrape):** the export embeds the
+complete static email HTML in a `__bundler/template` script (full `<!DOCTYPE>`,
+Outlook VML, MSO conditionals, Liquid placeholders) and the image bytes in a
+`__bundler/manifest` asset map. The flatten is therefore *deterministic*:
+JSON-decode the template, replace every asset-map UUID (and the VML `assets/…png`
+path) with a `data:<mime>;base64,…` URI built from the map's own bytes, done. We
+deliberately don't extract the DOM from a headless render — Chrome rewrites
+`<img src>` to `blob:null/<uuid>` (severing the verifiable asset linkage) and
+strips the VML/MSO conditionals Klaviyo and Outlook need. Headless Chrome is used
+instead as a **verification oracle**: it renders the original export and the
+flattened file and pixel-diffs them.
+
+**Fidelity gates (all must pass, else non-zero exit):**
+- every inlined image's sha256 is present in the export's own asset map (no substitution possible);
+- zero residue — no `<script>`, `omelette`, `Babel`, `om-src-id`, `__bundler`, `claude.ai`, or bare-UUID / `assets/…` refs;
+- visual regression — flattened render vs. the original export, pixel-diff within tolerance (the apples-to-apples gate). A `--parity-png` comparison is also reported but treated as advisory, since an external render may use different fonts → different line-wrap → vertical reflow.
+
+Useful flags: `--asset-map "assets/<file>=<uuid>"` (force a VML-path resolution),
+`--no-verify-render`, `--chrome <path>`, `--tolerance`, `--pixel-threshold`.
+
+This flatten is also the step the email loop needs to reach **Klaviyo** — Claude
+Design output can't go to Klaviyo as a runtime doc.
+
 ## Promote a design
 
 ```bash
@@ -81,6 +121,13 @@ the same step **replaces** it (idempotent), and a renamed step drops its stale f
 Useful flags: `--flow-name`, `--variant-label`, `--status`, `--step-labels "A,B,C"`,
 `--draft` (promote without marking approved), `--no-commit`, `--claude-design-url` /
 `--klaviyo-url` (supply or override links the receipt lacks).
+
+**Promoting a flattened derivative:** when `--html` is a flattened file (not the
+native artifact), pass `--source-artifact-sha256 <native-export-sha>`. The receipt's
+provenance is then checked against that **source-of-truth** hash, while the manifest
+records the flattened file under its *own* `sha256` plus `source_artifact_sha256`,
+`derivation: deterministic-flatten`, and a `provenance_note`. The flatten hash is
+never folded into the source field — the native export remains the source of truth.
 
 ## Viewer features
 

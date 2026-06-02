@@ -213,6 +213,13 @@ def build_parser() -> argparse.ArgumentParser:
                    help="mark the step not-yet-approved (default: approved on promote)")
     p.add_argument("--claude-design-url", help="override/supply Claude Design URL")
     p.add_argument("--klaviyo-url", help="override/supply Klaviyo editor URL")
+    p.add_argument("--source-artifact-sha256",
+                   help="sha256 of the native Claude Design export this file was flattened from. "
+                        "Use when --html is a deterministic flatten/derivative rather than the "
+                        "native artifact: the receipt's provenance is checked against THIS hash "
+                        "(the source of truth), and the promoted file keeps its own distinct hash.")
+    p.add_argument("--flatten-note",
+                   help="provenance note recorded on the step (default auto-composed for flattens)")
     p.add_argument("--allow-sha-mismatch", action="store_true",
                    help="proceed even if the HTML hash differs from the receipt")
     p.add_argument("--no-commit", action="store_true", help="write files but skip git commit")
@@ -232,11 +239,31 @@ def main(argv: Optional[list] = None) -> None:
 
     sha = sha256_of(html_src)
 
-    # Provenance guard: the file we promote must be the one the receipt vouches for.
+    # Provenance guard. Two modes:
+    #   * direct promote: the file IS the native artifact, so its hash must match
+    #     the receipt's artifact_sha256.
+    #   * flatten/derivative (--source-artifact-sha256 given): the file is a
+    #     deterministic flatten of the native artifact, so its hash legitimately
+    #     differs. We instead verify the receipt vouches for the *declared source*
+    #     (--source-artifact-sha256), and record the file under its own hash.
     receipt_sha = receipt.get("artifact_sha256")
-    if receipt_sha and receipt_sha != sha:
+    source_sha = args.source_artifact_sha256
+    if source_sha:
+        if receipt_sha and receipt_sha != source_sha:
+            msg = (f"source provenance mismatch — --source-artifact-sha256 is {source_sha} "
+                   f"but receipt vouches for {receipt_sha}. The declared source is not the "
+                   "artifact that passed provenance.")
+            if args.allow_sha_mismatch:
+                print(f"warning: {msg}", file=sys.stderr)
+            else:
+                fail(msg + " Re-check the source hash, or pass --allow-sha-mismatch.")
+        if sha == source_sha:
+            fail("--source-artifact-sha256 equals the promoted file's hash; this file is the "
+                 "native artifact, not a flatten. Drop --source-artifact-sha256 for a direct promote.")
+    elif receipt_sha and receipt_sha != sha:
         msg = (f"sha256 mismatch — HTML is {sha} but receipt vouches for {receipt_sha}. "
-               "The file being promoted is not the artifact that passed provenance.")
+               "The file being promoted is not the artifact that passed provenance. "
+               "(If this file is a deterministic flatten, pass --source-artifact-sha256.)")
         if args.allow_sha_mismatch:
             print(f"warning: {msg}", file=sys.stderr)
         else:
@@ -288,11 +315,27 @@ def main(argv: Optional[list] = None) -> None:
         "klaviyo_url": args.klaviyo_url or receipt.get("klaviyo_url"),
         "sha256": sha,
     }
+    # Provenance discipline for flattened derivatives: record the native Claude
+    # Design artifact as the source of truth and a note, keeping the flatten's
+    # own hash in `sha256`. Never fold the flatten hash into the source field.
+    if source_sha:
+        step_obj["source_artifact_sha256"] = source_sha
+        step_obj["derivation"] = "deterministic-flatten"
+        step_obj["provenance_note"] = (
+            args.flatten_note
+            or f"deterministic flatten of {source_sha[:6]}…; "
+               "images verified byte-for-byte against the export's asset map."
+        )
+    elif args.flatten_note:
+        step_obj["provenance_note"] = args.flatten_note
     upsert_step(variant, step_obj)
     write_manifest(manifest)
 
     print(f"promoted {args.flow}/{args.variant} step {args.step} -> {rel}")
     print(f"  sha256: {sha}")
+    if source_sha:
+        print(f"  source artifact (source of truth): {source_sha}")
+        print(f"  note: {step_obj['provenance_note']}")
     if step_obj["claude_design_url"]:
         print(f"  claude design: {step_obj['claude_design_url']}")
     if step_obj["klaviyo_url"]:
@@ -302,10 +345,14 @@ def main(argv: Optional[list] = None) -> None:
         print("  (--no-commit: files written, not committed)")
         return
 
+    src_line = f"source_artifact_sha256: {source_sha}\n" if source_sha else ""
+    note_line = f"note: {step_obj['provenance_note']}\n" if step_obj.get("provenance_note") else ""
     commit_msg = (
         f'promote({args.flow}/{args.variant}): step {args.step} "{name}"\n\n'
         f"file: {rel}\n"
         f"sha256: {sha}\n"
+        f"{src_line}"
+        f"{note_line}"
         f"approved: {step_obj['approved_date'] or 'no (draft)'}\n"
         f"claude_design: {step_obj['claude_design_url'] or '-'}\n"
         f"klaviyo: {step_obj['klaviyo_url'] or '-'}\n"
