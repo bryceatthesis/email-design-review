@@ -97,6 +97,23 @@
               "sha256": "6e5c627ebf7c997287c8bdf0a87bfcf79600c5c67e587c73c61e2ede5dc556c5"
             }
           ]
+        },
+        {
+          "id": "v8",
+          "label": "v8 hardened loop",
+          "status": "approved",
+          "steps": [
+            {
+              "step": 1,
+              "name": "Mustard Seed",
+              "file": "designs/mustard-seed/v8/01-mustard-seed.html",
+              "approved": true,
+              "approved_date": "2026-06-02",
+              "claude_design_url": "https://claude.ai/design/p/mustard-seed-v8-1-artifact",
+              "klaviyo_url": "https://www.klaviyo.com/email-editor/TMPL45408/edit",
+              "sha256": "1617f7f1e9ee15017c09208398bba096a47a49ac96de485cfd50395d446c008c"
+            }
+          ]
         }
       ],
       "step_labels": [
