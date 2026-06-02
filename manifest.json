@@ -57,6 +57,16 @@
               "claude_design_url": "https://claude.ai/design/p/welcome-future-state-1-artifact",
               "klaviyo_url": "https://www.klaviyo.com/email-editor/TMPL55099/edit",
               "sha256": "c0ffe732d622ddb0073884525222b9bebc7dd1daa3c453fe319614c1a686342d"
+            },
+            {
+              "step": 2,
+              "name": "Education",
+              "file": "designs/welcome/future-state/02-education.html",
+              "approved": true,
+              "approved_date": "2026-06-02",
+              "claude_design_url": "https://claude.ai/design/p/welcome-future-state-2-artifact",
+              "klaviyo_url": "https://www.klaviyo.com/email-editor/TMPL24339/edit",
+              "sha256": "4f17a398f8619b622a0913b45f73d3cbe591f3e4778b5e4cdfdc21e488b46a22"
             }
           ]
         }
