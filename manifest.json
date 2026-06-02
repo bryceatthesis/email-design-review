@@ -20,6 +20,16 @@
               "claude_design_url": "https://claude.ai/design/p/welcome-current-1-artifact",
               "klaviyo_url": "https://www.klaviyo.com/email-editor/TMPL69358/edit",
               "sha256": "349d0e7df619f2458614aa2673ab2d566227f6d460cd3789fda14c4e505ad2b2"
+            },
+            {
+              "step": 2,
+              "name": "Education",
+              "file": "designs/welcome/current/02-education.html",
+              "approved": true,
+              "approved_date": "2026-06-02",
+              "claude_design_url": "https://claude.ai/design/p/welcome-current-2-artifact",
+              "klaviyo_url": "https://www.klaviyo.com/email-editor/TMPL36291/edit",
+              "sha256": "f40e1e5432957b8bbbf0a201daa4c8fe352ef3db85bfaca8aeabf570c9d2bb5d"
             }
           ]
         }
