@@ -1,0 +1,34 @@
+{
+  "schema": 1,
+  "generated_at": "2026-06-02T19:00:04Z",
+  "flows": [
+    {
+      "id": "welcome",
+      "name": "Welcome Flow",
+      "variants": [
+        {
+          "id": "current",
+          "label": "Current (live)",
+          "status": "live",
+          "steps": [
+            {
+              "step": 1,
+              "name": "Welcome",
+              "file": "designs/welcome/current/01-welcome.html",
+              "approved": true,
+              "approved_date": "2026-06-02",
+              "claude_design_url": "https://claude.ai/design/p/welcome-current-1-artifact",
+              "klaviyo_url": "https://www.klaviyo.com/email-editor/TMPL69358/edit",
+              "sha256": "349d0e7df619f2458614aa2673ab2d566227f6d460cd3789fda14c4e505ad2b2"
+            }
+          ]
+        }
+      ],
+      "step_labels": [
+        "Welcome",
+        "Education",
+        "Offer"
+      ]
+    }
+  ]
+}
