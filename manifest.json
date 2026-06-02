@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generated_at": "2026-06-02T19:00:04Z",
+  "generated_at": "2026-06-02T19:00:13Z",
   "flows": [
     {
       "id": "welcome",
@@ -75,6 +75,32 @@
         "Welcome",
         "Education",
         "Offer"
+      ]
+    },
+    {
+      "id": "mustard-seed",
+      "name": "Mustard Seed (campaign)",
+      "variants": [
+        {
+          "id": "original",
+          "label": "Original send",
+          "status": "retired",
+          "steps": [
+            {
+              "step": 1,
+              "name": "Mustard Seed",
+              "file": "designs/mustard-seed/original/01-mustard-seed.html",
+              "approved": true,
+              "approved_date": "2026-06-02",
+              "claude_design_url": "https://claude.ai/design/p/mustard-seed-original-1-artifact",
+              "klaviyo_url": "https://www.klaviyo.com/email-editor/TMPL80507/edit",
+              "sha256": "6e5c627ebf7c997287c8bdf0a87bfcf79600c5c67e587c73c61e2ede5dc556c5"
+            }
+          ]
+        }
+      ],
+      "step_labels": [
+        "Email"
       ]
     }
   ]
