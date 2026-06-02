@@ -22,23 +22,6 @@
               "sha256": "0f49195eab61efc02b61512d5551919dcb57cea4a55ef04361f40feb8b4d481b"
             }
           ]
-        },
-        {
-          "id": "v8",
-          "label": "v8 hardened loop",
-          "status": "approved",
-          "steps": [
-            {
-              "step": 1,
-              "name": "Mustard Seed",
-              "file": "designs/mustard-seed/v8/01-mustard-seed.html",
-              "approved": true,
-              "approved_date": "2026-06-02",
-              "claude_design_url": "https://876bef0d-8dee-46e0-a0bd-e9c4ebc8edea.claudeusercontent.com/v1/design/projects/876bef0d-8dee-46e0-a0bd-e9c4ebc8edea/serve/2026-06-02%20Stasis%20Mustard%20Seed%20UQdTQi%20Hardened%20Loop%20v8.html?t=547ffdd0e40fcc0c5890d36d4dabafbb15a817e02e4e29b6e04ad9cf9506076a.0aec542c-f247-429d-a37c-066485e7cde0.0d089f7e-f62c-46c6-9d51-83eaf210d439.1780427333&srcmap=1&_wr=3",
-              "klaviyo_url": null,
-              "sha256": "08cbd0fa5cc0f6692f3612927349446c85be1b41e153dbdb2038539baa453678"
-            }
-          ]
         }
       ]
     }
