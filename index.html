@@ -293,11 +293,24 @@
   /* ---------------- rendering email into a frame ---------------- */
   function themed(html){
     const theme = state.theme;
-    const meta = `<meta name="color-scheme" content="${theme}">`
+    let inject = `<meta name="color-scheme" content="${theme}">`
                + `<style>:root{color-scheme:${theme}}</style>`;
+    if(theme === 'dark'){
+      // Approximate dark mode: invert the whole email (light bg + dark text ->
+      // dark bg + light text), then re-invert media so photos, logos, and
+      // background images render normally. This models an aggressive
+      // full-inversion client. It is NOT a faithful per-client preview —
+      // Gmail, Apple Mail, and Outlook each invert differently; confirm real
+      // dark rendering in Litmus / a live client before shipping.
+      inject += `<style id="__darksim">`
+        + `html{filter:invert(1) hue-rotate(180deg)!important;background:#ffffff!important;}`
+        + `img,picture,video,svg,canvas,[style*="background-image"],[background]{`
+        + `filter:invert(1) hue-rotate(180deg)!important;}`
+        + `</style>`;
+    }
     return /<head[\s>]/i.test(html)
-      ? html.replace(/<head([^>]*)>/i, `<head$1>${meta}`)
-      : meta + html;
+      ? html.replace(/<head([^>]*)>/i, `<head$1>${inject}`)
+      : inject + html;
   }
   function mount(side, raw, file){
     const canvas = document.querySelector(`.panel[data-side="${side}"] [data-role="canvas"]`);
