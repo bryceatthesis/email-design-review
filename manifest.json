@@ -30,6 +30,16 @@
               "claude_design_url": "https://claude.ai/design/p/welcome-current-2-artifact",
               "klaviyo_url": "https://www.klaviyo.com/email-editor/TMPL36291/edit",
               "sha256": "f40e1e5432957b8bbbf0a201daa4c8fe352ef3db85bfaca8aeabf570c9d2bb5d"
+            },
+            {
+              "step": 3,
+              "name": "Offer",
+              "file": "designs/welcome/current/03-offer.html",
+              "approved": true,
+              "approved_date": "2026-06-02",
+              "claude_design_url": "https://claude.ai/design/p/welcome-current-3-artifact",
+              "klaviyo_url": "https://www.klaviyo.com/email-editor/TMPL71288/edit",
+              "sha256": "b070e5e551c6c75e8269e5add484e0a4a2fef8837b8b70de64246f2c14b00f1a"
             }
           ]
         }
