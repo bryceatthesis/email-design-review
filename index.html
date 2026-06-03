@@ -159,8 +159,8 @@
     <h1>Stasis Design Review</h1>
 
     <div class="group">
-      <span class="lbl">Flow</span>
-      <select id="flowPicker" aria-label="Flow"></select>
+      <span class="lbl">Design</span>
+      <select id="flowPicker" aria-label="Design"></select>
     </div>
 
     <div class="spacer"></div>
@@ -199,7 +199,6 @@
           <select data-side="left" aria-label="Left variant"></select>
         </div>
         <div class="row2">
-          <span class="badge" data-role="status"></span>
           <span class="stepname" data-role="stepname"></span>
           <span class="links" data-role="links"></span>
         </div>
@@ -213,7 +212,6 @@
           <select data-side="right" aria-label="Right variant"></select>
         </div>
         <div class="row2">
-          <span class="badge" data-role="status"></span>
           <span class="stepname" data-role="stepname"></span>
           <span class="links" data-role="links"></span>
         </div>
@@ -387,20 +385,14 @@
   function renderPanel(side){
     const panel = document.querySelector(`.panel[data-side="${side}"]`);
     const variant = variantOf(side);
-    const statusEl = panel.querySelector('[data-role="status"]');
     const nameEl = panel.querySelector('[data-role="stepname"]');
     const linksEl = panel.querySelector('[data-role="links"]');
 
     if(!variant){
-      statusEl.className = 'badge'; statusEl.textContent = '';
       nameEl.textContent = ''; linksEl.innerHTML = '';
       showPanelEmpty(side, 'No variant selected.');
       return;
     }
-
-    const status = variant.status || 'draft';
-    statusEl.className = 'badge ' + status;
-    statusEl.textContent = status;
 
     const step = stepOf(variant, state.step);
     if(!step){
@@ -410,10 +402,7 @@
       return;
     }
 
-    nameEl.innerHTML = step.name
-      + (step.approved
-          ? ` <span class="badge approved">approved${step.approved_date ? ' · ' + step.approved_date : ''}</span>`
-          : ` <span class="badge unapproved">not approved</span>`);
+    nameEl.textContent = step.name;
 
     linksEl.innerHTML = '';
     if(step.claude_design_url) linksEl.appendChild(link('Claude Design', step.claude_design_url));
@@ -458,6 +447,41 @@
       writeHash();
     });
   });
+
+  /* ---------------- flow/campaign picker (grouped + sorted) ---------------- */
+  // The picker holds both flows and one-off campaigns. Group them by `type`
+  // ("campaign" | "flow"; default "flow") under sorted optgroups so the list
+  // stays legible as more designs land. Falls back to a flat sorted list if
+  // only one kind is present.
+  const TYPE_GROUPS = [
+    { type: 'campaign', label: 'Campaigns' },
+    { type: 'flow',     label: 'Flows' },
+  ];
+  function buildFlowPicker(picker, flows){
+    picker.innerHTML = '';
+    const byType = new Map();
+    for(const f of flows){
+      const t = f.type === 'campaign' ? 'campaign' : 'flow';
+      (byType.get(t) || byType.set(t, []).get(t)).push(f);
+    }
+    const groupsPresent = TYPE_GROUPS.filter(g => byType.get(g.type)?.length);
+    const sortByName = (a, b) => (a.name || a.id).localeCompare(b.name || b.id);
+    const addOption = (parent, f) => {
+      const o = document.createElement('option');
+      o.value = f.id; o.textContent = f.name || f.id;
+      parent.appendChild(o);
+    };
+    if(groupsPresent.length <= 1){
+      [...flows].sort(sortByName).forEach(f => addOption(picker, f));
+      return;
+    }
+    for(const g of groupsPresent){
+      const og = document.createElement('optgroup');
+      og.label = g.label;
+      byType.get(g.type).sort(sortByName).forEach(f => addOption(og, f));
+      picker.appendChild(og);
+    }
+  }
 
   /* ---------------- flow selection ---------------- */
   function selectFlow(flowId){
@@ -524,11 +548,7 @@
       MANIFEST = m;
       const picker = document.getElementById('flowPicker');
       if(!m.flows || !m.flows.length){ fail('Manifest has no flows yet.'); return; }
-      for(const f of m.flows){
-        const o = document.createElement('option');
-        o.value = f.id; o.textContent = f.name || f.id;
-        picker.appendChild(o);
-      }
+      buildFlowPicker(picker, m.flows);
       const startFlow = m.flows.some(f => f.id === state.flow) ? state.flow : m.flows[0].id;
       selectFlow(startFlow);
       // Re-apply when a shared link is pasted into this tab, or on back/forward.
