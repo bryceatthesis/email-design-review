@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generated_at": "2026-06-03T15:26:19Z",
+  "generated_at": "2026-06-03T19:30:05Z",
   "flows": [
     {
       "id": "mustard-seed",
@@ -40,6 +40,26 @@
               "source_artifact_sha256": "adf95da7960446234bbb2bf2f9acfa37f6679befae38b027c710fb61f1092d4b",
               "derivation": "deterministic-flatten",
               "provenance_note": "Re-sourced directly from the live Claude Design canvas (file v173, updated 2026-06-02T20:07:33Z; captured 2026-06-03) via OmeletteService/GetFile (source-of-truth sha adf95da7). Brain assets/mustard-brain-approved-tan-600x873.png sha 8ed19f11 + all 7 Klaviyo-CDN images verified byte-for-byte against the live canvas, inlined via flatten_claude_export.py (all fidelity gates passed). ROOT CAUSE (corrected): live canvas, Theo's export 18c546, prior flatten 34f89e, and this file all render the IDENTICAL v8 (this file is pixel-identical, 0.0000%, to 34f89e) \u2014 there is NO capture/flatten divergence. The missing cream arch is a DESIGN gap in v8 on the live canvas itself: v8 overlays live text on a 600x873 brain background (8ed19f11) that lacks the original's prominent baked-in arch (only a thin sliver), and the overlaid copy overflows 873px so the panel bottom flattens to cream. The original's arch comes from its whole blue panel being one tall baked image. Fix must happen in Claude Design (arched brain image or fully-baked blue panel), not in capture/flatten. Supersedes export 18c546 / flatten 34f89e as the provenance anchor (those were faithful, not wrong)."
+            }
+          ]
+        },
+        {
+          "id": "v9",
+          "label": "v9 BrainA (baked panel)",
+          "status": "approved",
+          "steps": [
+            {
+              "step": 1,
+              "name": "Mustard Seed",
+              "file": "designs/mustard-seed/v9/01-mustard-seed.html",
+              "approved": true,
+              "approved_date": "2026-06-03",
+              "claude_design_url": "https://claude.ai/design/p/876bef0d-8dee-46e0-a0bd-e9c4ebc8edea?file=2026-06-02+Stasis+Mustard+Seed+UQdTQi+Hardened+Loop+v9.html",
+              "klaviyo_url": null,
+              "sha256": "3037bebdba250c47265b5703ecc6bda756f363e5c87b4e68084c02b4bc0f5662",
+              "source_artifact_sha256": "a4796a9e0fa09d7e722aa783d17ef64a44eb8910d5a15a11cc4e70a55b76a101",
+              "derivation": "deterministic-flatten",
+              "provenance_note": "Captured from the live Claude Design canvas via OmeletteService/GetFile on 2026-06-03 (cut Theo's export out of the loop). Source-of-truth = canvas v9 file sha a4796a9e0fa09d7e722aa783d17ef64a44eb8910d5a15a11cc4e70a55b76a101 (27,549 b; hashes matched the corrected, hash-validated receipt twice). Baked BrainA panel asset assets/brain-panel-baked-600x873.png sha fa6d84534857babb10d4e173bbb60d083c35f44d386bce3f566f738d4c3b0cf0 (614,679 b) + all 7 Klaviyo-CDN images verified byte-for-byte against the canvas, inlined via flatten_claude_export.py (all fidelity gates passed; zero runtime residue, every <img> a data: URI, VML/MSO preserved). v9 uses ZERO background-image: the blue brain panel is a single linked <img> (403-char alt) with the cream arch baked in, so the static render shows the arch structurally \u2014 confirmed in the flattened render. This resolves the v8 design gap (v8 overlaid live text on a 600x873 brain background that lacked the prominent arch and overflowed its height, flattening the bottom). Receipt task_id mustard-seed-uqdtqi-braina-top-white-v9-design-review-2026-06-03, receipt hash-validated = true. v8 kept in place for history."
             }
           ]
         }
