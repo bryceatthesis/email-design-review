@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generated_at": "2026-06-02T21:34:32Z",
+  "generated_at": "2026-06-03T15:26:19Z",
   "flows": [
     {
       "id": "mustard-seed",
@@ -33,13 +33,13 @@
               "name": "Mustard Seed",
               "file": "designs/mustard-seed/v8/01-mustard-seed.html",
               "approved": true,
-              "approved_date": "2026-06-02",
-              "claude_design_url": "https://claude.ai/design/p/876bef0d-8dee-46e0-a0bd-e9c4ebc8edea?file=Stasis+Mustard+Seed+Email+%28Standalone%29.html",
+              "approved_date": "2026-06-03",
+              "claude_design_url": "https://claude.ai/design/p/876bef0d-8dee-46e0-a0bd-e9c4ebc8edea?file=2026-06-02+Stasis+Mustard+Seed+UQdTQi+Hardened+Loop+v8.html",
               "klaviyo_url": null,
-              "sha256": "34f89e636024bfdf7e1053b6186e2a2a8a7e30071328c4ed013f3f8eb75bd762",
-              "source_artifact_sha256": "18c546d07e62dc88339a23a21b7e6fb11388ab807ca073a7949e69c5d7c016df",
+              "sha256": "c1ea09259befb39dbb9160fe0377401a40500978c08160452994b0fa84bdeb39",
+              "source_artifact_sha256": "adf95da7960446234bbb2bf2f9acfa37f6679befae38b027c710fb61f1092d4b",
               "derivation": "deterministic-flatten",
-              "provenance_note": "deterministic flatten of 18c546\u2026; images verified byte-for-byte against the export's asset map."
+              "provenance_note": "Re-sourced directly from the live Claude Design canvas (file v173, updated 2026-06-02T20:07:33Z; captured 2026-06-03). Markup pulled via OmeletteService/GetFile (source-of-truth sha adf95da7); brain assets/mustard-brain-approved-tan-600x873.png sha 8ed19f11 + all 7 Klaviyo-CDN images verified byte-for-byte against the live canvas, then inlined via flatten_claude_export.py (all fidelity gates passed). ROOT CAUSE: live canvas, Theo's export 18c546, and prior flatten 34f89e all carry the IDENTICAL brain (8ed19f11) and identical brain-cell CSS (height:873px; background-size:600px auto; position center top); this render is pixel-identical (0.0000%) to 34f89e. The cream arch is image-borne in 8ed19f11 and renders correctly. Prior export was faithful, NOT divergent; re-sourced to anchor provenance to the live canvas as the standard source step."
             }
           ]
         }
