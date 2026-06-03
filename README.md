@@ -139,8 +139,15 @@ toggles) so a specific comparison can be shared.
 
 ## Hosting
 
-Stay local (`python3 -m http.server`) for day-to-day review. These are unreleased creative
-assets — if someone outside needs a link, use a private, access-controlled static host
-(Cloudflare Pages / Netlify with Access, or a private Vercel project). **Never** public
-GitHub Pages, and never frame a live `claude.ai/design` or Klaviyo web-view (both block
-embedding) — always promote the HTML into the repo first.
+Day-to-day review stays **local** (`python3 -m http.server`) — zero latency, no failure
+modes, and that's where `promote.py` lands designs. The hosted site is only a **mirror** for
+share-out moments (a link to send the team).
+
+The mirror is **public GitHub Pages**, served from this repo's root on `main`. `promote.py`
+pushes on every promotion (default on; `--no-push` to skip, and it warns-and-skips if no
+`origin` remote exists, so local-only promotion keeps working). Pages serves `index.html` +
+`designs/` + `manifest.json`; internal working docs are gitignored so they're never
+published.
+
+Never frame a live `claude.ai/design` or Klaviyo web-view (both block embedding) — always
+promote the HTML into the repo first.

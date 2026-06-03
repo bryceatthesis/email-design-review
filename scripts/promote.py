@@ -195,6 +195,23 @@ def git_commit(paths: list, message: str) -> None:
     subprocess.run(["git", "-C", str(REPO_ROOT), "commit", "-q", "-m", message], check=True)
 
 
+def git_push(remote: str = "origin", branch: str = "main") -> None:
+    """Push the promotion commit so the hosted GitHub Pages mirror updates itself.
+
+    If no matching remote is configured, warn and skip rather than fail — local-only
+    promotion must keep working on machines/clones with no remote.
+    """
+    remotes = subprocess.run(
+        ["git", "-C", str(REPO_ROOT), "remote"],
+        capture_output=True, text=True, check=True,
+    ).stdout.split()
+    if remote not in remotes:
+        print(f"  (no '{remote}' remote configured: promoted locally only, not pushed)")
+        return
+    subprocess.run(["git", "-C", str(REPO_ROOT), "push", remote, branch], check=True)
+    print(f"  pushed to {remote}/{branch}.")
+
+
 # ---------------------------------------------------------------- main
 def build_parser() -> argparse.ArgumentParser:
     p = argparse.ArgumentParser(description="Promote an approved design into the review repo.")
@@ -223,6 +240,8 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--allow-sha-mismatch", action="store_true",
                    help="proceed even if the HTML hash differs from the receipt")
     p.add_argument("--no-commit", action="store_true", help="write files but skip git commit")
+    p.add_argument("--no-push", action="store_true",
+                   help="skip pushing the commit to the hosted mirror (default: push to origin)")
     return p
 
 
@@ -359,6 +378,9 @@ def main(argv: Optional[list] = None) -> None:
     )
     git_commit([rel, "manifest.json"], commit_msg)
     print("  committed.")
+
+    if not args.no_push:
+        git_push()
 
 
 if __name__ == "__main__":

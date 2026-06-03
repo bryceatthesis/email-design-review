@@ -2,3 +2,11 @@
 __pycache__/
 *.pyc
 .incoming/
+
+# Internal working docs — kept local, not published to the public Pages mirror.
+# The public repo is just the review app (index.html, designs/, manifest.json, scripts).
+theo-*.md
+claude-code-brief-*.md
+mustard-seed-closeout-plan.md
+archive/
+_incoming/
