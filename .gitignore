@@ -10,5 +10,9 @@ __pycache__/
 theo-*.md
 claude-code-brief-*.md
 mustard-seed-closeout-plan.md
+claude-design-constraints.md
 archive/
 _incoming/
+
+# Local tooling — not part of the public app
+.claude/skills/
