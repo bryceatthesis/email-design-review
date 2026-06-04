@@ -28,9 +28,13 @@ designs/
       02-<step-slug>.html
 manifest.json          # the catalog the viewer reads
 index.html             # the viewer app (vanilla JS, no build step)
+scripts/capture_canvas.py         # live-canvas capture, headless (the source step)
+scripts/check_reflow.py           # headless mobile-reflow check (scrollWidth @ widths)
+scripts/_cdp.py                   # tiny stdlib Chrome DevTools Protocol client (shared)
 scripts/flatten_claude_export.py  # Claude Design export -> true static HTML
 scripts/promote.py     # promotion tool
 _incoming/             # staging area for exports + receipts (working dir)
+.capture-profile/      # dedicated, gitignored Chrome profile for headless capture
 ```
 
 ## Data model
@@ -67,6 +71,49 @@ JSON, and pulls:
 verifies it matches the hash of the HTML being promoted. A mismatch means the file is not the
 artifact that passed provenance, and promotion is refused (override with
 `--allow-sha-mismatch`).
+
+## Capture from the live canvas (the source step — headless, no Claude in Chrome)
+
+The standing source step is to pull the file **from the live Claude Design canvas**, not
+from any export (an export can diverge from the canvas; the canvas is the source of truth).
+`capture_canvas.py` does this headlessly via the Chrome DevTools Protocol, reusing a
+dedicated, pre-authenticated profile — **no visible Chrome and no "Claude in Chrome" tab
+groups**. It replays `OmeletteService/GetFile` same-origin from a `claude.ai/design` page so
+the request carries your session cookies, saves the exact bytes, and prints/asserts sha256s.
+
+**One-time login** (the only step that needs a visible window):
+
+```bash
+python3 scripts/capture_canvas.py login     # opens a visible Chrome on .capture-profile/
+# log into claude.ai in that window, leave it open, then run a capture
+```
+
+**Capture** (what every future brief calls):
+
+```bash
+python3 scripts/capture_canvas.py capture \
+  --project 876bef0d-8dee-46e0-a0bd-e9c4ebc8edea \
+  --file "2026-06-02 Stasis Mustard Seed UQdTQi Hardened Loop v9.html" \
+  --asset "assets/brain-panel-baked-600x873.png" \
+  --out _incoming/<dir> \
+  --expect-file <sha256> --expect "assets/<file>=<sha256>"
+```
+
+If a login window is open, `capture` attaches to that **live** session (CDP port 9444),
+captures, then closes the window gracefully — which flushes the `sessionKey` cookie to
+`.capture-profile/` so **every subsequent capture runs fully headless**. It **fails loudly
+with exit 2** ("re-run login") if the session is expired, and exit 3 on any hash mismatch
+(the live file changed since acceptance, or the wrong file was captured — STOP and report).
+
+- Mechanics: pure-stdlib CDP over a hand-rolled WebSocket (`scripts/_cdp.py`) — no Node, no
+  pip deps. `.capture-profile/` is gitignored.
+- After capture: assemble the synthetic export (canvas markup + the captured asset bytes +
+  the public Klaviyo-CDN images), flatten, then verify reflow with **`check_reflow.py`**
+  (local headless Chrome — also no Claude in Chrome): `python3 scripts/check_reflow.py
+  <flattened.html> --width 375 --width 600` asserts `scrollWidth == width` at each width.
+
+**Pipeline for a brief:** `capture_canvas.py` → build synthetic export → `flatten_claude_export.py`
+→ `check_reflow.py` → `promote.py`. Claude in Chrome is retired from the loop.
 
 ## Flatten a Claude Design export (before promoting)
 

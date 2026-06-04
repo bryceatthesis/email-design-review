@@ -2,6 +2,8 @@
 __pycache__/
 *.pyc
 .incoming/
+.capture-profile/
+.reflow-profile/
 
 # Internal working docs — kept local, not published to the public Pages mirror.
 # The public repo is just the review app (index.html, designs/, manifest.json, scripts).
