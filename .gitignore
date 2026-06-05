@@ -2,11 +2,25 @@
 __pycache__/
 *.pyc
 .incoming/
+
+# Authenticated browser profiles + any cookie/session/token material — NEVER commit.
+# (Security closeout 2026-06-05: verified never tracked in git history; explicit guard.)
 .capture-profile/
 .reflow-profile/
+**/Cookies
+**/Cookies-journal
+**/Login Data
+**/Web Data
+*.cookies
+*.session
+.env
+.env.*
+*.pem
+*.key
 
 # Internal working docs — kept local, not published to the public Pages mirror.
-# The public repo is just the review app (index.html, designs/, manifest.json, scripts).
+# The public repo is the review app only (index.html, overview.html, designs/,
+# reference/, manifest.json). Pipeline machinery + internal docs stay local.
 theo-*.md
 claude-code-brief-*.md
 ws-c-*.md
@@ -15,5 +29,6 @@ claude-design-constraints.md
 archive/
 _incoming/
 
-# Local tooling — not part of the public app
+# Local pipeline machinery + tooling — not part of the public app
 .claude/skills/
+scripts/
