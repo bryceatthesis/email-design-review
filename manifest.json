@@ -48,7 +48,7 @@
     },
     {
       "id": "welcome-quiz",
-      "name": "Welcome Quiz (Quiz Leads)",
+      "name": "Welcome Quiz",
       "variants": [
         {
           "id": "html-v1",
