@@ -52,9 +52,22 @@
       "variants": [
         {
           "id": "html-v1",
-          "label": "HTML v1",
+          "label": "HTML live-text recreation",
           "status": "approved",
           "steps": [
+            {
+              "step": 1,
+              "name": "Welcome Email 1",
+              "file": "designs/welcome-quiz/html-v1/01-welcome-email-1.html",
+              "approved": false,
+              "approved_date": null,
+              "claude_design_url": "https://claude.ai/design/p/876bef0d-8dee-46e0-a0bd-e9c4ebc8edea?file=2026-06-04+Stasis+Welcome+Quiz+Step+1+HTML+v1.html",
+              "klaviyo_url": null,
+              "sha256": "6ef1ccae64a91c855ee75c15684a623c4cd25e4bb7556f8cdcc827c536e43644",
+              "source_artifact_sha256": "807ff3ae1fb693719ad4443e345b95ddda0e494b15a5363fe8e4438b3607433a",
+              "derivation": "deterministic-flatten",
+              "provenance_note": "deterministic flatten of 807ff3\u2026; images verified byte-for-byte against the export's asset map."
+            },
             {
               "step": 4,
               "name": "Real People, Real Results",
