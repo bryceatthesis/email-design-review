@@ -98,6 +98,17 @@
               "klaviyo_url": "https://www.klaviyo.com/email-editor/V8mxXx/edit",
               "sha256": "9cdb3c26453f846fbb01bb7ee683cc239cf813754bb0ad82075fceb927275a2c",
               "provenance_note": "Klaviyo rendered template V8mxXx; 23 CloudFront slice images inlined as data URIs, each verified byte-for-byte against the welcome-flow module-map slice provenance."
+            },
+            {
+              "step": 3,
+              "name": "The Science That Powers Stasis",
+              "file": "designs/welcome-quiz/original/03-the-science-that-powers-stasis.html",
+              "approved": true,
+              "approved_date": "2026-06-05",
+              "claude_design_url": null,
+              "klaviyo_url": "https://www.klaviyo.com/email-editor/T42Tgm/edit",
+              "sha256": "db371734ca25dedb946f4420335a71f3faeb3f967f997998f24684d84b646376",
+              "provenance_note": "Klaviyo rendered template T42Tgm; 13 CloudFront slice images inlined as data URIs, each verified byte-for-byte against the welcome-flow module-map slice provenance."
             }
           ]
         }
