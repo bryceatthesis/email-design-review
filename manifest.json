@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generated_at": "2026-06-05T18:25:01Z",
+  "generated_at": "2026-06-05T18:25:02Z",
   "flows": [
     {
       "id": "mustard-seed",
@@ -120,6 +120,17 @@
               "klaviyo_url": "https://www.klaviyo.com/email-editor/SQKnr4/edit",
               "sha256": "88732f8a3896ecc3b7df4d680839d503a398dce73e75fa10117d7dff7c3549a0",
               "provenance_note": "Klaviyo rendered template SQKnr4; 13 CloudFront slice images inlined as data URIs, each verified byte-for-byte against the welcome-flow module-map slice provenance."
+            },
+            {
+              "step": 5,
+              "name": "Your First 30 Days on Stasis",
+              "file": "designs/welcome-quiz/original/05-your-first-30-days-on-stasis.html",
+              "approved": true,
+              "approved_date": "2026-06-05",
+              "claude_design_url": null,
+              "klaviyo_url": "https://www.klaviyo.com/email-editor/WejCAH/edit",
+              "sha256": "ad93342396c4f6d49dc9832ff90d91f836afb3a1345b5c8ac0884b14f50fccde",
+              "provenance_note": "Klaviyo rendered template WejCAH; 16 CloudFront slice images inlined as data URIs, each verified byte-for-byte against the welcome-flow module-map slice provenance."
             }
           ]
         }
