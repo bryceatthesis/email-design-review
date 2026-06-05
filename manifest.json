@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generated_at": "2026-06-05T18:25:02Z",
+  "generated_at": "2026-06-05T19:09:49Z",
   "flows": [
     {
       "id": "mustard-seed",
@@ -48,7 +48,7 @@
     },
     {
       "id": "welcome-quiz",
-      "name": "Welcome Quiz",
+      "name": "Welcome Flow",
       "variants": [
         {
           "id": "html-v1",
@@ -85,9 +85,19 @@
         },
         {
           "id": "original",
-          "label": "Original send",
+          "label": "Original send (image slices)",
           "status": "live",
           "steps": [
+            {
+              "step": 1,
+              "name": "Welcome Email 1",
+              "file": "designs/welcome-quiz/original/01-welcome-email-1.html",
+              "approved": true,
+              "approved_date": "2026-06-05",
+              "claude_design_url": null,
+              "klaviyo_url": null,
+              "sha256": "6054dcdc005b2000f7dba095f369237e200e0d37db38ca0e75984beb097ee53e"
+            },
             {
               "step": 2,
               "name": "Smarter Balance, Backed by Science",
