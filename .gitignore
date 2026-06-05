@@ -9,6 +9,7 @@ __pycache__/
 # The public repo is just the review app (index.html, designs/, manifest.json, scripts).
 theo-*.md
 claude-code-brief-*.md
+ws-c-*.md
 mustard-seed-closeout-plan.md
 claude-design-constraints.md
 archive/

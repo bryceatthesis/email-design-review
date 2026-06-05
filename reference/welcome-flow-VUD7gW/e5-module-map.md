@@ -1,0 +1,53 @@
+# E5 module map — Your First 30 Days on Stasis
+
+Source template: `step5_UrTK6e_WejCAH.html`  ·  subject: _Your First 30 Days on Stasis_  
+Slices: **16**  ·  all anonymous CloudFront (`d3k81ch9hvuctc.cloudfront.net/company/YsCgQB/images/`), 600px display width.
+
+## Structural summary
+
+16 slices. Section order: STASIS wordmark (cream) -> 'WHERE WILL YOU BE IN 30 DAYS?' inside a thin outlined box -> 30-dot grid infographic + 95% stat -> 'Fewer crashes...' headline+body -> SUBSCRIBE CTA -> promo (black) -> stats panel (capsule/brain icons) -> product still-life (blue glass + DAYTIME jar + capsules) -> stats panel (hourglass/Zz icons) -> 'Save Big, Thrive Bigger' (yellow) -> two-column pricing cards ($180 / $110) each with a SAVE NOW CTA -> disclaimer -> closing lockup (cream). Palette as E2/E3. Two footnote markers appear († and ‡). Build elements rather than sourced assets: the outlined box (02/03), the 30-dot grid (03), the 2-col pricing cards (11–14 — the only 600px/1x native slices). Fragility: curved/domed top edge on the cream footer (16).
+
+## Classification
+
+| # | File | Class | Baked text | Transcribed text (verbatim) / content description |
+|---|------|-------|-----------|----------------------------------------------------|
+| 1 | `e5-01.jpeg` | **text** | n/a — text slice (→ live HTML) | **Text:** STASIS  <br>_Note: Black wordmark on flat cream (header)._ |
+| 2 | `e5-02.jpeg` | **text** | n/a — text slice (→ live HTML) | **Text:** WHERE WILL YOU BE IN 30 DAYS?  <br>_Note: Black headline on cream; a thin rounded-rectangle OUTLINE BORDER begins here (CSS-recreatable box)._ |
+| 3 | `e5-03.jpeg` | **text** | n/a — text slice (→ live HTML) | **Text:** After just 30 days of taking Stasis, 95% of participants had a better experience with their stimulant.†  <br>_Note: 30-DOT GRID infographic (6×5 black dots; last dot orange with a dashed ring) beside the stat. Inside the outlined box. Dot grid = CSS/SVG-recreatable shapes, NOT a sourced asset._ |
+| 4 | `e5-04.jpeg` | **text** | n/a — text slice (→ live HTML) | **Text:** Fewer crashes. Steadier energy. Sharper focus. Calmer days.  \|  In a month, you could be thriving—clear-headed, balanced, and fully in control. So, are you ready?  <br>_Note: Headline + centered body on cream._ |
+| 5 | `e5-05.jpeg` | **text** | n/a — text slice (→ live HTML) | **Text:** SUBSCRIBE TO STASIS  <br>_Note: Orange pill CTA on cream._ |
+| 6 | `e5-06.jpeg` | **text** | n/a — text slice (→ live HTML) | **Text:** $50 OFF SUBSCRIPTIONS  \|  EXTRA 10% OFF + FREE shipping with code:  <br>_Note: Yellow pill badge + white text on flat black._ |
+| 7 | `e5-07.jpeg` | **hybrid** | Stat numbers/labels are live-text candidates; icons carry no baked copy | **Text:** 96% say their stimulant crash has improved†  \|  88% reported an improvement in stress levels†  <br>**Image:** Off-white stats panel: two small flat BRAND ICONS (orange two-tone capsule, teal brain) above divider rules.  <br>_Note: Icon-only imagery (no photo) — shared brand-icon set._ |
+| 8 | `e5-08.jpeg` | **content** | Product-label text only | **Image:** Product still-life: a blue translucent water glass beside a frosted DAYTIME Stasis jar (white weekday-dial lid, SUN MON TUE) on a glossy reflective dark surface, with copper/brown capsules scattered around. White seamless.  <br>_Note: Hero product render / still-life._ |
+| 9 | `e5-09.jpeg` | **hybrid** | Stat numbers/labels are live-text candidates; icons carry no baked copy | **Text:** 63% found it easier to transition from work to social situations†  \|  85% said their sleep was refreshing‡  <br>**Image:** Light-grey stats panel: two small flat brand icons (teal hourglass, blue ‘Zz’ sleep) above divider rules.  <br>_Note: Introduces the ‡ (double-dagger) footnote marker._ |
+| 10 | `e5-10.jpeg` | **text** | n/a — text slice (→ live HTML) | **Text:** Save Big, Thrive Bigger  \|  Stasis makes it easy to save while you level out and level up.  <br>_Note: Headline (Big / Bigger bold) + body on flat yellow card._ |
+| 11 | `e5-11.jpeg` | **text** | n/a — text slice (→ live HTML) | **Text:** SAVE  \|  $180  \|  with a 3-month subscription  <br>_Note: LEFT pricing card (white, on yellow). 600px/1x native — left half of the 2-column pricing row._ |
+| 12 | `e5-12.jpeg` | **text** | n/a — text slice (→ live HTML) | **Text:** SAVE  \|  $110  \|  with a 2-month subscription  <br>_Note: RIGHT pricing card (white, on yellow). 600px/1x native._ |
+| 13 | `e5-13.jpeg` | **text** | n/a — text slice (→ live HTML) | **Text:** SAVE NOW  <br>_Note: Orange pill CTA on the left pricing card. 600px/1x native._ |
+| 14 | `e5-14.jpeg` | **text** | n/a — text slice (→ live HTML) | **Text:** SAVE NOW  <br>_Note: Orange pill CTA on the right pricing card. 600px/1x native._ |
+| 15 | `e5-15.jpeg` | **text** | n/a — text slice (→ live HTML) | **Text:** †Results are from an open label, consumer perception survey conducted from July 2024 to September 2024 that included 175-178 customers who were taking Stasis for at least 30 days. Customers were also taking stimulants like Adderall, coffee, Vyvanse, etc. Customers who completed the survey were compensated with a $10 rebate for their opinions about Stasis.  <br>_Note: Light-grey disclaimer on white. (Only the † disclaimer is rendered; no separate ‡ line is present.)_ |
+| 16 | `e5-16.jpeg` | **text** | n/a — text slice (→ live HTML) | **Text:** STASIS  +  STIMULANT  \|  BALANCE FOR BOLD MINDS  \|  SHOP NOW  <br>_Note: Closing lockup on cream with a CURVED/DOMED TOP EDGE (shaped-edge transition)._ |
+
+Split: **13 text / 1 content / 2 hybrid** (= 16).
+
+## Provenance
+
+| # | File | px (native) | bytes | sha256 | Source URL |
+|---|------|-------------|-------|--------|------------|
+| 1 | `e5-01.jpeg` | 1200x210 | 11437 | `ed2ef7b6845d220a86e213f64fab092995f4ad68d8cf819fbb7c5725b794ca35` | https://d3k81ch9hvuctc.cloudfront.net/company/YsCgQB/images/35dbef3d-ad56-4413-b2d6-0d978da9a4d6.jpeg |
+| 2 | `e5-02.jpeg` | 1200x328 | 34956 | `ce1cd1d2f0ce58ca12886565e781f52bc4b726decd7a6e4634b73564684a7199` | https://d3k81ch9hvuctc.cloudfront.net/company/YsCgQB/images/834d86a5-4892-400c-bfb8-c5db8231a2da.jpeg |
+| 3 | `e5-03.jpeg` | 1200x555 | 62958 | `bf86959cfbaf820adebf3729b8d1ae55e187f17cacdd92fbdb5d5acfc2669b4d` | https://d3k81ch9hvuctc.cloudfront.net/company/YsCgQB/images/24d8ab62-9956-4c6f-bd9f-4f66d946cd54.jpeg |
+| 4 | `e5-04.jpeg` | 1200x407 | 59500 | `2d500649e7fc8cd9b4a6ac48cf9dfcce4d4fe9c7c466d27442d39f4baaf7339f` | https://d3k81ch9hvuctc.cloudfront.net/company/YsCgQB/images/c5b5540f-b29e-491f-b8b4-181381db5ad5.jpeg |
+| 5 | `e5-05.jpeg` | 1200x238 | 23154 | `73032c5df227ba6461ae9e99b793c39c4ecdf9f85f76c86fb20cd0a81a4c8be5` | https://d3k81ch9hvuctc.cloudfront.net/company/YsCgQB/images/b79c42f8-add6-44bc-97cf-36806dd84978.jpeg |
+| 6 | `e5-06.jpeg` | 1200x224 | 36083 | `834ff5f175a51c448fbe80c202faef33bc0ec7ab86ee78322b7d4270cffb4100` | https://d3k81ch9hvuctc.cloudfront.net/company/YsCgQB/images/7bec7fd4-459e-44bf-a768-ac0238eb3744.jpeg |
+| 7 | `e5-07.jpeg` | 1200x649 | 60254 | `79119daf11a6894cbdb4a707a726c2ee3b9e83e2cde572eeb46a21b050675719` | https://d3k81ch9hvuctc.cloudfront.net/company/YsCgQB/images/e6f76bfd-d4c1-430e-bbcc-849856df6361.jpeg |
+| 8 | `e5-08.jpeg` | 1200x603 | 58844 | `c15e130e047b13bcf1e924bd1412ad343d947f63679fa9d1306a4f4281017440` | https://d3k81ch9hvuctc.cloudfront.net/company/YsCgQB/images/d6796847-2631-422c-b757-77b5666688d3.jpeg |
+| 9 | `e5-09.jpeg` | 1200x750 | 62647 | `6b8c26bfa48bfbd0d6c5efede97bc3cea6432c4718b93c7c10bc444f3a0ff2f6` | https://d3k81ch9hvuctc.cloudfront.net/company/YsCgQB/images/97d2d319-3e12-4dca-9ef1-3ac6f0fcf269.jpeg |
+| 10 | `e5-10.jpeg` | 1200x385 | 57378 | `1c94b9a4355de76dfedd2b6fff4a8936409035e97f38a6c27ef6209bfb1014cf` | https://d3k81ch9hvuctc.cloudfront.net/company/YsCgQB/images/b6e4994e-1a32-49d3-906d-cc60e5824d58.jpeg |
+| 11 | `e5-11.jpeg` | 600x418 | 25517 | `ab629eaa7941cb4fe4d541d7c2e07f3304d749686c1e372304e698fd170f5fa0` | https://d3k81ch9hvuctc.cloudfront.net/company/YsCgQB/images/0d22f0b5-fa36-4683-8173-a7f58df44618.jpeg |
+| 12 | `e5-12.jpeg` | 600x418 | 23610 | `eb5575638e5db189d3f216411ef8deb0ba023887493dedd80af1b4ade7084ca0` | https://d3k81ch9hvuctc.cloudfront.net/company/YsCgQB/images/6b483526-1563-430f-af0b-ec0e848f8ca1.jpeg |
+| 13 | `e5-13.jpeg` | 600x305 | 14883 | `be03897312774af3b56b8513097a369d77dd32897657b61dfe8a29785814a093` | https://d3k81ch9hvuctc.cloudfront.net/company/YsCgQB/images/92223ea1-8f81-43cf-83ba-5d8d23a44307.jpeg |
+| 14 | `e5-14.jpeg` | 600x305 | 14593 | `f8205fdc044ed706da281e8f0dcf6ae6bac5028b1212d4b5a67724f83cb651ef` | https://d3k81ch9hvuctc.cloudfront.net/company/YsCgQB/images/cf122ffd-85b6-43d9-8efb-e92aaf3b9176.jpeg |
+| 15 | `e5-15.jpeg` | 1200x260 | 43956 | `56a3deaa954ca074c54f412250142bfb49606d63deb0f650a97fb5cf3db305d3` | https://d3k81ch9hvuctc.cloudfront.net/company/YsCgQB/images/4f8a63b5-952c-4175-a4fe-5e45e35528f6.jpeg |
+| 16 | `e5-16.jpeg` | 1200x983 | 78836 | `c0e2adc4ec14be3391720f813e57fe16a07bf60ca45745466d9a3dd28db24fcc` | https://d3k81ch9hvuctc.cloudfront.net/company/YsCgQB/images/9b358bc7-08b2-4af5-9a31-3a315045be08.jpeg |
+
