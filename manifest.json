@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generated_at": "2026-06-03T20:47:00Z",
+  "generated_at": "2026-06-05T18:07:42Z",
   "flows": [
     {
       "id": "mustard-seed",
@@ -45,6 +45,32 @@
         }
       ],
       "type": "campaign"
+    },
+    {
+      "id": "welcome-quiz",
+      "name": "Welcome Quiz (Quiz Leads)",
+      "variants": [
+        {
+          "id": "html-v1",
+          "label": "HTML v1",
+          "status": "approved",
+          "steps": [
+            {
+              "step": 4,
+              "name": "Real People, Real Results",
+              "file": "designs/welcome-quiz/html-v1/04-real-people-real-results.html",
+              "approved": true,
+              "approved_date": "2026-06-05",
+              "claude_design_url": "https://claude.ai/design/p/876bef0d-8dee-46e0-a0bd-e9c4ebc8edea?file=Stasis+Welcome+Quiz+Step+4+%28Standalone%29.html",
+              "klaviyo_url": null,
+              "sha256": "297ba3046b662cb6fe0f7c56c217431092a026458d48840fd4ada9a7dcaf9a4a",
+              "source_artifact_sha256": "360d8afade796af981e28632e47411a79d586f88b31dcac69efd2af35e97ce04",
+              "derivation": "deterministic-flatten",
+              "provenance_note": "deterministic flatten of 360d8a\u2026; images verified byte-for-byte against the export's asset map."
+            }
+          ]
+        }
+      ]
     }
   ]
 }
