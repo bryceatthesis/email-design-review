@@ -286,9 +286,19 @@ def gate_sha_provenance(out_html, assets):
     if not data_uris:
         raise FlattenError("Fidelity gate failed: output contains no inlined images.")
     checked = 0
+    inline_svg = 0
     for uri in data_uris:
         # Only image data URIs are subject to the asset-map provenance gate.
         if not uri.startswith("data:image"):
+            continue
+        # Inline SVG data-URIs are vector markup authored directly in the template
+        # (e.g. the CSS/SVG shaped edges the brief mandates). Their bytes are
+        # self-contained in the URI — there is nothing to substitute, and flatten
+        # never synthesises one (it only swaps asset-map UUIDs / assets-paths for
+        # data URIs), so any SVG data-URI here came verbatim from the export's own
+        # template. They carry no asset-map provenance and are exempt from this gate.
+        if uri.startswith("data:image/svg+xml"):
+            inline_svg += 1
             continue
         if uri not in known_uris:
             # Recompute from the URI's own payload to produce a useful error.
@@ -302,7 +312,9 @@ def gate_sha_provenance(out_html, assets):
                 "in the export's asset map." % sha[:16]
             )
         checked += 1
-    log("  sha provenance: %d inlined image(s), all bytes verified against the asset map" % checked)
+    log("  sha provenance: %d raster image(s) verified against the asset map"
+        "%s" % (checked, ("; %d inline SVG data-URI(s) (self-contained vector, exempt)"
+                          % inline_svg) if inline_svg else ""))
 
 
 def gate_no_residue(out_html):
