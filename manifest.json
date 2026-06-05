@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generated_at": "2026-06-05T18:07:51Z",
+  "generated_at": "2026-06-05T18:25:01Z",
   "flows": [
     {
       "id": "mustard-seed",
@@ -80,6 +80,24 @@
               "source_artifact_sha256": "971b138058328fed18509e8123485d0d30564d279caae09e2b270dbe37c35abf",
               "derivation": "deterministic-flatten",
               "provenance_note": "deterministic flatten of 971b13\u2026; images verified byte-for-byte against the export's asset map."
+            }
+          ]
+        },
+        {
+          "id": "original",
+          "label": "Original send",
+          "status": "live",
+          "steps": [
+            {
+              "step": 2,
+              "name": "Smarter Balance, Backed by Science",
+              "file": "designs/welcome-quiz/original/02-smarter-balance-backed-by-science.html",
+              "approved": true,
+              "approved_date": "2026-06-05",
+              "claude_design_url": null,
+              "klaviyo_url": "https://www.klaviyo.com/email-editor/V8mxXx/edit",
+              "sha256": "9cdb3c26453f846fbb01bb7ee683cc239cf813754bb0ad82075fceb927275a2c",
+              "provenance_note": "Klaviyo rendered template V8mxXx; 23 CloudFront slice images inlined as data URIs, each verified byte-for-byte against the welcome-flow module-map slice provenance."
             }
           ]
         }
