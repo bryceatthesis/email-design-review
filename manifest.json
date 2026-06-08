@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generated_at": "2026-06-08T15:06:45Z",
+  "generated_at": "2026-06-08T18:35:33Z",
   "flows": [
     {
       "id": "mustard-seed",
@@ -67,6 +67,19 @@
               "source_artifact_sha256": "807ff3ae1fb693719ad4443e345b95ddda0e494b15a5363fe8e4438b3607433a",
               "derivation": "deterministic-flatten",
               "provenance_note": "deterministic flatten of 807ff3\u2026; images verified byte-for-byte against the export's asset map."
+            },
+            {
+              "step": 2,
+              "name": "Smarter Balance, Backed by Science",
+              "file": "designs/welcome-quiz/html-v1/02-smarter-balance-backed-by-science.html",
+              "approved": true,
+              "approved_date": "2026-06-08",
+              "claude_design_url": "https://claude.ai/design/p/876bef0d-8dee-46e0-a0bd-e9c4ebc8edea?file=Stasis+Welcome+Quiz+Step+2+%28Standalone%29.html",
+              "klaviyo_url": null,
+              "sha256": "585a847bbee3fdea0b5f0534d45ad0515ad8550d229c4781bd993ac3de97e83f",
+              "source_artifact_sha256": "268abb7a99a6ed92a13027af589014ee9e97953ca7dd75ed30d14c2ff6a1c2c2",
+              "derivation": "deterministic-flatten",
+              "provenance_note": "Deterministic flatten of the Claude Design GetFile export (native sha 268abb7a\u2026). Theo's 2026-06-08 receipt pins served sha 2d81b1cd\u2026, differing by the established 46-byte serve/GetFile delta (matches receipt, no drift). Images verified byte-for-byte vs the export asset map; e2-06 capsule-pair render (sha 7e2bb639\u2026) present+inlined at the intro panel; e2-21 lockup (sha 5d86363f) absent; footer STASIS+STIMULANT live pills; composition/flatten/static-survival/live-canvas gates passed 2026-06-08. One canonical CloudFront slice URL remains in a provenance HTML comment (no live hotlink)."
             },
             {
               "step": 3,
