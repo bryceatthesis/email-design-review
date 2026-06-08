@@ -1,6 +1,6 @@
 # E3 module map — The Science That Powers Stasis
 
-Source template: `step3_RfAZKS_T42Tgm.html`  ·  subject: _The Science That Powers Stasis_  
+Source: E3 welcome-flow — current sent template (2026-06-04)  ·  subject: _The Science That Powers Stasis_  
 Slices: **13**  ·  all anonymous CloudFront (`d3k81ch9hvuctc.cloudfront.net/company/YsCgQB/images/`), 600px display width.
 
 ## Structural summary

@@ -1,6 +1,6 @@
 # E4 module map — Real People, Real Results
 
-Source template: `step4_R4juUz_SQKnr4.html`  ·  subject: _Real People, Real Results_  
+Source: E4 welcome-flow — current sent template (2026-06-04)  ·  subject: _Real People, Real Results_  
 Slices: **13**  ·  all anonymous CloudFront (`d3k81ch9hvuctc.cloudfront.net/company/YsCgQB/images/`), 600px display width.
 
 ## Structural summary

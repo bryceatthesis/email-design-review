@@ -1,6 +1,6 @@
 # E2 module map — Smarter Balance, Backed by Science
 
-Source template: `step2_TjVEt4_V8mxXx.html`  ·  subject: _Smarter Balance, Backed by Science_  
+Source: E2 welcome-flow — current sent template (2026-06-04)  ·  subject: _Smarter Balance, Backed by Science_  
 Slices: **23**  ·  all anonymous CloudFront (`d3k81ch9hvuctc.cloudfront.net/company/YsCgQB/images/`), 600px display width.
 
 ## Structural summary

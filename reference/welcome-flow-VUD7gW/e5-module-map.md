@@ -1,6 +1,6 @@
 # E5 module map — Your First 30 Days on Stasis
 
-Source template: `step5_UrTK6e_WejCAH.html`  ·  subject: _Your First 30 Days on Stasis_  
+Source: E5 welcome-flow — current sent template (2026-06-04)  ·  subject: _Your First 30 Days on Stasis_  
 Slices: **16**  ·  all anonymous CloudFront (`d3k81ch9hvuctc.cloudfront.net/company/YsCgQB/images/`), 600px display width.
 
 ## Structural summary
