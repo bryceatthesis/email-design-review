@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generated_at": "2026-06-09T15:06:32Z",
+  "generated_at": "2026-06-09T16:51:01Z",
   "flows": [
     {
       "id": "mustard-seed",
@@ -200,6 +200,19 @@
               "source_artifact_sha256": "235a397c33da61d0b385c307e160b8d04b2c799d712f9f28ead49860c077a4ae",
               "derivation": "deterministic-flatten",
               "provenance_note": "Deterministic flatten of GetFile export (native sha 235a397c\u2026, == receipt). SVG manifest asset gzip-compressed; flatten extended to decode gzip. Welcome-kit image + SVG wordmark verified vs asset map; live-text body; no 5d86363f; no slice-CDN refs; gates passed 2026-06-09."
+            },
+            {
+              "step": 2,
+              "name": "Smarter Balance, Backed by Science",
+              "file": "designs/welcome-quiz/html-v1-design-revision-2026-06-08/02-smarter-balance-backed-by-science.html",
+              "approved": true,
+              "approved_date": "2026-06-09",
+              "claude_design_url": "https://claude.ai/design/p/876bef0d-8dee-46e0-a0bd-e9c4ebc8edea?file=Stasis+Welcome+Quiz+Step+2+(Standalone).html",
+              "klaviyo_url": null,
+              "sha256": "99c906395b4ebfa55df814db3f8ff9c8137edc7823012f364d6b4f28934a6ed6",
+              "source_artifact_sha256": "b5c847eedab89ce66d521c82e2ae93b8d625b2e554e599a5797a87d390befc62",
+              "derivation": "deterministic-flatten",
+              "provenance_note": "Deterministic flatten of the authenticated GetFile export (native sha b5c847ee\u2026, the actual GetFile bytes). NOTE: Theo's receipt claimed sha 8c05f29a\u2026 which did NOT reproduce against canonical GetFile; promoted on the verified canonical sha per Bryce 2026-06-09 (direct retrieval = provenance). Images bundled in __bundler manifest + verified vs asset map; e2-06 capsule render 7e2bb639 referenced; hero texture bundled; no CloudFront hotlinks / assets-paths / raster data:image / 5d86363f; composition+flatten+static-survival+live-canvas passed."
             },
             {
               "step": 4,
