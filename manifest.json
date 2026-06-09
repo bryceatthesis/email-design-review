@@ -213,6 +213,19 @@
               "source_artifact_sha256": "a0f9481b13aeaae681f67447c1a3393dd724237ff1aa8ce254b88e2792ab01ad",
               "derivation": "deterministic-flatten",
               "provenance_note": "Deterministic flatten of GetFile export (native sha a0f9481b\u2026, == receipt). e4-02 portrait+badge + e4-09 portrait verified vs asset map; cards/headlines/CTAs live; badge baked in e4-02 hero (no duplicate live overlay); no slice-CDN refs; gates passed 2026-06-09."
+            },
+            {
+              "step": 5,
+              "name": "Your First 30 Days on Stasis",
+              "file": "designs/welcome-quiz/html-v1-design-revision-2026-06-08/05-your-first-30-days-on-stasis.html",
+              "approved": true,
+              "approved_date": "2026-06-09",
+              "claude_design_url": "https://claude.ai/design/p/876bef0d-8dee-46e0-a0bd-e9c4ebc8edea?file=Stasis+Welcome+Quiz+Step+5+(Standalone).html",
+              "klaviyo_url": null,
+              "sha256": "30812e99e59f410317a5f76e61b99a1a4bd04add3ae439b397a1fb2002661235",
+              "source_artifact_sha256": "1a4387b357c2666bb084d3336e7ff04405cefeb6aa0f8703716c3756bbbfee4c",
+              "derivation": "deterministic-flatten",
+              "provenance_note": "Deterministic flatten of GetFile export (native sha 1a4387b3\u2026, == receipt). e5-08 still-life + SVG verified vs asset map; 30-dot grid/outlined box/stats/pricing rebuilt live; no slice-CDN refs; gates passed 2026-06-09."
             }
           ]
         }
