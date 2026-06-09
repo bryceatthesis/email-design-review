@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generated_at": "2026-06-09T15:06:31Z",
+  "generated_at": "2026-06-09T15:06:32Z",
   "flows": [
     {
       "id": "mustard-seed",
@@ -200,6 +200,19 @@
               "source_artifact_sha256": "235a397c33da61d0b385c307e160b8d04b2c799d712f9f28ead49860c077a4ae",
               "derivation": "deterministic-flatten",
               "provenance_note": "Deterministic flatten of GetFile export (native sha 235a397c\u2026, == receipt). SVG manifest asset gzip-compressed; flatten extended to decode gzip. Welcome-kit image + SVG wordmark verified vs asset map; live-text body; no 5d86363f; no slice-CDN refs; gates passed 2026-06-09."
+            },
+            {
+              "step": 4,
+              "name": "Real People, Real Results",
+              "file": "designs/welcome-quiz/html-v1-design-revision-2026-06-08/04-real-people-real-results.html",
+              "approved": true,
+              "approved_date": "2026-06-09",
+              "claude_design_url": "https://claude.ai/design/p/876bef0d-8dee-46e0-a0bd-e9c4ebc8edea?file=Stasis+Welcome+Quiz+Step+4+(Standalone).html",
+              "klaviyo_url": null,
+              "sha256": "6d721ef111efd7c74480530b039254a2ee74db24015f583fea619891056a288b",
+              "source_artifact_sha256": "a0f9481b13aeaae681f67447c1a3393dd724237ff1aa8ce254b88e2792ab01ad",
+              "derivation": "deterministic-flatten",
+              "provenance_note": "Deterministic flatten of GetFile export (native sha a0f9481b\u2026, == receipt). e4-02 portrait+badge + e4-09 portrait verified vs asset map; cards/headlines/CTAs live; badge baked in e4-02 hero (no duplicate live overlay); no slice-CDN refs; gates passed 2026-06-09."
             }
           ]
         }
