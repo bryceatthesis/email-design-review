@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generated_at": "2026-06-09T16:51:01Z",
+  "generated_at": "2026-06-09T19:14:13Z",
   "flows": [
     {
       "id": "mustard-seed",
@@ -252,6 +252,24 @@
               "source_artifact_sha256": "1a4387b357c2666bb084d3336e7ff04405cefeb6aa0f8703716c3756bbbfee4c",
               "derivation": "deterministic-flatten",
               "provenance_note": "Deterministic flatten of GetFile export (native sha 1a4387b3\u2026, == receipt). e5-08 still-life + SVG verified vs asset map; 30-dot grid/outlined box/stats/pricing rebuilt live; no slice-CDN refs; gates passed 2026-06-09."
+            }
+          ]
+        },
+        {
+          "id": "cc-from-spec",
+          "label": "CC \u2014 from spec (hand-authored)",
+          "status": "in-review",
+          "steps": [
+            {
+              "step": 3,
+              "name": "The Science That Powers Stasis",
+              "file": "designs/welcome-quiz/cc-from-spec/03-the-science-that-powers-stasis.html",
+              "approved": true,
+              "approved_date": "2026-06-09",
+              "claude_design_url": null,
+              "klaviyo_url": null,
+              "sha256": "8999c5af31d833d6333c96823686c01e8eebe1de352e282dfc0122db630826e1",
+              "provenance_note": "Hand-authored live-text static HTML by Claude Code directly from reference/stasis-email-design-language.md + the e3 module map (no Theo, no Claude Design, no export/flatten). Images: 3 renders reused from html-v1 E3 (jars e3-05, capsule-pair e3-08 with baked 95% stat, couple e3-09) + 1 separator capsule cropped from the reused e3-05; all inlined data-URIs, zero slice-CDN refs. Composition + static-survival passed; flatten/live-canvas N/A."
             }
           ]
         }
