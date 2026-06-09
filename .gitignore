@@ -21,6 +21,8 @@ __pycache__/
 # Internal working docs — kept local, not published to the public Pages mirror.
 # The public repo is the review app only (index.html, overview.html, designs/,
 # reference/, manifest.json). Pipeline machinery + internal docs stay local.
+# CLAUDE.md is the governing doc (internal process) — local only.
+/CLAUDE.md
 theo-*.md
 claude-code-brief-*.md
 ws-c-*.md
