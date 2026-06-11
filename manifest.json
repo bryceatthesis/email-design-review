@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generated_at": "2026-06-11T18:12:30Z",
+  "generated_at": "2026-06-11T20:27:19Z",
   "flows": [
     {
       "id": "mustard-seed",
@@ -131,7 +131,8 @@
               "approved_date": "2026-06-11",
               "claude_design_url": null,
               "klaviyo_url": null,
-              "sha256": "89951a717142b6c7b88ac5059e79025f2781cf37ffef348f4764ab56d3fd07a3"
+              "sha256": "031f705c8bc59f023f7fc5acaed07d6fd317414d557d784f4efff5e2591272ff",
+              "provenance_note": " Hosted-font swap 2026-06-11 (embedded woff2 -> Shopify Files CDN URLs): render-verified pixel-identical to the Bryce-approved 2026-06-11 build; approval retained."
             },
             {
               "step": 2,
@@ -141,7 +142,8 @@
               "approved_date": "2026-06-11",
               "claude_design_url": null,
               "klaviyo_url": null,
-              "sha256": "4fde50d2b797f2bb7c379e783299eea8219e11653df0fc1cb2e1cb0d6fb4227d"
+              "sha256": "9bbca570a16e0742e65d6d7d89a7bde627cd739287e1d9ca037cbead56e2d030",
+              "provenance_note": " Hosted-font swap 2026-06-11 (embedded woff2 -> Shopify Files CDN URLs): render-verified pixel-identical to the Bryce-approved 2026-06-11 build; approval retained."
             },
             {
               "step": 3,
@@ -151,7 +153,8 @@
               "approved_date": "2026-06-11",
               "claude_design_url": null,
               "klaviyo_url": null,
-              "sha256": "3359652d17594a1d0d2bbc590fa036a569ef6af90c20f107f24f87fc302980f5"
+              "sha256": "a2680b5a490c7e4d6ca32c3bc7e7a225b88f9746ad6bea09e04184f69bd092dc",
+              "provenance_note": " Hosted-font swap 2026-06-11 (embedded woff2 -> Shopify Files CDN URLs): render-verified pixel-identical to the Bryce-approved 2026-06-11 build; approval retained."
             },
             {
               "step": 4,
@@ -161,7 +164,8 @@
               "approved_date": "2026-06-11",
               "claude_design_url": null,
               "klaviyo_url": null,
-              "sha256": "c09aa00780cc0a1efe91ecc76a0b90436db314e3d50f96236439815f98fec0c9"
+              "sha256": "ea8755930f3e3c8fe3248301c7368be8507d6e54c0a3351b00371110d542c6d5",
+              "provenance_note": " Hosted-font swap 2026-06-11 (embedded woff2 -> Shopify Files CDN URLs): render-verified pixel-identical to the Bryce-approved 2026-06-11 build; approval retained."
             },
             {
               "step": 5,
@@ -171,7 +175,65 @@
               "approved_date": "2026-06-11",
               "claude_design_url": null,
               "klaviyo_url": null,
-              "sha256": "32672a118b5fda27e1d0d8cf2622f04bd778239c9a2d7b40c17841448b70e612"
+              "sha256": "1257e69267aeacb067b62766517f74308082133827e0c2b4a7868672ede48951",
+              "provenance_note": " Hosted-font swap 2026-06-11 (embedded woff2 -> Shopify Files CDN URLs): render-verified pixel-identical to the Bryce-approved 2026-06-11 build; approval retained."
+            }
+          ]
+        },
+        {
+          "id": "cc-send",
+          "label": "Klaviyo variant B \u2014 send-ready (hosted assets)",
+          "status": "in-review",
+          "steps": [
+            {
+              "step": 1,
+              "name": "Welcome Email 1",
+              "file": "designs/welcome-quiz/cc-send/01-welcome-email-1.html",
+              "approved": false,
+              "approved_date": null,
+              "claude_design_url": null,
+              "klaviyo_url": null,
+              "sha256": "24478399e42c65e883e13f063a8f68097cca1fb3d725453363fddc4225847df9"
+            },
+            {
+              "step": 2,
+              "name": "Smarter Balance, Backed by Science",
+              "file": "designs/welcome-quiz/cc-send/02-smarter-balance-backed-by-science.html",
+              "approved": false,
+              "approved_date": null,
+              "claude_design_url": null,
+              "klaviyo_url": null,
+              "sha256": "1c55789d82116dd1398af368fd97e579d83c3ef7d09a8bab9c1cd4ac2579b16e"
+            },
+            {
+              "step": 3,
+              "name": "The Science That Powers Stasis",
+              "file": "designs/welcome-quiz/cc-send/03-the-science-that-powers-stasis.html",
+              "approved": false,
+              "approved_date": null,
+              "claude_design_url": null,
+              "klaviyo_url": null,
+              "sha256": "618960b73bc48189f7ba3b365af867778d229355999ee4d9f0806791b403b97b"
+            },
+            {
+              "step": 4,
+              "name": "Real People, Real Results",
+              "file": "designs/welcome-quiz/cc-send/04-real-people-real-results.html",
+              "approved": false,
+              "approved_date": null,
+              "claude_design_url": null,
+              "klaviyo_url": null,
+              "sha256": "7c0c76b494fb3aef667333d3f29dea91045e62b4802dbacb4a027d11fa007837"
+            },
+            {
+              "step": 5,
+              "name": "Your First 30 Days on Stasis",
+              "file": "designs/welcome-quiz/cc-send/05-your-first-30-days-on-stasis.html",
+              "approved": false,
+              "approved_date": null,
+              "claude_design_url": null,
+              "klaviyo_url": null,
+              "sha256": "6886800145f0dfc1f04fd7a7232a8e0294b2b470a1ebbdefc9ede6ea5c3ed008"
             }
           ]
         }
