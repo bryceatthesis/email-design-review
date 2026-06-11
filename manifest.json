@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generated_at": "2026-06-09T19:14:13Z",
+  "generated_at": "2026-06-11T18:12:30Z",
   "flows": [
     {
       "id": "mustard-seed",
@@ -49,82 +49,17 @@
     {
       "id": "welcome-quiz",
       "name": "Welcome Flow",
+      "step_labels": [
+        "Welcome offer",
+        "Smarter Balance",
+        "The Science",
+        "Real People",
+        "First 30 Days"
+      ],
       "variants": [
         {
-          "id": "html-v1",
-          "label": "HTML live-text recreation",
-          "status": "in-review",
-          "steps": [
-            {
-              "step": 1,
-              "name": "Welcome Email 1",
-              "file": "designs/welcome-quiz/html-v1/01-welcome-email-1.html",
-              "approved": false,
-              "approved_date": null,
-              "claude_design_url": "https://claude.ai/design/p/876bef0d-8dee-46e0-a0bd-e9c4ebc8edea?file=2026-06-04+Stasis+Welcome+Quiz+Step+1+HTML+v1.html",
-              "klaviyo_url": null,
-              "sha256": "6ef1ccae64a91c855ee75c15684a623c4cd25e4bb7556f8cdcc827c536e43644",
-              "source_artifact_sha256": "807ff3ae1fb693719ad4443e345b95ddda0e494b15a5363fe8e4438b3607433a",
-              "derivation": "deterministic-flatten",
-              "provenance_note": "deterministic flatten of 807ff3\u2026; images verified byte-for-byte against the export's asset map."
-            },
-            {
-              "step": 2,
-              "name": "Smarter Balance, Backed by Science",
-              "file": "designs/welcome-quiz/html-v1/02-smarter-balance-backed-by-science.html",
-              "approved": false,
-              "approved_date": null,
-              "claude_design_url": "https://claude.ai/design/p/876bef0d-8dee-46e0-a0bd-e9c4ebc8edea?file=Stasis+Welcome+Quiz+Step+2+%28Standalone%29.html",
-              "klaviyo_url": null,
-              "sha256": "585a847bbee3fdea0b5f0534d45ad0515ad8550d229c4781bd993ac3de97e83f",
-              "source_artifact_sha256": "268abb7a99a6ed92a13027af589014ee9e97953ca7dd75ed30d14c2ff6a1c2c2",
-              "derivation": "deterministic-flatten",
-              "provenance_note": "Deterministic flatten of the Claude Design GetFile export (native sha 268abb7a\u2026). Theo's 2026-06-08 receipt pins served sha 2d81b1cd\u2026, differing by the established 46-byte serve/GetFile delta (matches receipt, no drift). Images verified byte-for-byte vs the export asset map; e2-06 capsule-pair render (sha 7e2bb639\u2026) present+inlined at the intro panel; e2-21 lockup (sha 5d86363f) absent; footer STASIS+STIMULANT live pills; composition/flatten/static-survival/live-canvas gates passed 2026-06-08. One canonical CloudFront slice URL remains in a provenance HTML comment (no live hotlink)."
-            },
-            {
-              "step": 3,
-              "name": "The Science That Powers Stasis",
-              "file": "designs/welcome-quiz/html-v1/03-the-science-that-powers-stasis.html",
-              "approved": false,
-              "approved_date": null,
-              "claude_design_url": "https://claude.ai/design/p/876bef0d-8dee-46e0-a0bd-e9c4ebc8edea?file=Stasis+Welcome+Quiz+Step+3+%28Standalone%29.html",
-              "klaviyo_url": null,
-              "sha256": "903f503ee01e6db7b30e91f7bff41a74a2a097459eb1b185169d09fb6574b05e",
-              "source_artifact_sha256": "1682800c2c32c6b0d0c24201be521c5c0345fdfa6ea61b6ba049b3fb65ee5534",
-              "derivation": "deterministic-flatten",
-              "provenance_note": "Deterministic flatten of the Claude Design GetFile export (native sha 1682800c\u2026). Theo's 2026-06-07 receipt pins the served representation 276e5cbc\u2026, differing only by the established ~46-byte omelette-runtime delta (serve vs GetFile). Images verified byte-for-byte vs the export asset map; E3-08 capsule-pair render (sha addd435d\u2026) present in the 95% panel; no e2-21/5d86363f; composition/flatten/static-survival/live-canvas gates passed 2026-06-08."
-            },
-            {
-              "step": 4,
-              "name": "Real People, Real Results",
-              "file": "designs/welcome-quiz/html-v1/04-real-people-real-results.html",
-              "approved": false,
-              "approved_date": null,
-              "claude_design_url": "https://claude.ai/design/p/876bef0d-8dee-46e0-a0bd-e9c4ebc8edea?file=Stasis+Welcome+Quiz+Step+4+%28Standalone%29.html",
-              "klaviyo_url": null,
-              "sha256": "297ba3046b662cb6fe0f7c56c217431092a026458d48840fd4ada9a7dcaf9a4a",
-              "source_artifact_sha256": "360d8afade796af981e28632e47411a79d586f88b31dcac69efd2af35e97ce04",
-              "derivation": "deterministic-flatten",
-              "provenance_note": "deterministic flatten of 360d8a\u2026; images verified byte-for-byte against the export's asset map."
-            },
-            {
-              "step": 5,
-              "name": "Your First 30 Days on Stasis",
-              "file": "designs/welcome-quiz/html-v1/05-your-first-30-days-on-stasis.html",
-              "approved": false,
-              "approved_date": null,
-              "claude_design_url": "https://claude.ai/design/p/876bef0d-8dee-46e0-a0bd-e9c4ebc8edea?file=Stasis+Welcome+Quiz+Step+5+%28Standalone%29.html",
-              "klaviyo_url": null,
-              "sha256": "57234c872a0b209509ed64c32af4d9020ddbbfd60d1dcabc5f0712f711c5e08c",
-              "source_artifact_sha256": "971b138058328fed18509e8123485d0d30564d279caae09e2b270dbe37c35abf",
-              "derivation": "deterministic-flatten",
-              "provenance_note": "deterministic flatten of 971b13\u2026; images verified byte-for-byte against the export's asset map."
-            }
-          ]
-        },
-        {
           "id": "original",
-          "label": "Original send (image slices)",
+          "label": "Current live email (image slices)",
           "status": "live",
           "steps": [
             {
@@ -184,92 +119,59 @@
           ]
         },
         {
-          "id": "html-v1-design-revision-2026-06-08",
-          "label": "HTML v1 design revision 2026-06-08",
-          "status": "draft",
+          "id": "cc-from-spec",
+          "label": "New HTML rebuild \u2014 live text (for review)",
+          "status": "approved",
           "steps": [
             {
               "step": 1,
               "name": "Welcome Email 1",
-              "file": "designs/welcome-quiz/html-v1-design-revision-2026-06-08/01-welcome-email-1.html",
-              "approved": false,
-              "approved_date": null,
-              "claude_design_url": "https://claude.ai/design/p/876bef0d-8dee-46e0-a0bd-e9c4ebc8edea?file=Stasis+Welcome+Quiz+Step+1+(Standalone).html",
+              "file": "designs/welcome-quiz/cc-from-spec/01-welcome-email-1.html",
+              "approved": true,
+              "approved_date": "2026-06-11",
+              "claude_design_url": null,
               "klaviyo_url": null,
-              "sha256": "09d8a1da1545e803f9a611f49aa3f0874206d471072eba95fcf7ba262dedf76e",
-              "source_artifact_sha256": "235a397c33da61d0b385c307e160b8d04b2c799d712f9f28ead49860c077a4ae",
-              "derivation": "deterministic-flatten",
-              "provenance_note": "Deterministic flatten of GetFile export (native sha 235a397c\u2026, == receipt). SVG manifest asset gzip-compressed; flatten extended to decode gzip. Welcome-kit image + SVG wordmark verified vs asset map; live-text body; no 5d86363f; no slice-CDN refs; gates passed 2026-06-09."
+              "sha256": "89951a717142b6c7b88ac5059e79025f2781cf37ffef348f4764ab56d3fd07a3"
             },
             {
               "step": 2,
               "name": "Smarter Balance, Backed by Science",
-              "file": "designs/welcome-quiz/html-v1-design-revision-2026-06-08/02-smarter-balance-backed-by-science.html",
-              "approved": false,
-              "approved_date": null,
-              "claude_design_url": "https://claude.ai/design/p/876bef0d-8dee-46e0-a0bd-e9c4ebc8edea?file=Stasis+Welcome+Quiz+Step+2+(Standalone).html",
+              "file": "designs/welcome-quiz/cc-from-spec/02-smarter-balance-backed-by-science.html",
+              "approved": true,
+              "approved_date": "2026-06-11",
+              "claude_design_url": null,
               "klaviyo_url": null,
-              "sha256": "99c906395b4ebfa55df814db3f8ff9c8137edc7823012f364d6b4f28934a6ed6",
-              "source_artifact_sha256": "b5c847eedab89ce66d521c82e2ae93b8d625b2e554e599a5797a87d390befc62",
-              "derivation": "deterministic-flatten",
-              "provenance_note": "Deterministic flatten of the authenticated GetFile export (native sha b5c847ee\u2026, the actual GetFile bytes). NOTE: Theo's receipt claimed sha 8c05f29a\u2026 which did NOT reproduce against canonical GetFile; promoted on the verified canonical sha per Bryce 2026-06-09 (direct retrieval = provenance). Images bundled in __bundler manifest + verified vs asset map; e2-06 capsule render 7e2bb639 referenced; hero texture bundled; no CloudFront hotlinks / assets-paths / raster data:image / 5d86363f; composition+flatten+static-survival+live-canvas passed."
+              "sha256": "4fde50d2b797f2bb7c379e783299eea8219e11653df0fc1cb2e1cb0d6fb4227d"
             },
-            {
-              "step": 3,
-              "name": "The Science That Powers Stasis",
-              "file": "designs/welcome-quiz/html-v1-design-revision-2026-06-08/03-the-science-that-powers-stasis.html",
-              "approved": false,
-              "approved_date": null,
-              "claude_design_url": "https://claude.ai/design/p/876bef0d-8dee-46e0-a0bd-e9c4ebc8edea?file=Stasis+Welcome+Quiz+Step+3+(Standalone).html",
-              "klaviyo_url": null,
-              "sha256": "903f503ee01e6db7b30e91f7bff41a74a2a097459eb1b185169d09fb6574b05e",
-              "source_artifact_sha256": "f12b37f28a945846d5e1f71e05f665906779b048eb062e34761f859c919c6932",
-              "derivation": "deterministic-flatten",
-              "provenance_note": "Deterministic flatten of the authenticated GetFile export (native sha f12b37f2\u2026, the actual GetFile bytes). NOTE: Theo's receipt claimed sha 2fa075eb\u2026 which did NOT reproduce against canonical GetFile; promoted on the verified canonical sha per Bryce 2026-06-09 (direct retrieval = provenance). Images bundled in __bundler manifest + verified vs asset map; e3-08 capsule render addd435d referenced; no CloudFront hotlinks / assets-paths / raster data:image / 5d86363f; composition+flatten+static-survival+live-canvas passed."
-            },
-            {
-              "step": 4,
-              "name": "Real People, Real Results",
-              "file": "designs/welcome-quiz/html-v1-design-revision-2026-06-08/04-real-people-real-results.html",
-              "approved": false,
-              "approved_date": null,
-              "claude_design_url": "https://claude.ai/design/p/876bef0d-8dee-46e0-a0bd-e9c4ebc8edea?file=Stasis+Welcome+Quiz+Step+4+(Standalone).html",
-              "klaviyo_url": null,
-              "sha256": "6d721ef111efd7c74480530b039254a2ee74db24015f583fea619891056a288b",
-              "source_artifact_sha256": "a0f9481b13aeaae681f67447c1a3393dd724237ff1aa8ce254b88e2792ab01ad",
-              "derivation": "deterministic-flatten",
-              "provenance_note": "Deterministic flatten of GetFile export (native sha a0f9481b\u2026, == receipt). e4-02 portrait+badge + e4-09 portrait verified vs asset map; cards/headlines/CTAs live; badge baked in e4-02 hero (no duplicate live overlay); no slice-CDN refs; gates passed 2026-06-09."
-            },
-            {
-              "step": 5,
-              "name": "Your First 30 Days on Stasis",
-              "file": "designs/welcome-quiz/html-v1-design-revision-2026-06-08/05-your-first-30-days-on-stasis.html",
-              "approved": false,
-              "approved_date": null,
-              "claude_design_url": "https://claude.ai/design/p/876bef0d-8dee-46e0-a0bd-e9c4ebc8edea?file=Stasis+Welcome+Quiz+Step+5+(Standalone).html",
-              "klaviyo_url": null,
-              "sha256": "30812e99e59f410317a5f76e61b99a1a4bd04add3ae439b397a1fb2002661235",
-              "source_artifact_sha256": "1a4387b357c2666bb084d3336e7ff04405cefeb6aa0f8703716c3756bbbfee4c",
-              "derivation": "deterministic-flatten",
-              "provenance_note": "Deterministic flatten of GetFile export (native sha 1a4387b3\u2026, == receipt). e5-08 still-life + SVG verified vs asset map; 30-dot grid/outlined box/stats/pricing rebuilt live; no slice-CDN refs; gates passed 2026-06-09."
-            }
-          ]
-        },
-        {
-          "id": "cc-from-spec",
-          "label": "CC \u2014 from spec (hand-authored)",
-          "status": "in-review",
-          "steps": [
             {
               "step": 3,
               "name": "The Science That Powers Stasis",
               "file": "designs/welcome-quiz/cc-from-spec/03-the-science-that-powers-stasis.html",
-              "approved": false,
-              "approved_date": null,
+              "approved": true,
+              "approved_date": "2026-06-11",
               "claude_design_url": null,
               "klaviyo_url": null,
-              "sha256": "8999c5af31d833d6333c96823686c01e8eebe1de352e282dfc0122db630826e1",
-              "provenance_note": "Hand-authored live-text static HTML by Claude Code directly from reference/stasis-email-design-language.md + the e3 module map (no Theo, no Claude Design, no export/flatten). Images: 3 renders reused from html-v1 E3 (jars e3-05, capsule-pair e3-08 with baked 95% stat, couple e3-09) + 1 separator capsule cropped from the reused e3-05; all inlined data-URIs, zero slice-CDN refs. Composition + static-survival passed; flatten/live-canvas N/A."
+              "sha256": "3359652d17594a1d0d2bbc590fa036a569ef6af90c20f107f24f87fc302980f5"
+            },
+            {
+              "step": 4,
+              "name": "Real People, Real Results",
+              "file": "designs/welcome-quiz/cc-from-spec/04-real-people-real-results.html",
+              "approved": true,
+              "approved_date": "2026-06-11",
+              "claude_design_url": null,
+              "klaviyo_url": null,
+              "sha256": "c09aa00780cc0a1efe91ecc76a0b90436db314e3d50f96236439815f98fec0c9"
+            },
+            {
+              "step": 5,
+              "name": "Your First 30 Days on Stasis",
+              "file": "designs/welcome-quiz/cc-from-spec/05-your-first-30-days-on-stasis.html",
+              "approved": true,
+              "approved_date": "2026-06-11",
+              "claude_design_url": null,
+              "klaviyo_url": null,
+              "sha256": "32672a118b5fda27e1d0d8cf2622f04bd778239c9a2d7b40c17841448b70e612"
             }
           ]
         }

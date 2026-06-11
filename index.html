@@ -291,15 +291,17 @@
   /* ---------------- rendering email into a frame ---------------- */
   function themed(html){
     const theme = state.theme;
+    // Emails that pin `color-scheme: light only` render UNCHANGED in dark mode,
+    // matching Apple Mail / iOS Mail (the majority of opens), which honor the
+    // declaration. Everything else gets the aggressive full-inversion model
+    // below. Neither is a faithful per-client preview — Gmail app dark ignores
+    // the declaration and partially recolors; confirm real dark rendering in
+    // Litmus / a live client before shipping.
+    const pinsLight = /content=["']light only["']|color-scheme\s*:\s*light\s*only/i.test(html);
+    if(theme === 'dark' && pinsLight) return html;
     let inject = `<meta name="color-scheme" content="${theme}">`
                + `<style>:root{color-scheme:${theme}}</style>`;
     if(theme === 'dark'){
-      // Approximate dark mode: invert the whole email (light bg + dark text ->
-      // dark bg + light text), then re-invert media so photos, logos, and
-      // background images render normally. This models an aggressive
-      // full-inversion client. It is NOT a faithful per-client preview —
-      // Gmail, Apple Mail, and Outlook each invert differently; confirm real
-      // dark rendering in Litmus / a live client before shipping.
       inject += `<style id="__darksim">`
         + `html{filter:invert(1) hue-rotate(180deg)!important;background:#ffffff!important;}`
         + `img,picture,video,svg,canvas,[style*="background-image"],[background]{`
