@@ -1,0 +1,54 @@
+<!--
+  COMPONENT · testimonial-card-centered
+  PURPOSE · §6.1 centered quote card (uppercase Antarctica heading + upright Tiempos quote + Antarctica attribution) — the E4 trio pattern, parameterized for the approved colorways.
+
+  SOURCE · designs/welcome-quiz/cc-from-spec/04-real-people-real-results.html (Bryce-approved build, 2026-06-11)
+    lime  · "SAVING ME" (abuts hero portrait above)        · lines 96–104  (fragment body below = these lines verbatim, slots filled in; the module comment on line 95 is not part of the fragment)
+    peach · "MOST IMPACTFUL SUPPLEMENT" (standalone)       · lines 128–136 (module comment on line 127 not part of the fragment)
+    teal  · "MYSELF AGAIN!" (abuts baked teal seam above)  · lines 162–170 (module comment on line 161 not part of the fragment)
+  Peach and teal differ from the lime body ONLY by the slot values tabled below (verified against source 2026-06-12).
+
+  APPROVED COLORWAY VALUE-SETS — fill every slot from ONE row; never mix rows or invent values.
+    {{CARD_BG}}          lime #EEEF78        · peach #FD9A70           · teal #24DEAD          · (cream #F4EFEB: see note)
+    {{TOP_CORNERS}}      lime 0 0 18px 18px  · peach 18px              · teal 0 0 18px 18px      (slot = the FULL border-radius value: square top corners when abutting, 18px all round standalone)
+    {{ROW_PADDING}}      lime 0 40px         · peach 38px 40px 0 40px  · teal 0 40px
+    {{CARD_PADDING}}     lime 48px 68px 30px 68px · peach 46px 50px 18px 50px · teal 40px 30px 18px 30px
+    {{HEADING_SIZE}}     lime 42px           · peach 36px              · teal 40px
+    {{HEADING_COLOR}}    lime #0E1A38        · peach #3A1A0E           · teal #0B3D32
+    {{QUOTE_COLOR}}      lime #1C2233        · peach #2A1206           · teal #0B3D32
+    {{ATTRIBUTION_COLOR}} lime #0E1A38       · peach #3A1A0E           · teal #0B3D32
+    cream #F4EFEB · NO approved centered instance. Cream is approved only as the photo-flavor Devon card — use testimonial-card-photo-cream.html (source cc-from-spec/03 lines 160–173). Do not invent centered cream values.
+
+  SLOTS
+    {{ROW_PADDING}}       outer td padding (the 40px side gutters live here); per colorway table.
+    {{CARD_BG}}           card background — appears TWICE (bgcolor attribute + inline background-color); fill both identically.
+    {{TOP_CORNERS}}       the full border-radius value; approved: "0 0 18px 18px" when the card abuts a photo/seam row directly above (zero gap), "18px" when standalone.
+    {{CARD_PADDING}}      inner .qpad td padding (desktop); at ≤480 the .qpad media class overrides every colorway to 32px 24px 24px 24px.
+    {{HEADING_SIZE}}      36–42px per colorway (mobile .qh forces 30px).
+    {{HEADING}}           uppercase heading copy, e.g. SAVING ME.
+    {{HEADING_COLOR}}     per colorway table.
+    {{QUOTE_PARAGRAPHS}}  inner text of the single .qq paragraph (this pattern is ONE serif paragraph). Curly-quote entities travel with the copy: lime + peach approved WITH &ldquo;…&rdquo; wrapping, teal approved WITHOUT quote marks.
+    {{QUOTE_COLOR}}       per colorway table.
+    {{ATTRIBUTION}}       attribution copy, e.g. Lynn H.
+    {{ATTRIBUTION_COLOR}} per colorway table.
+
+  REQUIRED MEDIA CLASSES — copy verbatim into the host document's @media only screen and (max-width:480px){ } block (source lines 70–71):
+    .qh{font-size:30px !important;} .qq{font-size:19px !important;}
+    .qpad{padding:32px 24px 24px 24px !important;}
+
+  DEPENDENCIES
+    · light-only pin: host carries <meta name="color-scheme" content="light only"> + <meta name="supported-color-schemes" content="light only"> + :root, body { color-scheme: light only; }
+    · fonts: Antarctica 400/500/600/700 + Tiempos Text 400 @font-face kit (Shopify Files CDN, per brands/stasis/design-language.md); stacks used inline: 'Antarctica','Helvetica Neue',Arial,sans-serif and 'Tiempos Text',Georgia,'Times New Roman',serif
+    · testimonial serif is UPRIGHT, never italic (spec §3/§6.1, RESOLVED 2026-06-10) — font-style:normal on the .qq paragraph is load-bearing
+    · host shell: 600px .wrap table on white; abutting flavors must sit with ZERO gap under a photo/seam row that also uses padding:0 40px, so card and photo align at 520px CSS
+    · border-collapse:separate on the card table is required for border-radius to render; no VML/MSO parts in this fragment
+-->
+<tr><td style="padding:{{ROW_PADDING}};">
+  <table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0" bgcolor="{{CARD_BG}}" style="width:100%;background-color:{{CARD_BG}};border-radius:{{TOP_CORNERS}};border-collapse:separate;"><tbody>
+    <tr><td align="center" class="qpad" style="padding:{{CARD_PADDING}};">
+      <p class="qh" style="margin:0 0 16px 0;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:{{HEADING_SIZE}};line-height:1;letter-spacing:-0.03em;color:{{HEADING_COLOR}};text-transform:uppercase;text-align:center;">{{HEADING}}</p>
+      <p class="qq" style="margin:0 0 22px 0;font-family:'Tiempos Text',Georgia,'Times New Roman',serif;font-style:normal;font-weight:400;font-size:22px;line-height:1.4;color:{{QUOTE_COLOR}};text-align:center;">{{QUOTE_PARAGRAPHS}}</p>
+      <p style="margin:0;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:600;font-size:20px;line-height:1.3;color:{{ATTRIBUTION_COLOR}};text-align:center;">{{ATTRIBUTION}}</p>
+    </td></tr>
+  </tbody></table>
+</td></tr>

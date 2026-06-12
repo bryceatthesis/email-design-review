@@ -1,0 +1,49 @@
+<!-- ============================================================
+cta-pill — Stasis component library (brands/stasis)
+
+PURPOSE: Brand pill CTA button — VML roundrect for Outlook paired with a border-radius table + anchor for everything else; orange fill, black uppercase tracked label.
+
+SOURCE: designs/welcome-quiz/cc-from-spec/02-smarter-balance-backed-by-science.html
+(E2, Bryce-approved build), lines 214-220 (module 7 instance). Identical pattern
+repeats at lines 139-145 (hero, adds m-cta), 187-193 and 330-336; size variant at
+lines 355-361 (closing lockup). Extracted verbatim 2026-06-12; only the slot values
+below were swapped for {{SLOT}} markers.
+
+SLOTS:
+  {{CTA_TEXT}} — button label, uppercase: VML <center> + <a> (2 occurrences).
+                 Approved E2 value: TRY STASIS
+  {{CTA_HREF}} — destination: VML href + <a> href (2 occurrences).
+                 Approved E2 value: https://takestasis.com/
+
+PADDING VARIANTS (per brief — this file ships the standard geometry):
+  - standard (this file):      anchor padding:21px 56px; VML height:57px, width:236px
+  - closing-lockup variant:    anchor padding:17px 50px; VML height:50px, width:222px
+                               (E2 lines 355-361; used for SHOP NOW in closing-lockup.html)
+  - hero variant:              standard geometry but anchor class="cta-link m-cta",
+                               giving mobile padding 15px 46px via .m-cta (E2 lines 139-145)
+  The VML pill is a fixed pixel box — 236px fits TRY STASIS (10 chars); re-measure the
+  VML width if {{CTA_TEXT}} differs materially, or Outlook will clip/float the label.
+
+REQUIRED MEDIA CLASSES — host document must include, verbatim, inside
+@media only screen and (max-width:480px){ … }:
+  .cta-link{white-space:normal !important;}
+  .m-cta{padding:15px 46px !important;}   (only when using the hero-variant anchor class)
+
+DEPENDENCIES:
+  - Paste INSIDE a host <td> — the host td supplies outer spacing, background color
+    and alignment (this fragment is the button only, not a table row).
+  - Light-only pin in host head (see hero-art-overlay header for the exact lines).
+  - Font kit: Antarctica @font-face from the Stasis Shopify CDN; inline sans stack
+    font-family:'Antarctica','Helvetica Neue',Arial,sans-serif; weight 700,
+    letter-spacing 0.18em (3px in the VML center), uppercase.
+  - Colors pinned: fill #FF541E, label #000000.
+  - VML/MSO: keep the [if mso] roundrect and the [if !mso] table as a pair — Outlook
+    sees only the VML, everything else only the HTML pill.
+============================================================ -->
+  <!--[if mso]>
+  <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="{{CTA_HREF}}" style="height:57px;v-text-anchor:middle;width:236px;" arcsize="50%" stroke="false" fillcolor="#FF541E"><w:anchorlock/>
+  <center style="color:#000000;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-size:15px;font-weight:700;letter-spacing:3px;text-transform:uppercase;">{{CTA_TEXT}}</center></v:roundrect>
+  <![endif]-->
+  <!--[if !mso]><!-->
+  <table align="center" role="presentation" border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse;margin:0 auto;"><tbody><tr><td align="center" bgcolor="#FF541E" style="background-color:#FF541E;border-radius:999px;"><a class="cta-link" href="{{CTA_HREF}}" target="_blank" style="display:inline-block;padding:21px 56px;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:700;font-size:15px;line-height:1;letter-spacing:0.18em;text-transform:uppercase;color:#000000;text-decoration:none;border-radius:999px;white-space:nowrap;">{{CTA_TEXT}}</a></td></tr></tbody></table>
+  <!--<![endif]-->

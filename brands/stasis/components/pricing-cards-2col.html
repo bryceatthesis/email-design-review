@@ -1,0 +1,60 @@
+<!--
+component: pricing-cards-2col
+PURPOSE: Two white pricing cards (14px radius) side by side, 50/50, each with SAVE eyebrow, big dollar amount, term copy, and a SAVE NOW orange CTA pill (VML + anchor pair); stacks on mobile.
+SOURCE: designs/welcome-quiz/cc-from-spec/05-your-first-30-days-on-stasis.html lines 273-312 (modules 11-14 · two-column pricing cards, CSS rebuild), verbatim. This fragment is a <tr> that lives INSIDE the §6.1 lime panel table — in E5 it is the second row of module 10's panel (host: white td padding 36px 28px 8px 28px wrapping a width-100% table with background-color:#EEEF78;border-radius:18px;border-collapse:separate — E5 lines 266-267 open it, 313-314 close it). Paste this row inside that panel, not directly into the 600px wrap table.
+SLOTS (card 1 = left, card 2 = right):
+  {{CARD1_SAVE_AMOUNT}} / {{CARD2_SAVE_AMOUNT}} — the 46px/600 dollar amounts. Approved: $180 / $110.
+  {{CARD1_TERM_COPY}} / {{CARD2_TERM_COPY}} — inner HTML of the term line. Approved: with a <strong style="font-weight:600;">3-month</strong> subscription / with a <strong style="font-weight:600;">2-month</strong> subscription (term emphasized with inline 600 strong).
+  {{CARD1_CTA_HREF}} / {{CARD2_CTA_HREF}} — CTA destinations. Each appears TWICE per card (the MSO v:roundrect href AND the <a class="btn"> href) — fill both with the same URL. Approved instance: https://takestasis.com/ on both cards.
+  (The SAVE eyebrow and the SAVE NOW button label are baked copy in the approved pattern, not slots.)
+REQUIRED MEDIA CLASSES (host must include inside @media only screen and (max-width:480px){...}):
+  .col-stack{display:block !important;width:100% !important;}
+  .col-gap-l{padding:0 0 24px 0 !important;}
+  .col-gap-r{padding:0 !important;}
+  .btn{padding:16px 28px !important;letter-spacing:0.12em !important;}
+DEPENDENCIES:
+  - Light-only pin (§8.6) in host head.
+  - Sans stack: font-family:'Antarctica','Helvetica Neue',Arial,sans-serif; eyebrow 700, amount 600, term 400 with inline 600, CTA 700. Host must ship the Antarctica @font-face kit.
+  - VML/MSO: each card's CTA is a §5.1 bulletproof pair — Outlook gets the v:roundrect inside the [if mso] conditional comment (height 46px, width 172px, arcsize 50%, fill #FF541E); everything else gets the table+anchor inside the [if !mso] conditional. Keep both halves and all four conditional-comment markers per card intact.
+  - Card bg #FFFFFF on the lime #EEEF78 panel; card tables use border-collapse:separate (required for border-radius). Ink #0E1A38, CTA fill #FF541E, CTA text #000000 — all baked.
+-->
+    <tr><td style="padding:28px 24px 24px 24px;">
+      <table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0" style="width:100%;border-collapse:collapse;"><tbody><tr>
+        <td class="col-stack col-gap-l" valign="top" width="50%" style="width:50%;padding:0 8px 0 0;vertical-align:top;">
+          <table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0" style="width:100%;background-color:#FFFFFF;border-radius:14px;border-collapse:separate;"><tbody><tr><td style="padding:26px 24px;">
+            <p style="margin:0 0 10px 0;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:700;font-size:15px;line-height:1.1;letter-spacing:0.06em;color:#0E1A38;text-transform:uppercase;text-align:left;">SAVE</p>
+            <p style="margin:0 0 12px 0;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:600;font-size:46px;line-height:1;letter-spacing:-0.03em;color:#0E1A38;text-align:left;">{{CARD1_SAVE_AMOUNT}}</p>
+            <p style="margin:0 0 20px 0;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:400;font-size:15px;line-height:1.35;letter-spacing:-0.01em;color:#0E1A38;text-align:left;">{{CARD1_TERM_COPY}}</p>
+            <!--[if mso]>
+<v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="{{CARD1_CTA_HREF}}" style="height:46px;v-text-anchor:middle;width:172px;" arcsize="50%" stroke="false" fillcolor="#FF541E"><w:anchorlock/>
+<center style="color:#000000;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-size:15px;font-weight:700;letter-spacing:3px;text-transform:uppercase;">SAVE NOW</center>
+</v:roundrect>
+<![endif]-->
+            <!--[if !mso]><!-->
+            <table role="presentation" border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse;"><tbody><tr>
+            <td align="center" bgcolor="#FF541E" style="background-color:#FF541E;border-radius:999px;">
+            <a class="btn" href="{{CARD1_CTA_HREF}}" target="_blank" style="display:inline-block;padding:15px 28px;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:700;font-size:15px;line-height:1;letter-spacing:0.18em;text-transform:uppercase;color:#000000;text-decoration:none;border-radius:999px;white-space:nowrap;">SAVE NOW</a>
+            </td></tr></tbody></table>
+            <!--<![endif]-->
+          </td></tr></tbody></table>
+        </td>
+        <td class="col-stack col-gap-r" valign="top" width="50%" style="width:50%;padding:0 0 0 8px;vertical-align:top;">
+          <table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0" style="width:100%;background-color:#FFFFFF;border-radius:14px;border-collapse:separate;"><tbody><tr><td style="padding:26px 24px;">
+            <p style="margin:0 0 10px 0;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:700;font-size:15px;line-height:1.1;letter-spacing:0.06em;color:#0E1A38;text-transform:uppercase;text-align:left;">SAVE</p>
+            <p style="margin:0 0 12px 0;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:600;font-size:46px;line-height:1;letter-spacing:-0.03em;color:#0E1A38;text-align:left;">{{CARD2_SAVE_AMOUNT}}</p>
+            <p style="margin:0 0 20px 0;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:400;font-size:15px;line-height:1.35;letter-spacing:-0.01em;color:#0E1A38;text-align:left;">{{CARD2_TERM_COPY}}</p>
+            <!--[if mso]>
+<v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="{{CARD2_CTA_HREF}}" style="height:46px;v-text-anchor:middle;width:172px;" arcsize="50%" stroke="false" fillcolor="#FF541E"><w:anchorlock/>
+<center style="color:#000000;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-size:15px;font-weight:700;letter-spacing:3px;text-transform:uppercase;">SAVE NOW</center>
+</v:roundrect>
+<![endif]-->
+            <!--[if !mso]><!-->
+            <table role="presentation" border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse;"><tbody><tr>
+            <td align="center" bgcolor="#FF541E" style="background-color:#FF541E;border-radius:999px;">
+            <a class="btn" href="{{CARD2_CTA_HREF}}" target="_blank" style="display:inline-block;padding:15px 28px;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:700;font-size:15px;line-height:1;letter-spacing:0.18em;text-transform:uppercase;color:#000000;text-decoration:none;border-radius:999px;white-space:nowrap;">SAVE NOW</a>
+            </td></tr></tbody></table>
+            <!--<![endif]-->
+          </td></tr></tbody></table>
+        </td>
+      </tr></tbody></table>
+    </td></tr>

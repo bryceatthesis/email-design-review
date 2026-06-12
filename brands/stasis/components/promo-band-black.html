@@ -1,0 +1,39 @@
+<!--
+  COMPONENT · promo-band-black
+  PURPOSE · §6.3 black promo band: lime $50 pill + white context sub-line + the send-copy coupon code pair (desktop 26px bold / mobile 17px regular, Helvetica) forming a complete coupon zone.
+
+  SOURCE · designs/welcome-quiz/cc-send/05-your-first-30-days-on-stasis.html (coupon-normalized send copy, 2026-06-12), lines 186–197 (band body = lines 187–197 verbatim with copy slots; the interior C-b/C-c comment is source-verbatim provenance).
+
+  COUPON ZONE RULE — reference/send-prep-spec.md §2 (BINDING, Bryce 2026-06-12; supersedes wsc-send-spec's match-the-original call referenced in the interior comment):
+    context AND code must render in BOTH desktop (600) and mobile (375); the code sits directly under its context line; the code renders exactly once per zone per mode — the .wsc-desk/.wsc-mob display-split pair below counts as once; no standalone bare code lines anywhere.
+  SEND-COPY-ONLY · the desk/mob code pair (the .wsc-desk p + conditional .wsc-mob div) is added at send-prep and carries Klaviyo Liquid. REVIEW BUILDS MAY OMIT THE PAIR — the approved review build (cc-from-spec/04 §6.3 band, cc-from-spec/05 rebuild) ships the band as pill + context line only.
+
+  SLOTS
+    {{PILL_TEXT}}     lime pill copy, uppercase. Approved: $50 OFF SUBSCRIPTIONS
+    {{CONTEXT_LINE}}  white context sub-line. Approved: EXTRA 10% OFF + FREE shipping with code:
+                      Keep the trailing "with code:" phrasing — it is the §2 zone context for the code pair directly beneath; never let it render with nothing under it in a send.
+    The coupon tag {% coupon_code 'Welcome_Discount' %} is NOT a slot — kept verbatim (it appears twice: desk + mob). Changing the discount handle is a send-prep decision, not a component fill-in.
+
+  REQUIRED MEDIA CLASSES — copy verbatim into the host document's @media only screen and (max-width:480px){ } block (source lines 71 and 88–90):
+    .pill50{font-size:17px !important;padding:8px 18px !important;}
+    /* wsc-send-spec §2.0 · coupon desktop/mobile visibility plumbing */
+    .wsc-desk{display:none !important;}
+    div.wsc-mob{display:block !important;}
+
+  DEPENDENCIES
+    · light-only pin: host carries the "light only" color-scheme metas + :root, body { color-scheme: light only; }
+    · fonts: Antarctica kit (Shopify Files CDN) for pill + context line; the code pair intentionally uses the plain 'Helvetica Neue',Arial / Helvetica stack, NOT Antarctica — locked match to the original send treatment (black-band codes per send-prep-spec §2 item 7: desktop 26px bold, mobile 17px regular)
+    · MSO/Outlook: the mobile code div is wrapped in a non-mso conditional and carries display:none + mso-hide:all; Outlook renders only the desktop 26px bold line. No VML in this fragment.
+    · host shell: 600px .wrap table; the band is full-bleed black across the wrap (bgcolor + inline background-color both pinned)
+-->
+<tr><td align="center" bgcolor="#000000" style="background-color:#000000;padding:28px 40px;">
+  <table role="presentation" border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse;margin:0 auto 12px auto;"><tbody><tr>
+    <td class="pill50" bgcolor="#EEEF78" style="background-color:#EEEF78;border-radius:999px;padding:12px 28px;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:600;font-size:22px;line-height:1;letter-spacing:-0.01em;text-transform:uppercase;color:#0E1A38;white-space:nowrap;">{{PILL_TEXT}}</td>
+  </tr></tbody></table>
+  <div style="margin:0 0 8px 0;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:600;font-size:14px;line-height:1.3;letter-spacing:0.02em;color:#FFFFFF;text-align:center;">{{CONTEXT_LINE}}</div>
+  <!-- C-b/C-c · band code pair (wsc-send-spec §2.5b → §2.4b/c verbatim — desktop 26 bold / mobile 17 regular, Helvetica; replaces the rebuild's single 24px Antarctica div per the locked match-the-original call) -->
+  <p class="wsc-desk" style="margin:10px 0 0 0;font-family:'Helvetica Neue',Arial;font-size:26px;line-height:1.3;color:#FFFFFF;text-align:center;"><strong><span style="font-family: Helvetica, Arial, sans-serif;">{% coupon_code 'Welcome_Discount' %}</span></strong></p>
+  <!--[if !mso]><!-->
+  <div class="wsc-mob" style="display:none;mso-hide:all;margin:10px 0 0 0;font-family:'Helvetica Neue',Arial;font-size:17px;font-weight:400;line-height:1.3;color:#FFFFFF;text-align:center;"><span style="font-family: Helvetica, Arial, sans-serif;">{% coupon_code 'Welcome_Discount' %}</span></div>
+  <!--<![endif]-->
+</td></tr>

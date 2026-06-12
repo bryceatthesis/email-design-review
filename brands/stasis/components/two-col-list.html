@@ -1,0 +1,28 @@
+<!--
+component: two-col-list
+PURPOSE: Lime panel with a 44%/56% two-column layout: big heading on the left, ruled list (hairline-divided rows) on the right; columns stack on mobile via .col-stack.
+SOURCE: designs/welcome-quiz/cc-from-spec/03-the-science-that-powers-stasis.html lines 132-140 plus the row's closing </td></tr> from line 152 (module 8 · negative downsides, TWO COLUMNS). The module's trailing CTA table (lines 141-151, the §5.1 primary CTA inside the same panel td) is intentionally NOT part of this component — it is a separate pattern; in E3 it sat after the two-column table, before the closing </td></tr>.
+SLOTS:
+  {{HEADING_HTML}} — inner HTML of the left-column heading p.h-lg. Approved instance: This leads to <strong style="font-weight:700;">negative downsides,</strong> showing up in your day as (emphasis spans use inline <strong style="font-weight:700;">).
+  {{ITEM_1}} / {{ITEM_2}} / {{ITEM_3}} — ruled list rows (each td carries border-bottom:1px solid rgba(14,26,56,0.32)). Approved: Sleep disruption / Afternoon crashes / Nervous jitters.
+  {{ITEM_LAST}} — the LAST row, identical but with NO border-bottom (the rule pattern is divider-between-rows, not under the last). Approved: Premature aging. To change the count, duplicate a ruled row and keep the last row rule-less.
+REQUIRED MEDIA CLASSES (host must include inside @media only screen and (max-width:480px){...}):
+  .col-stack{display:block !important;width:100% !important;}
+  .col-left{padding:0 0 18px 0 !important;}
+  .h-lg{font-size:26px !important;}
+DEPENDENCIES:
+  - Light-only pin (§8.6) in host head.
+  - Sans stack: font-family:'Antarctica','Helvetica Neue',Arial,sans-serif; heading weight 500 with inline 700 emphasis; list rows weight 500. Host must ship the Antarctica @font-face kit.
+  - Panel bg #EEEF78 (lime) and ink #0E1A38 are baked in the approved pattern.
+  - No VML/MSO requirements in this fragment (the omitted §5.1 CTA carries its own VML fallback).
+-->
+<tr><td bgcolor="#EEEF78" style="background-color:#EEEF78;padding:36px 40px 32px 40px;">
+  <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="width:100%;border-collapse:collapse;"><tbody><tr>
+    <td class="col-stack col-left" valign="top" width="44%" style="width:44%;padding:0 20px 0 0;vertical-align:top;">
+      <p class="h-lg" style="margin:0;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-size:32px;line-height:1.1;letter-spacing:-0.02em;color:#0E1A38;text-align:left;font-weight:500;">{{HEADING_HTML}}</p>
+    </td>
+    <td class="col-stack" valign="top" width="56%" style="width:56%;vertical-align:top;">
+      <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="width:100%;border-collapse:collapse;"><tbody><tr><td style="padding:0 0 14px 0;border-bottom:1px solid rgba(14,26,56,0.32);font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:20px;line-height:1.2;letter-spacing:-0.01em;color:#0E1A38;padding-top:14px;">{{ITEM_1}}</td></tr><tr><td style="padding:0 0 14px 0;border-bottom:1px solid rgba(14,26,56,0.32);font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:20px;line-height:1.2;letter-spacing:-0.01em;color:#0E1A38;padding-top:14px;">{{ITEM_2}}</td></tr><tr><td style="padding:0 0 14px 0;border-bottom:1px solid rgba(14,26,56,0.32);font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:20px;line-height:1.2;letter-spacing:-0.01em;color:#0E1A38;padding-top:14px;">{{ITEM_3}}</td></tr><tr><td style="padding:0 0 14px 0;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:20px;line-height:1.2;letter-spacing:-0.01em;color:#0E1A38;padding-top:14px;">{{ITEM_LAST}}</td></tr></tbody></table>
+    </td>
+  </tr></tbody></table>
+</td></tr>

@@ -1,0 +1,114 @@
+<!-- ============================================================
+hero-art-overlay — Stasis component library (brands/stasis)
+
+PURPOSE: Full-bleed hero row — live text (wordmark, H1, subhead, pill CTA) overlaid on recomposed text-free background art, VML rect fallback for Outlook, plus the artwork's bottom bleed as its own <img> row.
+
+SOURCE: designs/welcome-quiz/cc-from-spec/02-smarter-balance-backed-by-science.html
+(E2, Bryce-approved build), lines 115-158. Extracted verbatim 2026-06-12; only the
+slot values below were swapped for {{SLOT}} markers.
+
+SLOTS:
+  {{HERO_BG_COLOR}}      — solid color behind the art: td bgcolor + inline background-color +
+                           VML v:fill color (3 occurrences). Approved E2 value: #011D59 (deep navy).
+  {{HERO_BG_URL}}        — background artwork for the text zone: td background attr + inline
+                           background-image url (2 occurrences). Must be TEXT-FREE art for the
+                           600px column (cover, bottom center). Approved E2 value: the embedded
+                           JPEG data URI on source line 120 — recomposed e2 hero from
+                           GettyImages-1335424588_BrainA_W.png (sha 60a17f19…, Drive id
+                           1kA2c434v5nuMDvV0-JwSXh0FyNCMCOpl), recipe at
+                           _incoming/welcome-flow-VUD7gW/assets/recomposed-e2-hero/recipe.md.
+  {{HERO_BG_BOTTOM_URL}} — bottom bleed of the same artwork, shipped as the 600px-wide <img>
+                           row directly below the text zone (1 occurrence). Approved E2 value:
+                           the embedded JPEG data URI on source line 155. NOTE: not in the
+                           original slot brief — parameterized because the approved hero art
+                           ships split in two pieces (bg td + bleed img); both must come from
+                           the same recomposition.
+  {{WORDMARK_URL}}       — Stasis wordmark image, displayed 169x38. LOGO IMAGE, never typed
+                           (spec §4). Approved E2 value: the embedded PNG data URI on source
+                           line 130 — wordmark-white-1200.png (kit logo-usage.md, master sha
+                           661cd181…, rendition sha 92970f10…).
+  {{HEADLINE}}           — H1 copy, uppercase; may carry designed <br/> breaks.
+                           Approved E2 value: WELCOME<br/>TO STASIS
+  {{SUBHEAD}}            — subhead copy. Approved E2 value: where bold minds find their balance.
+  {{CTA_TEXT}}           — button label: VML <center> + <a> (2 occurrences). Approved: TRY STASIS
+  {{CTA_HREF}}           — button destination: VML href + <a> href (2 occurrences).
+                           Approved E2 value: https://takestasis.com/
+  The wordmark link is pinned to https://takestasis.com/ and is intentionally NOT a slot.
+
+REQUIRED MEDIA CLASSES — host document must include, verbatim, inside
+@media only screen and (max-width:480px){ … }:
+  .px{padding-left:24px !important;padding-right:24px !important;}
+  .h-hero{font-size:38px !important;line-height:0.96 !important;}
+  .cta-link{white-space:normal !important;}
+  .dbr{display:none !important;}
+  .m-hero{padding-top:28px !important;padding-bottom:28px !important;}
+  .m-logo{width:106px !important;height:24px !important;}
+  .m-h1row{padding-top:50px !important;}
+  .m-subrow{padding-top:12px !important;}
+  .m-sub{font-size:16px !important;}
+  .m-ctarow{padding-top:28px !important;}
+  .m-cta{padding:15px 46px !important;}
+  (.dbr only needed if HEADLINE/SUBHEAD copy uses <br class="dbr"/> designed breaks.)
+
+DEPENDENCIES:
+  - Paste as a direct <tr> child of the host 600px wrap table (class="wrap",
+    width:600px;max-width:600px) inside the [if mso] 600px wrapper table.
+  - Light-only pin: <meta name="color-scheme" content="light only"> +
+    <meta name="supported-color-schemes" content="light only"> +
+    :root, body { color-scheme: light only; } (host head).
+  - Font kit: Antarctica @font-face 400/500/600/700 hosted on the Stasis Shopify CDN
+    (mso-font-alt 'Helvetica Neue'); inline sans stack:
+    font-family:'Antarctica','Helvetica Neue',Arial,sans-serif.
+    Weights here: H1 + subhead 500 (display roles are 500, NOT 900 — font-map.md), CTA 700.
+  - VML/MSO: Outlook replaces the CSS background image with v:rect + v:fill (solid
+    {{HERO_BG_COLOR}}) + v:textbox ([if gte mso 9]); the CTA ships as v:roundrect
+    (arcsize 50%, height:57px, width:236px) under [if mso] with the HTML pill under
+    [if !mso]. Keep both halves of each conditional pair intact.
+  - td bgcolor + VML fill keep the white hero text legible when images are blocked.
+  - Host img reset (img{border:0;display:block;height:auto;…}) — the bottom-bleed
+    <img> row depends on it.
+============================================================ -->
+<!-- 2 · hero — live text over recomposed text-free artwork (module-map e2-02..05).
+     source = GettyImages-1335424588_BrainA_W.png sha 60a17f1936556c7b2de5034bcb5f8e447f3facc2cf99e8c4e2f1fafc340b4136 (Drive id 1kA2c434v5nuMDvV0-JwSXh0FyNCMCOpl);
+     recomposition recipe at _incoming/welcome-flow-VUD7gW/assets/recomposed-e2-hero/recipe.md (masked MAD 1.148 vs original send; all pixels trace to the master). -->
+<tr><td align="center" valign="top" style="padding:0;">
+  <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="width:100%;border-collapse:collapse;"><tbody>
+    <tr><td align="center" valign="top" bgcolor="{{HERO_BG_COLOR}}" background="{{HERO_BG_URL}}" class="px m-hero" style="background-image:url('{{HERO_BG_URL}}');background-color:{{HERO_BG_COLOR}};background-repeat:no-repeat;background-position:bottom center;background-size:cover;padding:45px 48px 44px 48px;text-align:center;">
+      <!--[if gte mso 9]>
+      <v:rect xmlns:v="urn:schemas-microsoft-com:vml" fill="true" stroke="false" style="width:600px;">
+      <v:fill type="tile" color="{{HERO_BG_COLOR}}"/>
+      <v:textbox style="mso-fit-shape-to-text:true" inset="0,0,0,0">
+      <![endif]-->
+      <div>
+      <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="width:100%;border-collapse:collapse;"><tbody>
+        <tr><td align="center" style="padding:0;text-align:center;">
+          <!-- wordmark §4: LOGO IMAGE, never typed. wordmark-white-1200.png (kit logo-usage.md), master sha 661cd181..., rendition sha 92970f10...; display 169x38 = e2-02 baked bbox (431,90)-(768,165)@2x, IoU 0.970 -->
+          <a href="https://takestasis.com/" target="_blank" style="text-decoration:none;"><img src="{{WORDMARK_URL}}" width="169" height="38" alt="Stasis" border="0" class="m-logo" style="display:block;width:169px;height:38px;margin:0 auto;"/></a>
+        </td></tr>
+        <tr><td align="center" class="m-h1row" style="padding:80px 0 0 0;text-align:center;">
+          <h1 class="h-hero" style="margin:0;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:60px;line-height:0.97;letter-spacing:-0.03em;text-transform:uppercase;color:#FFFFFF;text-align:center;">{{HEADLINE}}</h1>
+        </td></tr>
+        <tr><td align="center" class="m-subrow" style="padding:18px 0 0 0;text-align:center;">
+          <p class="m-sub" style="margin:0;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:25px;line-height:1.3;letter-spacing:-0.01em;color:#FFFFFF;text-align:center;">{{SUBHEAD}}</p>
+        </td></tr>
+        <tr><td align="center" class="m-ctarow" style="padding:46px 0 0 0;text-align:center;">
+          <!--[if mso]>
+          <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="{{CTA_HREF}}" style="height:57px;v-text-anchor:middle;width:236px;" arcsize="50%" stroke="false" fillcolor="#FF541E"><w:anchorlock/>
+          <center style="color:#000000;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-size:15px;font-weight:700;letter-spacing:3px;text-transform:uppercase;">{{CTA_TEXT}}</center></v:roundrect>
+          <![endif]-->
+          <!--[if !mso]><!-->
+          <table align="center" role="presentation" border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse;margin:0 auto;"><tbody><tr><td align="center" bgcolor="#FF541E" style="background-color:#FF541E;border-radius:999px;"><a class="cta-link m-cta" href="{{CTA_HREF}}" target="_blank" style="display:inline-block;padding:21px 56px;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:700;font-size:15px;line-height:1;letter-spacing:0.18em;text-transform:uppercase;color:#000000;text-decoration:none;border-radius:999px;white-space:nowrap;">{{CTA_TEXT}}</a></td></tr></tbody></table>
+          <!--<![endif]-->
+        </td></tr>
+      </tbody></table>
+      </div>
+      <!--[if gte mso 9]>
+      </v:textbox>
+      </v:rect>
+      <![endif]-->
+    </td></tr>
+    <tr><td align="center" bgcolor="#FFFFFF" style="padding:0;font-size:0;line-height:0;mso-line-height-rule:exactly;background-color:#FFFFFF;">
+      <img alt="" width="600" src="{{HERO_BG_BOTTOM_URL}}" style="display:block;width:100%;max-width:600px;height:auto;"/>
+    </td></tr>
+  </tbody></table>
+</td></tr>

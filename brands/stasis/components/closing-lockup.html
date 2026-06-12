@@ -1,0 +1,58 @@
+<!-- ============================================================
+closing-lockup — Stasis component library (brands/stasis)
+
+PURPOSE: Closing lockup (spec §5.2) — cream dome shaped edge rising from black (§8), STASIS + STIMULANT pill pair, BALANCE FOR BOLD MINDS display line in cobalt, SHOP NOW pill CTA on cream.
+
+SOURCE: designs/welcome-quiz/cc-from-spec/02-smarter-balance-backed-by-science.html
+(E2, Bryce-approved build), lines 343-362. Extracted verbatim 2026-06-12; only the
+slot value below was swapped for a {{SLOT}} marker.
+
+SLOTS:
+  {{CTA_HREF}} — SHOP NOW destination: VML href + <a> href (2 occurrences).
+                 Approved E2 value: https://takestasis.com/
+  All copy (STASIS / + / STIMULANT pills, BALANCE FOR BOLD MINDS, SHOP NOW) is the
+  pinned brand lockup — intentionally NOT slotted.
+
+REQUIRED MEDIA CLASSES — host document must include, verbatim, inside
+@media only screen and (max-width:480px){ … }:
+  .px{padding-left:24px !important;padding-right:24px !important;}
+  .h-closer{font-size:40px !important;}
+  .cta-link{white-space:normal !important;}
+
+DEPENDENCIES:
+  - Paste as two consecutive <tr> children of the host 600px wrap table.
+  - The module ABOVE must be black #000000: the dome row is a black td with the cream
+    dome div rising out of it. Changing the dome td bgcolor departs from the approved
+    E2 rendering.
+  - Dome shape is CSS only (border-top-left/right-radius:50% 100%) with NO VML
+    fallback — Outlook renders a flat cream band, as shipped in the approved build.
+  - Light-only pin in host head (see hero-art-overlay header for the exact lines).
+  - Font kit: Antarctica @font-face from the Stasis Shopify CDN; inline sans stack
+    font-family:'Antarctica','Helvetica Neue',Arial,sans-serif; pills + CTA 700,
+    display line 500/48px.
+  - Colors pinned: cream #F4EFEB, cobalt #3D72E6, STIMULANT pill on white #FFFFFF,
+    CTA orange #FF541E.
+  - VML/MSO: SHOP NOW ships as v:roundrect (arcsize 50%, height:50px, width:222px —
+    the size-variant pill, see cta-pill.html header) under [if mso] paired with the
+    HTML pill under [if !mso]; keep the pair intact.
+============================================================ -->
+<tr><td align="center" bgcolor="#000000" style="padding:0;font-size:0;line-height:0;mso-line-height-rule:exactly;background-color:#000000;">
+  <div style="height:54px;background-color:#F4EFEB;border-top-left-radius:50% 100%;border-top-right-radius:50% 100%;font-size:0;line-height:0;">&nbsp;</div>
+</td></tr>
+
+<!-- 12 · closing lockup §5.2 (cream) · module-map e2-21/22/23 -->
+<tr><td align="center" bgcolor="#F4EFEB" class="px" style="padding:6px 48px 52px 48px;background-color:#F4EFEB;text-align:center;">
+  <table align="center" role="presentation" border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse;margin:0 auto 24px auto;"><tbody><tr>
+    <td align="center" style="padding:0 8px 0 0;"><span style="display:inline-block;padding:10px 26px;border:2px solid #3D72E6;border-radius:999px;background-color:#F4EFEB;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:700;font-size:17px;line-height:1;letter-spacing:-0.02em;color:#3D72E6;text-transform:uppercase;">STASIS</span></td>
+    <td align="center" style="padding:0 8px;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:700;font-size:19px;line-height:1;color:#3D72E6;">+</td>
+    <td align="center" style="padding:0 0 0 8px;"><span style="display:inline-block;padding:10px 24px;border-radius:999px;background-color:#FFFFFF;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:700;font-size:17px;line-height:1;letter-spacing:-0.02em;color:#3D72E6;text-transform:uppercase;">STIMULANT</span></td>
+  </tr></tbody></table>
+  <h2 class="h-closer" style="margin:0 auto 28px auto;max-width:480px;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:48px;line-height:0.98;letter-spacing:-0.02em;text-transform:uppercase;color:#3D72E6;text-align:center;">BALANCE FOR BOLD MINDS</h2>
+  <!--[if mso]>
+  <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="{{CTA_HREF}}" style="height:50px;v-text-anchor:middle;width:222px;" arcsize="50%" stroke="false" fillcolor="#FF541E"><w:anchorlock/>
+  <center style="color:#000000;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-size:15px;font-weight:700;letter-spacing:3px;text-transform:uppercase;">SHOP NOW</center></v:roundrect>
+  <![endif]-->
+  <!--[if !mso]><!-->
+  <table align="center" role="presentation" border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse;margin:0 auto;"><tbody><tr><td align="center" bgcolor="#FF541E" style="background-color:#FF541E;border-radius:999px;"><a class="cta-link" href="{{CTA_HREF}}" target="_blank" style="display:inline-block;padding:17px 50px;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:700;font-size:15px;line-height:1;letter-spacing:0.18em;text-transform:uppercase;color:#000000;text-decoration:none;border-radius:999px;white-space:nowrap;">SHOP NOW</a></td></tr></tbody></table>
+  <!--<![endif]-->
+</td></tr>

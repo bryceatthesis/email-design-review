@@ -1,5 +1,7 @@
 # WS-C send-spec — footer + coupon insertion for the cc-send copies (A/B variant B)
 
+> **SUPERSEDED IN PART 2026-06-12 (Bryce, Gmail iOS review of the staged sends):** the **"variant B's coupon line must match each original exactly" governing call is replaced by `reference/send-prep-spec.md` §2** — every coupon zone shows context AND code in BOTH modes, the code sits directly under its context line, exactly once per zone, and **no standalone bare code lines anywhere**. This retires: governing call 2 in the header below, the §2 intro "locked call", §2.2's E2 mobile-band quirk ("ends at WITH CODE: with no code" — now forbidden), the bare mobile code insertions §2.2b / §2.3b / §2.4a / §2.5a, §3's coupon crop and tag-count expectations, and §4's open item on §2.5b. The cc-send copies were coupon-normalized to send-prep-spec §2 on 2026-06-12. **Still valid** — and generalized into send-prep-spec: the footer spec (§1), the visibility plumbing (§2.0), and the verification approach (§3's structure). Original text below is unedited; where they conflict, send-prep-spec §2 wins.
+
 > **Derived 2026-06-11 by Claude Code** from the ORIGINAL Klaviyo templates
 > (`designs/welcome-quiz/original/0N-*.html`, live text — data-URI-stripped working copies, never read raw)
 > + headless-CDP renders of those originals at 600px and 375px (scripts/_cdp.py, unique /tmp profiles).
@@ -125,6 +127,8 @@ Notes:
 
 ## 2 · COUPON LINES — per-email insertion spec
 
+> ⚠ **SUPERSEDED 2026-06-12** — the "match each original exactly" locked call below is replaced by `reference/send-prep-spec.md` §2 (context+code both modes, code under context, once per zone, no bare codes). See the top-of-file banner. Text kept for the record; the font-stack guidance (verbatim `Antartica` fallthrough) survives in send-prep-spec §2 item 7.
+
 **Locked call: variant B coupon lines match each original exactly** — font stacks verbatim (including the
 originals' misspelled `Antartica` first family: no client resolves it, so it intentionally falls through to
 Lucida/fallback exactly as the original does in real clients — do NOT "correct" it to the rebuilds'
@@ -158,6 +162,8 @@ The approved rebuild covers both with one element (`p.code`, 26px → 17px via m
 Crops: `e1-600-00-coupon.png`, `e1-375-00-coupon.png`.
 
 ### 2.2 E2 — three insertions (crops: `e2-600-00`, `e2-375-00`, `e2-600-01`, `e2-375-band`)
+
+> ⚠ **SUPERSEDED 2026-06-12** — do NOT reproduce the asymmetry described below; send-prep-spec §2 forbids a mode ending at "WITH CODE:" with nothing beneath, and forbids bare codes. See the top-of-file banner.
 
 The E2 original's coupon layout is asymmetric — reproduce it as-is:
 desktop shows the code twice (top yellow strip + black promo band); mobile shows it once, mid-body;

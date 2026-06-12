@@ -1,0 +1,26 @@
+<!--
+  COMPONENT · legal-footer
+  PURPOSE · white legal footer on every send copy: FDA disclaimer + unsubscribe/preferences/privacy line + address/year line, all Klaviyo Liquid verbatim (reference/send-prep-spec.md §1).
+
+  SOURCE · designs/welcome-quiz/cc-send/02-smarter-balance-backed-by-science.html (send copy, 2026-06-12), lines 382–387 (body = lines 383–387 verbatim). Identical block verified in cc-send/03 (L231+), cc-send/04 (L219+), cc-send/05 (L352+).
+
+  SLOTS · none. IMPORTANT: {{ organization.full_address }} and {{ organization.name }} below are KLAVIYO LIQUID, not component slots — this library's slot markers are UPPERCASE_WITH_UNDERSCORES with no inner spaces. Keep all Liquid verbatim: {% unsubscribe %}, {% manage_preferences %}, {{ organization.full_address }}, {% current_year %}, {{ organization.name }}.
+  SEND-COPY-ONLY · appended at send-prep; review builds (cc-from-spec) do not carry a legal footer.
+
+  E1 FLAVOR DIFFERENCE · cc-send/01-welcome-email-1.html lines 177–182 omits {% manage_preferences %} — its unsubscribe line reads "{% unsubscribe %} or View our Privacy Policy." (no comma list). E1 also uses a 20px .px override (cc-send/01 line 62) instead of 24px. Keep that flavor per-email; this component is the E2–E5 default.
+
+  REQUIRED MEDIA CLASSES — copy verbatim into the host document's @media only screen and (max-width:480px){ } block (source line 69):
+    .px{padding-left:24px !important;padding-right:24px !important;}
+
+  DEPENDENCIES
+    · light-only pin: host carries the "light only" color-scheme metas + :root, body { color-scheme: light only; }
+    · fonts: Antarctica stack (the FDA disclaimer is italic 12px, the legal lines 11px regular); privacy link color #3D72E6 royal with underline is part of the approved block
+    · white background pinned (bgcolor + inline) per original render ground truth — do not let a colored section above bleed into it
+    · Klaviyo context required: the Liquid tags only resolve in Klaviyo; the staged draft must keep them byte-exact (klaviyo-stage verification)
+    · no VML/MSO parts in this fragment
+-->
+<tr><td align="center" bgcolor="#FFFFFF" class="px" style="padding:20px 40px 40px 40px;background-color:#FFFFFF;text-align:center;">
+  <p style="margin:0 0 14px 0;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-style:italic;font-weight:400;font-size:12px;line-height:1.55;color:#222427;text-align:center;">These statements have not been evaluated by the Food and Drug Administration. This product is not intended to diagnose, treat, cure or prevent any disease.</p>
+  <p style="margin:0 0 14px 0;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:400;font-size:11px;line-height:1.55;color:#222427;text-align:center;">No longer want to receive these emails?<br/>{% unsubscribe %}, {% manage_preferences %}, or View our <a href="https://takestasis.com/policies/privacy-policy" target="_blank" style="color:#3D72E6;text-decoration:underline;">Privacy Policy</a>.</p>
+  <p style="margin:0;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:400;font-size:11px;line-height:1.55;color:#222427;text-align:center;">{{ organization.full_address }}<br/>&copy; {% current_year %} {{ organization.name }}. All rights reserved.</p>
+</td></tr>

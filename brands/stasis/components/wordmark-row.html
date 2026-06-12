@@ -1,0 +1,18 @@
+<!--
+component: wordmark-row
+PURPOSE: Centered black Stasis wordmark row (logo image inside a full-width td); the standard logo module between bands.
+SOURCE: designs/welcome-quiz/cc-from-spec/03-the-science-that-powers-stasis.html lines 94-96 (module 2 · wordmark). ONE deviation from verbatim, to host the BG slot: the source td had no bg attribute (white body default); bgcolor="{{BG}}"/background-color:{{BG}} were added to the td. Cream variant instance: 05-your-first-30-days-on-stasis.html lines 97-99 (adds class "wm-td" for a mobile padding override; include .wm-td rule only if you use that class).
+SLOTS:
+  {{WORDMARK_URL}} — the wordmark image source. §4 logo-is-the-logo rule: the wordmark is ALWAYS the approved image asset (wordmark-black-1200.png rendition, kit logo-usage.md; master sha 661cd181..., rendition sha 2eebc271...), NEVER typed text. Approved builds embed it as a base64 data URI; send copies swap to the production-hosted URL per send-prep.
+  {{BG}} — row background. Approved: #FFFFFF (E3, white) / #F4EFEB (E5, cream).
+  {{PADDING}} — td padding. Approved: 35px 40px 47px 40px (E3) / 37px 40px 43px 40px (E5; E5 pairs it with class "wm-td" whose mobile rule is .wm-td{padding:23px 40px 24px 40px !important;}).
+REQUIRED MEDIA CLASSES (host must include inside @media only screen and (max-width:480px){...}):
+  .wm{width:106px !important;height:24px !important;}
+DEPENDENCIES:
+  - Light-only pin (§8.6): host head carries <meta name="color-scheme" content="light only">, <meta name="supported-color-schemes" content="light only">, and :root/body{color-scheme:light only;}.
+  - No font dependency (image only). Keep width="169" height="38", alt="Stasis", display:block, margin:0 auto exactly; mobile size is the .wm 106x24 rule.
+  - No VML/MSO requirements. Host wrap table is the standard 600px .wrap with MSO ghost table.
+-->
+<tr><td align="center" bgcolor="{{BG}}" style="background-color:{{BG}};padding:{{PADDING}};">
+  <a href="https://takestasis.com/" target="_blank" style="text-decoration:none;"><img class="wm" src="{{WORDMARK_URL}}" width="169" height="38" alt="Stasis" border="0" style="display:block;width:169px;height:38px;margin:0 auto;"/></a>
+</td></tr>

@@ -1,5 +1,7 @@
 # E1 "Welcome Email 1" — module map (derived)
 
+> **NOTE 2026-06-12:** this map predates the spec's RESOLVED 2026-06-10/11 amendments. The spec (`brands/stasis/design-language.md`) WINS on styling: the wordmark is the **logo asset (never typed)** §4 — the "live text per spec §4" wordmark directive in rows 1/T1 below is superseded. This map remains authoritative for verbatim COPY and asset PROVENANCE only.
+
 > **Derived 2026-06-10 by Claude Code from original template + render (not from slice analysis).**
 > (The tasking phrase reproduced verbatim read "derived undefined by Claude Code from original template + render (not from slice analysis)" — the stray token "undefined" is a tasking artifact; treat as the derivation date slot.)
 >

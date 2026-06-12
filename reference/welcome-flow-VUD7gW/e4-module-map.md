@@ -1,5 +1,7 @@
 # E4 module map — Real People, Real Results
 
+> **NOTE 2026-06-12:** this map predates the spec's RESOLVED 2026-06-10/11 amendments. The spec (`brands/stasis/design-language.md`) WINS on styling: wordmark is the logo asset (never typed) §4; testimonial serif is Tiempos Text UPRIGHT never italic, alignment per the designed original §6.1 — E4's designed cards are **CENTERED**, same width as the hero above, abutting directly beneath (not the "Georgia italic / ALL LEFT" cited below); card fills are the sampled saturated values **#FD9A70 / #24DEAD** per §2 (not the structural summary's `#F4A87C-ish` / `#2FE0A6-ish` estimates). This map remains authoritative for verbatim COPY and slice PROVENANCE only.
+
 Source: E4 welcome-flow — current sent template (2026-06-04)  ·  subject: _Real People, Real Results_  
 Slices: **13**  ·  all anonymous CloudFront (`d3k81ch9hvuctc.cloudfront.net/company/YsCgQB/images/`), 600px display width.
 

@@ -1,0 +1,32 @@
+<!--
+  COMPONENT · coupon-code-row-yellow
+  PURPOSE · the always-both-modes yellow coupon code row that sits DIRECTLY under the yellow promo strip; strip + row together form one send-prep-spec §2 coupon zone at the top of the email.
+
+  SOURCE · designs/welcome-quiz/cc-send/02-smarter-balance-backed-by-science.html (coupon-normalized send copy, 2026-06-12), lines 120–129 (body = lines 121–129 verbatim; the source's "C-a · desktop code row" comment label is legacy wsc-send-spec naming — under reference/send-prep-spec.md §2 this row renders in BOTH modes).
+    Zone context: the yellow promo strip immediately above ("Save an extra 10% with code", same file lines 115–118). This row must never appear without that context line directly above it — §2 forbids standalone bare code lines.
+
+  SLOTS · none. The coupon Liquid {% coupon_code 'Welcome_Discount' %} and all styling are kept verbatim. Changing the discount handle is a send-prep decision, not a component fill-in. SEND-COPY-ONLY: the row carries Klaviyo Liquid; review builds omit it.
+
+  INTENTIONAL ODDITIES — do not "fix":
+    · 'Antartica' (misspelled) as the first family in the code span is INTENTIONAL fallthrough to the Lucida stack (send-prep-spec §2 item 7, locked match to the original send). Spelling it 'Antarctica' would change the rendered face.
+    · row background #EEEF7A differs from the strip's #EEEF78 by one digit — by design, matches the original send.
+    · no .wsc-desk/.wsc-mob display split: the same row shows in both modes — desktop 26px/400, mobile resized to 18px/700 via .wsc-code-y.
+
+  REQUIRED MEDIA CLASSES — copy verbatim into the host document's @media only screen and (max-width:480px){ } block (source line 104):
+    .wsc-code-y{font-size:18px !important;font-weight:700 !important;}
+
+  DEPENDENCIES
+    · light-only pin: host carries the "light only" color-scheme metas + :root, body { color-scheme: light only; }
+    · fonts: the cell uses the plain 'Helvetica Neue',Arial stack and the span the Antartica→Lucida fallthrough stack — NOT the brand @font-face kit; this is the locked original treatment for yellow-strip codes
+    · host shell: 600px .wrap table; the row is full-bleed (padding:0 on the outer td, width:100% table); the bare <div> wrapper is source-verbatim — keep it
+    · no VML/MSO parts in this fragment
+-->
+<tr><td style="padding:0;">
+  <div>
+    <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="width:100%;border-collapse:collapse;"><tbody><tr>
+      <td bgcolor="#EEEF7A" class="wsc-code-y" style="background-color:#EEEF7A;padding:9px 18px;font-family:'Helvetica Neue',Arial;font-size:26px;font-weight:400;line-height:1.3;color:#222427;text-align:center;">
+        <span style="font-family: Antartica, Lucida, 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Geneva, Verdana, sans-serif;">{% coupon_code 'Welcome_Discount' %}</span>
+      </td>
+    </tr></tbody></table>
+  </div>
+</td></tr>
