@@ -82,12 +82,14 @@ Hex below are **`[EXTRACTED]`** (live-HTML values, or pixel-samples of the named
 
 ### Families
 
-| Use | Email stack | Brand intent | Source |
+| Use | Email face (embedded) | Fallback stack | Source |
 |---|---|---|---|
-| Display / headers / labels / CTA | `'Helvetica Neue', Arial, sans-serif` | Brand face is **`Antartica`** (geometric heavy sans) | `[EXTRACTED]` e2-e5-flattened (stack); step*.html + Fonts folder (Antartica) |
-| Testimonial quotes | `Georgia, 'Times New Roman', serif` (italic) | "Body Serif" in the type system | `[EXTRACTED]` e3/e4-flattened quotes; Digital Web Style Guide ("Body 1/2 Serif") |
+| Display / headers / labels / CTA | **`Antarctica`** (brand geometric sans — weight matched per role against the baked originals) | `'Helvetica Neue', Arial, sans-serif` weight 900 | RESOLVED 2026-06-10; Drive `Antarctica WOFF2` folder (`1ZUqAg9c89xHptVWl8p_UeTN0Rv_K_QeB`) |
+| Testimonial quotes / body serif | **`Tiempos Text`** — **UPRIGHT, never italic** | `Georgia, 'Times New Roman', serif` upright | RESOLVED 2026-06-10; Drive WOFF2 (`1CMiAgacGWxrgWGL3XEMTvEpgUqO6s6MC`) |
 
-> **Antartica is not an email-safe font** and is not web-loaded in the sends — every live-text send falls back to the Helvetica Neue stack. **Binding rule for email:** set the Helvetica Neue stack and carry the brand weight with `font-weight:900`; do not `@font-face` Antartica into email. `[EXTRACTED]` (no `@font-face` in any flattened send) + `[INFERRED — confirm]` (that we never want to attempt loading it).
+> **RESOLVED 2026-06-10 (Bryce live review — supersedes §10.6 and the earlier no-@font-face rule):** the brand faces ARE available as licensed woff2 in Drive and **must be embedded via `@font-face`** (progressive enhancement: Apple Mail et al. render the brand face; Gmail falls back to the tuned Helvetica/Georgia stacks). The prior rule was based on a misspelling — the face is **Antarctica**, not "Antartica"; sourcing failed on the typo and Helvetica substitution shipped, which Bryce rejected ("text weighting is really not correct across the board"). Per-role faces/weights are pinned by **rendering candidates against the baked original text and matching** — parity with the designed send beats the abstract size table below. Production hosting (vs data-URI embed) is a separate Bryce decision before any Klaviyo send.
+>
+> **Italics: the designed sends use UPRIGHT serif for testimonials.** The italic in e3/e4-flattened was recreation drift, not brand. Never italicize quotes ("to change from normal to italics is crazy" — Bryce, 2026-06-10).
 
 ### Weights
 
@@ -120,7 +122,9 @@ Hex below are **`[EXTRACTED]`** (live-HTML values, or pixel-samples of the named
 
 ## 4. Wordmark
 
-The single most-drifted element (E4 shipped a thin, wide-tracked wordmark). Pinned from the actual rendered wordmark (`e4-01.jpeg`, viewed):
+> **RESOLVED 2026-06-10 (Bryce live review — supersedes the typed-text pattern below): the wordmark is the LOGO ASSET, never typed text.** "The logo has to be the logo." Use the approved image: catalog entry "Stasis blue wordmark" (Status Approved; Air canonical `app.air.inc/a/bFVACbwGW/98e78704-52bb-4c1b-ab2d-1fd76df15180`; Drive backup `1ZOo4f6yTl3IfDWL1_1JxyoYodAtaxitk`; staged at `_incoming/welcome-flow-VUD7gW/assets/brand/stasis-wordmark-blue.png`, sha `661cd181…`, 4336×981 transparent RGBA). White/black variants are flat-tint derivations of the same asset (geometry untouched, derivation documented); a verified white 600px copy is staged alongside (sha `d040df08…`). Size/placement per the original being recreated (measure the baked wordmark). Typed STASIS remains acceptable only inside the §5.2 formula-lockup pills (those are typographic pills, not the logo).
+
+Historical reference — the typed approximation this section used to specify (kept for the tracking rule, which still applies to any incidental typed brand text). Pinned from `e4-01.jpeg`:
 
 | Property | Value | Source |
 |---|---|---|
@@ -214,9 +218,11 @@ The closing "balance" lockup, rebuilt live (text-classified brand/formula lockup
 
 ### 6.1 Testimonial quote card (E4 pattern — alignment goes here)
 
+> **RESOLVED 2026-06-10 (Bryce live review — REVERSES the 2026-06-08 left-alignment call):** alignment follows the **designed original, per email**. The E4 designed version is **CENTERED**, with the quote block the **same width as the hero image above it, abutting directly beneath** (no extra inset). Quotes are **UPRIGHT serif (Tiempos Text), never italic**. The "centering = drift" claim below came from grading the old recreations, not the designed sends — it was wrong. Measure the original; match it.
+
 - Container: `width:100%; background-color:{CARD}; border-radius:18px; border-collapse:separate;` `[EXTRACTED]`
 - Inner padding: `26px 28px 28px 28px` `[EXTRACTED]`
-- **All contents LEFT-aligned** (heading, quote, attribution) — the E4 alignment drift was centering these. `[EXTRACTED]`
+- ~~All contents LEFT-aligned~~ **alignment per the designed original of the email being built** (E4: centered). Superseded 2026-06-10, see banner above.
 - Heading: weight 900 · 15px · 1.1 · `+0.06em` · uppercase · in a **dark tone harmonized to the card hue** (yellow→navy `#0E1A38`, peach→brown `#3A1A0E`, teal→green `#0B3D32`). `[EXTRACTED]`
 - Quote: `Georgia` *italic* · 400 · 17px · 1.5 · same harmonized dark tone. `[EXTRACTED]`
 - Attribution line: sans, smaller, same column (left). `[INFERRED — confirm]` exact size (treat as caption 14px / weight 600).
@@ -237,7 +243,9 @@ The closing "balance" lockup, rebuilt live (text-classified brand/formula lockup
 
 ### 6.2 Stat panel (E5 pattern)
 
-Big numeral: weight 900 · **58px** (mobile 54px) · line-height 0.9 · `−0.04em` · royal blue `#3D72E6`. Label beneath: weight 600 · 14px · 1.3 · navy `#0E1A38`. Centered. `[EXTRACTED]` e5-flattened `.stat-num`.
+> **RESOLVED 2026-06-10 (Bryce live review):** stat treatments follow the **designed original per email** — numeral color, layout, and **every artistic element** (brand icons, photos) included. E2's designed panel is a black 2-column icon-grid: flat brand icon above a divider rule, **WHITE numeral**, label beneath, with the capsule-in-hand photo bleeding into the right edge. Stripping icons/photos to bare numeral|label rows is a redesign, not a recreation ("we need to be like good designers, not just designers").
+
+Geometry reference (from e5-flattened): numeral weight 900 · **58px** (mobile 54px) · line-height 0.9 · `−0.04em`; label weight 600 · 14px · 1.3. Color and arrangement per the original being recreated.
 
 ### 6.3 Promo / discount band
 
@@ -276,6 +284,30 @@ The brand uses curved panel transitions (the cream arc rising into the closing l
 - For deeper scallops or multi-bump edges, render as a **full-width image row** (baked whole), not as text-dependent CSS. `[INFERRED — confirm]` — extends the text-height rule above; no live multi-scallop example exists in these sends.
 
 ---
+
+## 8.5 Artistic completeness & derived-crop sourcing (RESOLVED 2026-06-10, Bryce live review)
+
+1. **Never simplify away artistic elements** present in the designed original — icons, photos, decorative rings, organic shapes, tonal transitions. Omitting them because sourcing is hard is a build failure, not a fallback.
+2. **Derived crops are a sanctioned sourcing mode:** when no canonical master exists, crop the element from the **sha-verified original slice** and record provenance (source slice sha + crop box) in the email's source-asset table. This is exact sourcing, not approximation.
+3. **CSS recreations of distinctive organic/hand-drawn decorations are NOT acceptable substitutes** (e.g. the e2-06 hand-drawn dashed ring became a "blue dashed square" in CSS). If the original's look is specific, use the original's pixels.
+4. **Continuous tonal transitions ship as image assets, not CSS gradients,** when the original is an asset (e.g. E1's blue→white zone = `gradient_top_zone.png`, seamless into the white section; the CSS approximation produced a visible hard cut).
+
+## 8.6 Modes — mobile reflow & dark mode (RESOLVED 2026-06-10, Bryce live review: "perfect from all modes")
+
+**Mobile (375px) — blocking gate.** Every email must pass `scripts/check_reflow.py <file> --width 375 --width 600` (scrollWidth == width, no horizontal overflow). The designed original rendered at 375 is the reflow reference. Checklist:
+- No fixed-width element without a `@media (max-width:480px)` override (inner tables with `width=` attrs, fixed-px divs, padded sums > 375).
+- `white-space:nowrap` only where the content provably fits 375 at its mobile size.
+- Fixed `background-size:<px>` is forbidden — use `cover` (or `100% auto` with a safe anchor).
+- Type scales per the established mobile map (`.h-hero`, `.h-lg`, `.h-closer`, `.stat-num`, …); new components must ship their mobile rule with them.
+
+**Mobile-first principles (RESOLVED 2026-06-11, Bryce review round 2 — most opens are mobile; presentation must fit both without ripping up desktop):**
+- **Supplementary elements must not inflate when columns stack.** A side-render or accent image keeps a capped mobile size (supporting-cast scale, e.g. ≤ ~45% of frame width) — stacking must never promote it to a hero ("turning what's meant to be a supplementary element into a main one").
+- **CTA scroll-depth parity:** at 375, the first CTA lands within ~15% of the original's scroll depth. Tall stacked sections get compacted on mobile (smaller decorative grids, tightened verticals) rather than pushing CTAs down.
+- **Pinned desktop line-breaks** use the hide-on-mobile pattern: `word <br class="dbr"/>nextword` (space *before* the br) + `@media{.dbr{display:none}}` — never a bare `<br/>` that forces ragged mobile lines, never a hidden br that would merge words.
+- **Continuity effects survive breakpoints:** elements that straddle a section boundary in the design (e.g. a capsule cut by the color border) are built as split assets — bottom-of-element on the upper section's last row, top-of-element on the lower section's first row — so the effect holds at every width, no negative margins.
+- **Wordmark optical size is measured per email from the original** — the kit default proved oversized in review; size the mark to the baked original's optical box and rebalance the elements beneath it (padding + any anchored background compositions) to the original's ink positions.
+
+**Dark mode — lock light, harden colors.** Every email pins light: `<meta name="color-scheme" content="light only">`, `<meta name="supported-color-schemes" content="light only">`, and `:root,body{color-scheme:light only}` in `<style>`. Plus hardening for partially-recoloring clients: every content `td` carries `bgcolor` attr + `background-color` style; every text element carries an explicit `color`. Client reality (documented, not hidden): Apple Mail/iOS honor the pin → renders as designed; Gmail app dark ignores it and partially recolors live-text emails — an inherent HTML-vs-image difference, to be confirmed in Litmus before any live send. The review tool renders light-pinned emails unchanged in its Dark toggle (Apple-Mail-faithful); non-pinned content gets an aggressive inversion model.
 
 ## 9. Inferred items (consolidated — confirm before binding)
 

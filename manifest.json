@@ -120,7 +120,7 @@
         },
         {
           "id": "cc-from-spec",
-          "label": "New HTML rebuild \u2014 live text (for review)",
+          "label": "New HTML rebuild — live text (for review)",
           "status": "approved",
           "steps": [
             {
@@ -182,7 +182,7 @@
         },
         {
           "id": "cc-send",
-          "label": "Klaviyo variant B \u2014 send-ready (hosted assets)",
+          "label": "Klaviyo variant B — send-ready (hosted assets)",
           "status": "in-review",
           "steps": [
             {
@@ -203,7 +203,8 @@
               "approved_date": null,
               "claude_design_url": null,
               "klaviyo_url": null,
-              "sha256": "1c55789d82116dd1398af368fd97e579d83c3ef7d09a8bab9c1cd4ac2579b16e"
+              "sha256": "02b3d31f8f8d68445b62e6071b65562527d7b23315d0094d901eaeb0599832cc",
+              "provenance_note": "Coupon normalization 2026-06-12 (Bryce phone review): top yellow code row + black-band code now render in BOTH modes (mobile 18px bold / 17px); bare mid-body mobile code deleted."
             },
             {
               "step": 3,
@@ -213,7 +214,8 @@
               "approved_date": null,
               "claude_design_url": null,
               "klaviyo_url": null,
-              "sha256": "618960b73bc48189f7ba3b365af867778d229355999ee4d9f0806791b403b97b"
+              "sha256": "8d08076988efe857fb0c7b8fd685a91b52cd1f7f557f2ad29131091814282a7a",
+              "provenance_note": "Coupon normalization 2026-06-12: yellow code strip under the top black band now renders in BOTH modes (mobile 18px bold); bare mid-body mobile code deleted."
             },
             {
               "step": 4,
@@ -223,7 +225,8 @@
               "approved_date": null,
               "claude_design_url": null,
               "klaviyo_url": null,
-              "sha256": "7c0c76b494fb3aef667333d3f29dea91045e62b4802dbacb4a027d11fa007837"
+              "sha256": "c5909ae65356c01605dc19113c329c852eb7bf25aa43246b31d11d98483a0927",
+              "provenance_note": "Coupon normalization 2026-06-12: bare mobile code between CTA and promo band deleted; band keeps its compliant desk/mob code pair."
             },
             {
               "step": 5,
@@ -233,7 +236,8 @@
               "approved_date": null,
               "claude_design_url": null,
               "klaviyo_url": null,
-              "sha256": "6886800145f0dfc1f04fd7a7232a8e0294b2b470a1ebbdefc9ede6ea5c3ed008"
+              "sha256": "1803962ad4657638c24618039e628faf2601f80c0f9376db366f1eba1140adf0",
+              "provenance_note": "Coupon normalization 2026-06-12: doubled bare mobile code above the promo band deleted; band keeps its compliant desk/mob pair. Dot grid re-verified 5x6=30 vs original composite (no change needed on disk; corrupted Klaviyo copy re-injected)."
             }
           ]
         }

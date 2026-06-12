@@ -76,8 +76,7 @@
     .lockup-pill{font-size:14px !important;padding:8px 16px !important;}
     .m-gutter24{padding-left:24px !important;padding-right:24px !important;}
     .wm{width:106px !important;height:24px !important;}
-    .wsc-desk{display:none !important;}
-    div.wsc-mob{display:block !important;}
+    td.wsc-code{font-size:18px !important;font-weight:700 !important;}
   }
 </style>
 </head>
@@ -94,11 +93,11 @@
   <div style="font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:600;font-size:14px;line-height:1.3;letter-spacing:0.02em;color:#FFFFFF;text-align:center;">Plus, Get EXTRA 10% OFF + FREE shipping with code:</div>
 </td></tr>
 
-<!-- C-a · desktop code row under yellow strip (wsc-send-spec §2.2a — matches original exactly) -->
+<!-- C-a · code row under yellow strip — both modes, mobile 18px bold via .wsc-code (coupon rule 2026-06-11) -->
 <tr><td style="padding:0;">
-  <div class="wsc-desk">
+  <div>
     <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="width:100%;border-collapse:collapse;"><tbody><tr>
-      <td bgcolor="#EEEF7A" style="background-color:#EEEF7A;padding:9px 18px;font-family:'Helvetica Neue',Arial;font-size:26px;font-weight:400;line-height:1.3;color:#222427;text-align:center;">
+      <td class="wsc-code" bgcolor="#EEEF7A" style="background-color:#EEEF7A;padding:9px 18px;font-family:'Helvetica Neue',Arial;font-size:26px;font-weight:400;line-height:1.3;color:#222427;text-align:center;">
         <span style="font-family: Antartica, Lucida, 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Geneva, Verdana, sans-serif;">{% coupon_code 'Welcome_Discount' %}</span>
       </td>
     </tr></tbody></table>
@@ -131,15 +130,6 @@
 <!-- 5 · jars render (e3-05, reused) -->
 <tr><td align="center" style="padding:0 0 8px 0;">
   <img src="https://d3k81ch9hvuctc.cloudfront.net/company/YsCgQB/images/26f177cd-cb0f-44a9-88d8-9adf3c7d4d45.jpeg" width="600" alt="Stasis Daytime and Nighttime jars with two loose capsules" style="display:block;width:600px;max-width:100%;height:auto;"/>
-</td></tr>
-
-<!-- C-b · mobile-only code between intro copy and explainer (wsc-send-spec §2.2b) -->
-<tr><td style="padding:0;">
-  <!--[if !mso]><!-->
-  <div class="wsc-mob" style="display:none;mso-hide:all;padding:9px 18px;font-family:'Helvetica Neue',Arial;font-size:18px;line-height:1.3;color:#222427;text-align:center;">
-    <strong><span style="font-family: Antartica, Lucida, 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Geneva, Verdana, sans-serif;">{% coupon_code 'Welcome_Discount' %}</span></strong>
-  </div>
-  <!--<![endif]-->
 </td></tr>
 
 <!-- 6 · they-come-with + condition pills (left-aligned, one color) -->

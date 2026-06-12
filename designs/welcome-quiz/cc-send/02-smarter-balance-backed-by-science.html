@@ -101,6 +101,8 @@
     /* send-only visibility plumbing (wsc-send-spec §2.0) */
     .wsc-desk{display:none !important;}
     div.wsc-mob{display:block !important;}
+    .wsc-code-y{font-size:18px !important;font-weight:700 !important;}
+    .wsc-code-blk{font-size:17px !important;}
   }
 </style>
 </head>
@@ -117,9 +119,9 @@
 
 <!-- C-a · desktop code row under yellow strip (wsc-send-spec §2.2a — matches original exactly) -->
 <tr><td style="padding:0;">
-  <div class="wsc-desk">
+  <div>
     <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="width:100%;border-collapse:collapse;"><tbody><tr>
-      <td bgcolor="#EEEF7A" style="background-color:#EEEF7A;padding:9px 18px;font-family:'Helvetica Neue',Arial;font-size:26px;font-weight:400;line-height:1.3;color:#222427;text-align:center;">
+      <td bgcolor="#EEEF7A" class="wsc-code-y" style="background-color:#EEEF7A;padding:9px 18px;font-family:'Helvetica Neue',Arial;font-size:26px;font-weight:400;line-height:1.3;color:#222427;text-align:center;">
         <span style="font-family: Antartica, Lucida, 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Geneva, Verdana, sans-serif;">{% coupon_code 'Welcome_Discount' %}</span>
       </td>
     </tr></tbody></table>
@@ -174,15 +176,6 @@
 <!-- 3 · intro copy · module-map e2-05 -->
 <tr><td align="left" bgcolor="#FFFFFF" class="px" style="padding:34px 39px 20px 42px;background-color:#FFFFFF;text-align:left;">
   <p style="margin:0;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:21px;line-height:28px;letter-spacing:-0.01em;color:#000000;text-align:left;">Millions rely on stimulants to fuel their focus&mdash;but <br class="dbr"/>that doesn&rsquo;t mean they should settle for the crashes, <br class="dbr"/>jitters, or restless nights.</p>
-</td></tr>
-
-<!-- C-b · mobile-only code between intro copy and explainer (wsc-send-spec §2.2b) -->
-<tr><td style="padding:0;">
-  <!--[if !mso]><!-->
-  <div class="wsc-mob" style="display:none;mso-hide:all;padding:9px 18px;font-family:'Helvetica Neue',Arial;font-size:18px;line-height:1.3;color:#222427;text-align:center;">
-    <strong><span style="font-family: Antartica, Lucida, 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Geneva, Verdana, sans-serif;">{% coupon_code 'Welcome_Discount' %}</span></strong>
-  </div>
-  <!--<![endif]-->
 </td></tr>
 
 <!-- 4 · explainer · top rule + full-width H2 + two-column lead | capsule-pair render WITH hand-drawn dashed ring · module-map e2-06 (geometry measured from slice 2026-06-10) -->
@@ -250,7 +243,7 @@
   </tr></tbody></table>
   <p style="margin:20px 0 0 0;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:600;font-size:18px;line-height:1.3;letter-spacing:0.02em;color:#FFFFFF;text-transform:uppercase;text-align:center;">EXTRA 10% OFF+FREE SHIPPING WITH CODE:</p>
   <!-- C-c · desktop code inside black band (wsc-send-spec §2.2c) -->
-  <p class="wsc-desk" style="margin:9px 0 0 0;font-family:'Helvetica Neue',Arial;font-size:26px;font-weight:400;line-height:1.3;color:#FFFFFF;text-align:center;"><span style="font-family: Antartica, Lucida, 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Geneva, Verdana, sans-serif;">{% coupon_code 'Welcome_Discount' %}</span></p>
+  <p class="wsc-code-blk" style="margin:9px 0 0 0;font-family:'Helvetica Neue',Arial;font-size:26px;font-weight:400;line-height:1.3;color:#FFFFFF;text-align:center;"><span style="font-family: Antartica, Lucida, 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Geneva, Verdana, sans-serif;">{% coupon_code 'Welcome_Discount' %}</span></p>
 </td></tr>
 
 <!-- 9 · product set photo + benefit checklist · module-map e2-15/16 -->
