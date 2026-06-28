@@ -1,0 +1,41 @@
+<!--
+component: personalized-greeting  [PROPOSED — Bryce design review 2026-06-18; in-review, locks verbatim on first approved-build ship]
+PURPOSE: The Klaviyo merge-tag greeting that opens a Stasis email body — a centered "Hi {{ first_name }}," salutation line (ink, larger than body), with a body/intro paragraph directly beneath, and an OPTIONAL primary CTA pill below it. Two real shipped flavors, one fragment:
+  - SALUTATION flavor (the default, ~most instances): standalone centered "Hi {{ first_name }}," line above the body copy. Seen in OT Password / login-code (idx 121, 38, 43) and Shipping Notification (idx 28 — which also carries a TRACK YOUR PACKAGE CTA directly under the body).
+  - INLINE flavor: the merge tag is the FIRST word of the intro paragraph, no standalone salutation line, e.g. "[First_Name], for the first time ever, we're offering you…" (idx 214, 78 — BFCM launch). Achieve this by emptying {{GREETING_LINE}} and opening {{BODY_HTML}} with the merge tag.
+Appears in ~8 of 294 emails (transactional OT/order/shipping + a few promo intros).
+SOURCE: PROPOSED 2026-06-17 — built to brands/stasis/tokens.json + real Figma frames (figma-frames email idx 28 "Shipping Notification", 121 "OT Password", 214 "11.11 BFCM Launch"; cross-checked 38/43 "OT Password" variants). Surfaced by the asset-accounting component mining (enum-parts sections labelled "personalized greeting" / "personalized greeting body" / "[First_Name] merge-tag intro"). NOT yet extracted from a Bryce-approved live-text build — values are token-driven, not verbatim-from-approved; this fragment LOCKS to verbatim once it ships in one approved build.
+SLOTS:
+  {{GREETING_LINE}} — the salutation line, e.g. Hi {{ first_name }}, — keep the trailing comma; the merge tag is Klaviyo Liquid ({{ first_name }} or {{ person.first_name }} or {{ first_name|default:'there' }}), NOT a {{SLOT}} marker — stage it byte-exact. For the INLINE flavor, leave this EMPTY (the wrapping <p> auto-collapses to zero height — see DEPENDENCIES) and put the tag at the head of {{BODY_HTML}}.
+  {{BODY_HTML}} — inner HTML of the intro paragraph below the greeting (one or more sentences). Real instances: "Your order has shipped!" (idx 28) · "Your login code is:" (idx 121, set as a stronger lead — bump weight inline if used as a sub-headline) · "for the first time ever, we're offering you the ability to upgrade your subscription and save big on your routine:" (idx 214, INLINE — prefix with the merge tag). Emphasis spans use inline <strong style="font-weight:700;">.
+  {{CTA_TEXT}} — OPTIONAL primary CTA label, uppercase. Approved geometry is the standard cta-pill (idx 28 TRACK YOUR PACKAGE). Appears TWICE (VML <center> + <a>). If no CTA, delete the whole [CTA BLOCK — OPTIONAL] section (both conditional halves AND the wrapping spacer <tr>).
+  {{CTA_HREF}} — OPTIONAL CTA destination; appears TWICE (VML href + <a> href) — fill both with the same URL.
+REQUIRED MEDIA CLASSES (host must include, verbatim, inside @media only screen and (max-width:480px){ … }):
+  .px{padding-left:24px !important;padding-right:24px !important;}
+  .greet{font-size:24px !important;}
+  .cta-link{white-space:normal !important;}
+DEPENDENCIES:
+  - Paste level: ROW — this is a <tr> that is a direct child of the host 600px .wrap table (it is white-bg standalone, like an intro module). If you instead need it inside an existing white td, lift the inner content and drop the outer <tr><td>.
+  - Light-only pin (§8.6) in host head: both metas (color-scheme + supported-color-schemes "light only") and the :root, body { color-scheme: light only; } rule. Antarctica @font-face kit shipped by host.
+  - Sans stack font-family:'Antarctica','Helvetica Neue',Arial,sans-serif; greeting weight 500 (display weight per §3, NOT 700/900), body weight 500. All centered (text-align:center) — every real frame centers the greeting + intro.
+  - Colors pinned from tokens.json: bg white #FFFFFF; greeting + body ink #0E1A38 (charcoal #222427 is the alternate body color if matching a darker-body frame — pick one, do not invent). CTA fill #FF541E, label #000000.
+  - The merge tag is Liquid, kept byte-exact for klaviyo-stage; for review builds the tag renders literally (as the Figma frames show "Hi Maddie,") — that is expected, do not hardcode a name.
+  - INLINE flavor: an empty {{GREETING_LINE}} leaves <p class="greet"> with no text; its margin-bottom is 0 via the &nbsp;-free collapse — to be safe when going inline, also remove the greeting <p> entirely rather than emptying it, so no stray top gap renders.
+  - CTA is the cta-pill standard geometry (anchor padding 18px 40px; VML height 56px width 272px — this file's wide label TRACK YOUR PACKAGE bumps the box past the 264px ~10-char default; re-measure the VML width if {{CTA_TEXT}} changes materially or Outlook will clip/float the label. Keep both halves of every mso/!mso conditional pair.
+  - No dark-mode-only colors; no live behavior in this component (purely static text + optional link).
+-->
+<tr><td class="px" bgcolor="#FFFFFF" align="center" style="background-color:#FFFFFF;padding:36px 50px 8px 50px;text-align:center;">
+  <p class="greet" style="margin:0 0 14px 0;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:28px;line-height:1.15;letter-spacing:-0.02em;color:#0E1A38;text-align:center;">{{GREETING_LINE}}</p>
+  <p style="margin:0;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:15px;line-height:1.55;letter-spacing:-0.01em;color:#0E1A38;text-align:center;">{{BODY_HTML}}</p>
+</td></tr>
+<!-- ===== CTA BLOCK — OPTIONAL (delete this whole comment-bounded section, incl. the <tr>, if no CTA) ===== -->
+<tr><td class="px" bgcolor="#FFFFFF" align="center" style="background-color:#FFFFFF;padding:24px 50px 36px 50px;text-align:center;">
+  <!--[if mso]>
+  <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="{{CTA_HREF}}" style="height:56px;v-text-anchor:middle;width:272px;" arcsize="50%" stroke="false" fillcolor="#FF541E"><w:anchorlock/>
+  <center style="color:#000000;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-size:20px;font-weight:700;letter-spacing:3px;text-transform:uppercase;">{{CTA_TEXT}}</center></v:roundrect>
+  <![endif]-->
+  <!--[if !mso]><!-->
+  <table align="center" role="presentation" border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse;margin:0 auto;"><tbody><tr><td align="center" bgcolor="#FF541E" style="background-color:#FF541E;border-radius:999px;"><a class="cta-link" href="{{CTA_HREF}}" target="_blank" style="display:inline-block;padding:18px 40px;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:700;font-size:20px;line-height:1;letter-spacing:0.18em;text-transform:uppercase;color:#000000;text-decoration:none;border-radius:999px;white-space:nowrap;">{{CTA_TEXT}}</a></td></tr></tbody></table>
+  <!--<![endif]-->
+</td></tr>
+<!-- ===== /CTA BLOCK — OPTIONAL ===== -->

@@ -1,0 +1,30 @@
+<!--
+component: tinted-explainer-panel  [PROPOSED — Bryce design review 2026-06-18; in-review, locks verbatim on first approved-build ship]
+PURPOSE: Soft-tinted full-width rounded card (light-blue / mint / cream / pale-yellow) that breaks out one explanatory point — a centered white rounded eyebrow pill, a centered display headline (sans, weight 500), and a short centered explainer paragraph. The tint is a slot; everything else is brand-fixed type. No CTA (the with-CTA dark variant in the catalog is a different module).
+SOURCE: PROPOSED 2026-06-17, built to brands/stasis/tokens.json + the Figma mining reference; NOT yet from an approved build. Surfaced by the email-system component mining (shipped 18× across 17 pages as the "soft-tint full-width rounded panel holding a sub-headline + body, used to break out an explanatory point" — periwinkle-blue, chartreuse/yellow, mint-green and cream tints; [26] Campaigns module note). Fidelity reference: salvage slice the Stasis email-system reference (light-blue tint, white eyebrow pill "CORTISOL 101", centered black headline + body). Locks verbatim after it ships in one Bryce-approved build.
+SLOTS:
+  {{PANEL_BG}} — the soft tint fill. CHOICE slot; appears TWICE (bgcolor attribute + inline background-color) — fill both identically with the SAME value. Use a soft tint, not a brand accent: light-blue, mint, cream #F4EFEB (creme token), or pale-yellow. Reference instance used a light-blue wash (#B9CFDD-class). Do NOT drop in lime #EEEF78 or spice #FF541E — those are accents, not panel washes.
+  {{EYEBROW}} — eyebrow copy inside the white pill, e.g. CORTISOL 101. Rendered uppercase by CSS; pass natural case. Baked black ink #0E1A38, 13px/700/0.2em tracked (eyebrow token).
+  {{HEADLINE_HTML}} — inner HTML of the centered display headline (sans, weight 500, ink #0E1A38). Approved-instance style: The Stress Hormone Impacting Your Energy, Mood, and Brain Health. Emphasis spans use inline <strong style="font-weight:700;">.
+  {{BODY_HTML}} — inner HTML of the centered explainer paragraph (sans, weight 500, charcoal #222427). One short paragraph.
+REQUIRED MEDIA CLASSES (host must include inside @media only screen and (max-width:480px){...}):
+  .px{padding-left:24px !important;padding-right:24px !important;}
+  .te-h{font-size:26px !important;}
+DEPENDENCIES:
+  - Light-only pin (§8.6) in host head; Antarctica @font-face kit (weights 400/500/700 used here).
+  - Sans stack only: font-family:'Antarctica','Helvetica Neue',Arial,sans-serif; eyebrow 700, headline weight 500 (NOT 900 — font-map.md) with optional inline 700 emphasis, body 500. No serif in this module.
+  - border-collapse:separate on the panel table is required for border-radius to render (same as testimonial-card-centered / pricing-cards).
+  - Tint {{PANEL_BG}} is a soft wash; eyebrow pill is baked white #FFFFFF, headline ink #0E1A38, body charcoal #222427. All baked colors are light-only safe — no dark-mode-dependent colors.
+  - No CTA in this module, so no VML/MSO parts. If a panel needs a CTA, paste cta-pill.html (with its VML) inside, after the body paragraph.
+-->
+<tr><td class="px" align="center" bgcolor="{{PANEL_BG}}" style="background-color:{{PANEL_BG}};padding:0 40px;">
+  <table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0" bgcolor="{{PANEL_BG}}" style="width:100%;background-color:{{PANEL_BG}};border-radius:18px;border-collapse:separate;"><tbody>
+    <tr><td align="center" style="padding:44px 40px 40px 40px;">
+      <table role="presentation" border="0" cellpadding="0" cellspacing="0" style="border-collapse:separate;margin:0 auto 26px auto;"><tbody>
+        <tr><td bgcolor="#FFFFFF" align="center" style="background-color:#FFFFFF;border-radius:999px;padding:14px 28px;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:700;font-size:13px;line-height:1;letter-spacing:0.2em;color:#0E1A38;text-transform:uppercase;text-align:center;mso-line-height-rule:exactly;">{{EYEBROW}}</td></tr>
+      </tbody></table>
+      <p class="te-h" style="margin:0 0 18px 0;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:30px;line-height:1.08;letter-spacing:-0.03em;color:#0E1A38;text-align:center;">{{HEADLINE_HTML}}</p>
+      <p style="margin:0;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:15px;line-height:1.55;letter-spacing:-0.01em;color:#222427;text-align:center;">{{BODY_HTML}}</p>
+    </td></tr>
+  </tbody></table>
+</td></tr>

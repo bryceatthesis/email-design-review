@@ -1,0 +1,41 @@
+<!--
+component: benefit-card-grid  [PROPOSED — Bryce design review 2026-06-18; in-review, locks verbatim on first approved-build ship]
+PURPOSE: 2-up grid of benefit cards (2 cards per row; stacks to 1-up on mobile). Each card: a small image/icon, a bold label, and a short caption. Repeatable: ship one row for a 2x1, two rows for a 2x2, three for a 2x3. This is the "Free Tools / Your Free Gifts / No More Trade-Offs" benefit-card-grid module.
+SOURCE: PROPOSED 2026-06-17 — built to tokens.json + the Figma mining reference (figma-component-catalog.json benefit-card-grid: frequency 9 across 8 pages; sample_description "2-up grid of cards (2x2 or 2x3), each with an image/icon, bold label, and short caption."; the 0124 GWP "Free Tools To Help You Thrive" 2x2/2x3 instance is the closest match). Reference renders in the asset-accounting masters set. NOT yet extracted from a Bryce-approved build — locks verbatim after it ships in one.
+SLOTS (one card = one cell; this fragment is ONE row = cards A + B; A = left, B = right):
+  {{CARD_BG}} — card fill (a color CHOICE per the variant set: tinted creme #F4EFEB / lime #EEEF78 / panel #F7F7F7 / white #FFFFFF). Both cells in a row normally share it. Appears once per card.
+  {{CARDA_IMAGE}} / {{CARDB_IMAGE}} — small benefit image/icon (production-hosted; sourced via email-image-source — gaps stop the build).
+  {{CARDA_ALT}} / {{CARDB_ALT}} — image alt text.
+  {{CARDA_LABEL}} / {{CARDB_LABEL}} — bold benefit label (e.g. Travel Pill Case).
+  {{CARDA_CAPTION}} / {{CARDB_CAPTION}} — short supporting caption, one or two lines.
+  (The card geometry — 14px radius, 64px icon, paddings, 50/50 split — is baked, not slotted. For a 2x2/2x3, duplicate this whole <tr> and refill the slots.)
+REQUIRED MEDIA CLASSES (host must include inside @media only screen and (max-width:480px){...}):
+  .px{padding-left:24px !important;padding-right:24px !important;}
+  .col-stack{display:block !important;width:100% !important;}
+  .col-gap-l{padding:0 0 16px 0 !important;}
+  .col-gap-r{padding:0 !important;}
+DEPENDENCIES:
+  - Light-only pin (§8.6) in host head; Antarctica @font-face kit.
+  - Images sourced via email-image-source (canonical masters only); for review they may point at served-local images.
+  - Sans stack: font-family:'Antarctica','Helvetica Neue',Arial,sans-serif; label weight 600, caption weight 500. NOT 900.
+  - Colors: ink #0E1A38 label, charcoal #222427 caption — baked. Card fill is the {{CARD_BG}} choice; card tables use border-collapse:separate (required for border-radius).
+  - No VML/MSO (no CTA in this module — if a card needs a pill, compose cta-pill.html inside the caption cell, which carries its own VML pair).
+-->
+<tr><td class="px" style="padding:8px 40px;">
+  <table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0" style="width:100%;border-collapse:collapse;"><tbody><tr>
+    <td class="col-stack col-gap-l" valign="top" width="50%" style="width:50%;padding:0 8px 0 0;vertical-align:top;">
+      <table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0" style="width:100%;background-color:{{CARD_BG}};border-radius:14px;border-collapse:separate;"><tbody><tr><td style="padding:26px 24px;">
+        <img src="{{CARDA_IMAGE}}" alt="{{CARDA_ALT}}" width="64" style="width:64px;max-width:64px;height:auto;display:block;border:0;margin:0 0 16px 0;"/>
+        <p style="margin:0 0 6px 0;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:600;font-size:18px;line-height:1.2;letter-spacing:-0.02em;color:#0E1A38;text-align:left;">{{CARDA_LABEL}}</p>
+        <p style="margin:0;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:15px;line-height:1.5;letter-spacing:-0.01em;color:#222427;text-align:left;">{{CARDA_CAPTION}}</p>
+      </td></tr></tbody></table>
+    </td>
+    <td class="col-stack col-gap-r" valign="top" width="50%" style="width:50%;padding:0 0 0 8px;vertical-align:top;">
+      <table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0" style="width:100%;background-color:{{CARD_BG}};border-radius:14px;border-collapse:separate;"><tbody><tr><td style="padding:26px 24px;">
+        <img src="{{CARDB_IMAGE}}" alt="{{CARDB_ALT}}" width="64" style="width:64px;max-width:64px;height:auto;display:block;border:0;margin:0 0 16px 0;"/>
+        <p style="margin:0 0 6px 0;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:600;font-size:18px;line-height:1.2;letter-spacing:-0.02em;color:#0E1A38;text-align:left;">{{CARDB_LABEL}}</p>
+        <p style="margin:0;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:15px;line-height:1.5;letter-spacing:-0.01em;color:#222427;text-align:left;">{{CARDB_CAPTION}}</p>
+      </td></tr></tbody></table>
+    </td>
+  </tr></tbody></table>
+</td></tr>

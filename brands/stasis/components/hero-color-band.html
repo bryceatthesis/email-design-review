@@ -1,0 +1,43 @@
+<!--
+component: hero-color-band  [PROPOSED — Bryce design review 2026-06-18; in-review, locks verbatim on first approved-build ship]
+PURPOSE: Full-width solid brand-color hero band (no photo) holding a centered eyebrow + headline + subhead + primary pill CTA, reversed onto a saturated band. The band color is a choice slot (navy / royal / lime / creme); reversed-white type pairs with the dark bands, ink type with the light bands. This is the "headline on a solid color block" hero surfaced 11× across the Figma mining (welcome/quiz/campaign/transactional masthead bands).
+SOURCE: PROPOSED 2026-06-17 — built to tokens.json + the Figma mining reference (figma-component-catalog.json "hero-color-band", sample_description "Hero where the headline and supporting copy sit on a solid brand color block rather than a photo."; module description across 24/25/26-campaigns, welcome-flow-updates, 0124-gwp-campaigns: "Full-width solid color block under the logo holding the eyebrow + headline + primary CTA, no photo"; variant_notes confirm royal-blue / navy / lime-chartreuse / cream bands with reversed-white headline + orange-or-chartreuse pill). NOT yet extracted from a Bryce-approved build — locks verbatim (paddings/sizes frozen) only after it ships in one. Type sizes use tokens.json type.eyebrow / type.h1 / type.lead; CTA uses the cta-pill geometry; colors are tokens.json color.* only.
+SLOTS:
+  {{BAND_BG}} — band background color, a CHOICE from the closed set: navy #011D59 / royal #3D72E6 / lime #EEEF78 / creme #F4EFEB. Fill BOTH the bgcolor attr and the inline background-color. Pair it with the matching text colors below (light bands take ink #0E1A38, dark bands take white #FFFFFF) — do not invent a fifth band color.
+  {{EYEBROW_COLOR}} — eyebrow color. Approved pairings: on navy/royal use lime #EEEF78 (or white #FFFFFF); on lime/creme use ink #0E1A38.
+  {{EYEBROW}} — eyebrow line, short, uppercased by CSS (e.g. WELCOME TO STASIS). Omit the eyebrow <tr> entirely if unused.
+  {{HEADLINE_COLOR}} — headline color: white #FFFFFF on navy/royal, ink #0E1A38 on lime/creme.
+  {{HEADLINE_HTML}} — inner HTML of the headline (h1 type token). Emphasis spans use inline <strong style="font-weight:700;"> like two-col-list; a designed line break uses <br class="dbr"/> (hidden on mobile, where it rewraps).
+  {{SUBHEAD_COLOR}} — subhead color: white #FFFFFF on navy/royal, charcoal #222427 or ink #0E1A38 on lime/creme.
+  {{SUBHEAD}} — one short supporting line under the headline (lead type token). Omit the subhead <tr> entirely if unused.
+  {{CTA_TEXT}} — pill label, uppercase (VML <center> + <a>, 2 occurrences). The VML box is a fixed 264px — re-measure the v:roundrect width if the label differs materially from a ~10-char label or Outlook will clip it (see cta-pill.html).
+  {{CTA_HREF}} — pill destination (VML href + <a> href, 2 occurrences). Omit the whole CTA <tr> (the [if mso] roundrect AND the [if !mso] table together) if the band has no CTA.
+REQUIRED MEDIA CLASSES (host must include inside @media only screen and (max-width:480px){...}):
+  .px{padding-left:24px !important;padding-right:24px !important;}
+  .h-hero{font-size:32px !important;}
+  .sub-hero{font-size:18px !important;}
+  .cta-link{white-space:normal !important;}
+  .m-cta{padding:15px 46px !important;}
+  .dbr{display:none !important;}
+DEPENDENCIES:
+  - Light-only pin (§8.6) in host head: both metas (color-scheme / supported-color-schemes "light only") + the :root,body{color-scheme:light only;} rule. All band/text colors are baked light-only values — no dark-mode-dependent colors.
+  - Sans stack: font-family:'Antarctica','Helvetica Neue',Arial,sans-serif; display weights 500 (NOT 900 — font-map.md); eyebrow 700, CTA 700. Host must ship the Antarctica @font-face kit. (Serif Tiempos UPRIGHT is unused here — this hero is all sans.)
+  - cta-pill: the CTA below is the standard cta-pill geometry (anchor 18px 40px / VML 56×264, fill #FF541E, label #000000) with the hero-variant .m-cta mobile class. Keep both halves of the mso/!mso conditional pair — Outlook sees only the VML, everything else only the HTML pill.
+  - No image slots: this hero is text-only on a solid block (the no-photo variant). If a band ever needs art, that is hero-art-overlay, not this component.
+-->
+<tr><td class="px" align="center" bgcolor="{{BAND_BG}}" style="background-color:{{BAND_BG}};padding:54px 40px 52px 40px;">
+  <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="width:100%;border-collapse:collapse;"><tbody>
+    <tr><td align="center" style="padding:0 0 14px 0;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:700;font-size:13px;line-height:1.2;letter-spacing:0.2em;text-transform:uppercase;color:{{EYEBROW_COLOR}};text-align:center;">{{EYEBROW}}</td></tr>
+    <tr><td align="center" style="padding:0;"><p class="h-hero" style="margin:0;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:40px;line-height:1.02;letter-spacing:-0.04em;color:{{HEADLINE_COLOR}};text-align:center;">{{HEADLINE_HTML}}</p></td></tr>
+    <tr><td align="center" style="padding:18px 0 0 0;"><p class="sub-hero" style="margin:0;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:600;font-size:20px;line-height:1.34;letter-spacing:-0.02em;color:{{SUBHEAD_COLOR}};text-align:center;">{{SUBHEAD}}</p></td></tr>
+    <tr><td align="center" style="padding:30px 0 0 0;">
+      <!--[if mso]>
+      <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="{{CTA_HREF}}" style="height:56px;v-text-anchor:middle;width:264px;" arcsize="50%" stroke="false" fillcolor="#FF541E"><w:anchorlock/>
+      <center style="color:#000000;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-size:20px;font-weight:700;letter-spacing:3px;text-transform:uppercase;">{{CTA_TEXT}}</center></v:roundrect>
+      <![endif]-->
+      <!--[if !mso]><!-->
+      <table align="center" role="presentation" border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse;margin:0 auto;"><tbody><tr><td align="center" bgcolor="#FF541E" style="background-color:#FF541E;border-radius:999px;"><a class="cta-link m-cta" href="{{CTA_HREF}}" target="_blank" style="display:inline-block;padding:18px 40px;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:700;font-size:20px;line-height:1;letter-spacing:0.18em;text-transform:uppercase;color:#000000;text-decoration:none;border-radius:999px;white-space:nowrap;">{{CTA_TEXT}}</a></td></tr></tbody></table>
+      <!--<![endif]-->
+    </td></tr>
+  </tbody></table>
+</td></tr>

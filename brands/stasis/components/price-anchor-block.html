@@ -1,0 +1,73 @@
+<!--
+component: price-anchor-block  [PROPOSED — Bryce design review 2026-06-18; in-review, locks verbatim on first approved-build ship]
+PURPOSE: Centered offer-anchor block — a two-tone "anchor pill" pairing a struck-through
+  anchor price ($204) with the live sale price ($79 in a solid royal chip), an italic
+  "when you subscribe to the …" qualifier line, and a subscribe CTA pill underneath.
+  The recurring "subscribe & save" closer that lands ~29× across the email set (the GWP /
+  Day+Night-Set offers): see 1.28, 1.24 Ending Soon GWP, 1.24/1.25/1.31, 6/8/9/10.
+SOURCE: PROPOSED 2026-06-17 — built to brands/stasis/tokens.json + the real Figma frames
+  idx 178 (1.28 "Why Stasis is an Essential Part of Your Year") and idx 163 (1.24 Ending
+  Soon_ GWP), cross-checked against idx 8 (1.24). In every frame: pale-blue rounded pill on
+  the left carrying $204 struck through in a muted slate-blue, butted against a solid royal
+  #3D72E6 pill on the right carrying $79 in white; below, ink copy "when you subscribe to
+  the Day + Night Set." (the word "subscribe" italic); then a spice #FF541E CTA pill
+  ("GET THE SUPPORT YOU DESERVE" on 178, "SUBSCRIBE & CLAIM YOUR GIFTS" on 163). Background
+  is the creme/white closing field. NOT yet extracted from a Bryce-approved build — locks
+  verbatim after it ships in one.
+SLOTS:
+  {{ANCHOR_PRICE}}  — struck-through anchor/was price, incl. currency. Frame value: $204
+  {{SALE_PRICE}}    — live sale price in the royal chip, incl. currency. Frame value: $79
+  {{OFFER_LEAD}}    — inline HTML of the qualifier line. Frame value:
+                      when you <em style="font-style:italic;">subscribe</em><br/>to the Day&nbsp;+&nbsp;Night Set.
+                      (keep "subscribe" in the <em>; the original italicizes only that word)
+  {{CTA_TEXT}}      — CTA label, uppercase. Appears TWICE (VML <center> + <a>). Frame
+                      values: GET THE SUPPORT YOU DESERVE (178) / SUBSCRIBE & CLAIM YOUR GIFTS (163)
+  {{CTA_HREF}}      — CTA destination. Appears TWICE (VML href + <a> href) — fill both the same. (VML pill width 340px for the default label — re-measure per label.)
+REQUIRED MEDIA CLASSES (host must include, verbatim, inside @media only screen and (max-width:480px){…}):
+  .px{padding-left:24px !important;padding-right:24px !important;}
+  .cta-link{white-space:normal !important;}
+  .pa-anchor{font-size:24px !important;}      (shrinks the $204 anchor numeral on phones)
+  .pa-sale{font-size:24px !important;}        (shrinks the $79 sale numeral on phones)
+DEPENDENCIES:
+  - Paste this <tr> directly into the 600px wrap table (it is a full-width row, not a panel
+    child). The host td supplies nothing extra — outer spacing/bg are baked here (creme
+    field; swap bgcolor to #FFFFFF if the host section is white, as on 178).
+  - Light-only pin (§8.6) in host head; Antarctica @font-face kit from the Stasis Shopify CDN.
+  - Colors pinned from tokens.json: anchor-pill bg #EAF0FB (pale royal tint) with $204 in a
+    muted slate #8AA4D8 + line-through; sale chip fill royal #3D72E6 with $79 in white
+    #FFFFFF; qualifier ink #0E1A38; CTA fill spice #FF541E, label black #000000; field creme #F4EFEB.
+  - The anchor pill + sale chip are rendered as a single 2-cell table so the two halves butt
+    flush (border-collapse:separate, matched radii) — Outlook-safe, no negative margins.
+  - VML/MSO: the CTA is a §5.1 bulletproof pair — keep the [if mso] roundrect AND the
+    [if !mso] table+anchor together; Outlook sees only the VML, everything else only the HTML.
+    (The price pill itself uses no VML — plain table cells with radius; acceptable since the
+    fallback square-corner pill in Outlook still reads correctly.)
+  - EMAIL-SAFE INTERPRETATION: the Figma anchor "pill" is one rounded shape split into two
+    color zones; email renders it as two adjacent rounded cells. No live/countdown/video/form
+    behavior in this module — fully static styled markup, no hosted image required.
+-->
+<tr><td class="px" align="center" bgcolor="#F4EFEB" style="background-color:#F4EFEB;padding:28px 50px 32px 50px;">
+
+  <!-- anchor pill ($204 struck) + sale chip ($79) -->
+  <table role="presentation" border="0" cellpadding="0" cellspacing="0" align="center" style="border-collapse:separate;margin:0 auto 18px auto;"><tbody><tr>
+    <td bgcolor="#EAF0FB" align="center" valign="middle" style="background-color:#EAF0FB;border-radius:999px 0 0 999px;padding:14px 22px 14px 28px;">
+      <span class="pa-anchor" style="font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:600;font-size:30px;line-height:1;letter-spacing:-0.02em;color:#8AA4D8;text-decoration:line-through;">{{ANCHOR_PRICE}}</span>
+    </td>
+    <td bgcolor="#3D72E6" align="center" valign="middle" style="background-color:#3D72E6;border-radius:0 999px 999px 0;padding:14px 28px 14px 22px;">
+      <span class="pa-sale" style="font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:700;font-size:30px;line-height:1;letter-spacing:-0.02em;color:#FFFFFF;">{{SALE_PRICE}}</span>
+    </td>
+  </tr></tbody></table>
+
+  <!-- qualifier line -->
+  <p style="margin:0 0 22px 0;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:20px;line-height:1.34;letter-spacing:-0.02em;color:#0E1A38;text-align:center;">{{OFFER_LEAD}}</p>
+
+  <!-- subscribe CTA -->
+  <!--[if mso]>
+  <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="{{CTA_HREF}}" style="height:56px;v-text-anchor:middle;width:340px;" arcsize="50%" stroke="false" fillcolor="#FF541E"><w:anchorlock/>
+  <center style="color:#000000;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-size:20px;font-weight:700;letter-spacing:3px;text-transform:uppercase;">{{CTA_TEXT}}</center></v:roundrect>
+  <![endif]-->
+  <!--[if !mso]><!-->
+  <table align="center" role="presentation" border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse;margin:0 auto;"><tbody><tr><td align="center" bgcolor="#FF541E" style="background-color:#FF541E;border-radius:999px;"><a class="cta-link" href="{{CTA_HREF}}" target="_blank" style="display:inline-block;padding:18px 40px;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:700;font-size:20px;line-height:1;letter-spacing:0.18em;text-transform:uppercase;color:#000000;text-decoration:none;border-radius:999px;white-space:nowrap;">{{CTA_TEXT}}</a></td></tr></tbody></table>
+  <!--<![endif]-->
+
+</td></tr>

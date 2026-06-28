@@ -1,0 +1,60 @@
+<!--
+component: product-duo-image  [PROPOSED — Bryce design review 2026-06-18; in-review, locks verbatim on first approved-build ship]
+PURPOSE: The Daytime + Nighttime product-duo hero/feature image — the two Stasis jars (Daytime = light/creme frosted, Nighttime = black-lid frosted) side by side, usually with a loose capsule, on a brand-color panel. Optional sale/savings starburst badge overlay, optional centered caption + primary CTA below. Image module: in production this is a photographic render, so the email-safe build is ONE hosted master image on a token background — NOT two CSS product columns (that two-card chooser is a separate comparison/pricing pattern). Shipped ~27× across the system (hero variant: Email 3, Browse Abandon; on-color panel: Black Friday; dark-floor variant: 2.19 Snap; badge variants: 9.1 Labor Day, 7.12 Social Proof).
+SOURCE: PROPOSED 2026-06-17 — built to brands/stasis/tokens.json + the Stasis email-system frames (studied idx 105 "Email 3" dual-product hero w/ red/white capsule on light, idx 240 "11.19 Black Friday [B]" duo on lime panel + GET STASIS CTA, idx 187 "2.19 Science of the Snap" duo on dark reflective floor). CTA geometry from cta-pill.html; header/markup format mirrors ingredient-spotlight-card.html, two-col-list.html, pricing-cards-2col.html. NOT yet extracted from a Bryce-approved build — locks verbatim after it ships in one.
+SLOTS:
+  {{PANEL_BG}} — background-color of the panel (appears 2×: bgcolor attr + style). Use a token hex: lime #EEEF78 (Black Friday), creme #F4EFEB / white #FFFFFF (Email 3 hero), or black #000000 (Snap dark-floor). Default lime #EEEF78.
+  {{DUO_IMAGE}} — the canonical two-jar master (production-hosted; sourced via email-image-source — gaps stop the build). Two jars side by side, loose capsule optional; bake the photographic background/shadow into the render so it sits flush on {{PANEL_BG}}.
+  {{DUO_ALT}} — image alt text. e.g. "Stasis Daytime and Nighttime jars side by side".
+  {{DUO_HREF}} — optional link wrapping the image (whole-image click-through). If unused, delete the <a...> open tag and its </a>, leaving the bare <img>.
+  {{BADGE_IMAGE}} — OPTIONAL hosted starburst/savings badge (e.g. "EXTRA 20% OFF", "SAVE $66"). Email-safe: a small transparent-PNG overlay placed in its own top-aligned cell. If unused, delete the entire BADGE ROW (the <tr> between the "BADGE ROW" and "/BADGE ROW" comment markers in the body). Prefer baking the badge into {{DUO_IMAGE}} when the original art has it composited; use this slot only when the badge must vary independently.
+  {{BADGE_ALT}} — badge alt text (the badge's promo words, so it is readable with images off).
+  {{CAPTION_HTML}} — OPTIONAL centered caption under the image (inner HTML; emphasis via inline <strong style="font-weight:600;">). e.g. Most impulse buys come with regret. This one comes with <strong style="font-weight:600;">focus, calm, and better sleep.</strong> If unused, delete the CAPTION ROW.
+  {{CAPTION_COLOR}} — caption text color: ink #0E1A38 on light/lime panels, white #FFFFFF on the black dark-floor panel. (Appears 1×.)
+  {{CTA_TEXT}} — OPTIONAL primary CTA label, uppercase (appears 2×: VML <center> + <a>). e.g. GET STASIS. If unused, delete the CTA ROW.
+  {{CTA_HREF}} — CTA destination (appears 2×: VML href + <a> href — fill both identically). e.g. https://takestasis.com/.
+REQUIRED MEDIA CLASSES (host must include, verbatim, inside @media only screen and (max-width:480px){ … }):
+  .px{padding-left:24px !important;padding-right:24px !important;}
+  .duo-img{width:100% !important;max-width:100% !important;height:auto !important;}
+  .cta-link{white-space:normal !important;}
+DEPENDENCIES:
+  - Light-only pin (§8.6) in host head; Antarctica @font-face kit from the Stasis Shopify CDN.
+  - {{DUO_IMAGE}} (and {{BADGE_IMAGE}} if used) sourced via email-image-source (canonical masters only); for review they may point at a served-local image. The two-jar render is the load-bearing visual — do not substitute CSS-drawn jars.
+  - Colors are TOKENS, never invented: panel lime #EEEF78 / creme #F4EFEB / white #FFFFFF / black #000000; caption ink #0E1A38 or white #FFFFFF; CTA fill #FF541E, CTA label #000000. Sans stack font-family:'Antarctica','Helvetica Neue',Arial,sans-serif (display weight 500; CTA 700, letter-spacing 0.18em, uppercase).
+  - VML/MSO: the optional CTA is a §5.1 bulletproof pair — Outlook gets the [if mso] v:roundrect (height 56px, width 264px, arcsize 50%, fill #FF541E); everything else gets the [if !mso] table+anchor. Keep both halves and all conditional-comment markers intact. Re-measure the VML width if {{CTA_TEXT}} is materially longer than ~10 chars or Outlook will clip the label.
+  - EMAIL-SAFE INTERPRETATION: any live behavior the original art implies (no animation/video here) collapses to this static hosted image; the starburst badge is a static hosted PNG or baked into the master, never live text. No dark-mode-only colors.
+  - This is the full 600px-wrap <tr><td> row fragment — paste directly into the 600px wrap table (not inside another panel). The panel color is the row's own bgcolor.
+-->
+<tr><td class="px" bgcolor="{{PANEL_BG}}" style="background-color:{{PANEL_BG}};padding:32px 40px 36px 40px;">
+  <table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0" style="width:100%;border-collapse:collapse;"><tbody>
+
+    <!-- Optional savings badge: prefer baking it into {{DUO_IMAGE}}. Only if it must vary independently, add a top-aligned badge row here (hosted transparent PNG). Omitted by default. -->
+
+
+    <!-- IMAGE ROW (always present) -->
+    <tr><td align="center" style="padding:0;">
+      <a href="{{DUO_HREF}}" target="_blank" style="text-decoration:none;border:0;">
+        <img class="duo-img" src="{{DUO_IMAGE}}" alt="{{DUO_ALT}}" width="520" style="width:520px;max-width:100%;height:auto;display:block;border:0;margin:0 auto;"/>
+      </a>
+    </td></tr>
+
+    <!-- CAPTION ROW (optional — delete the whole <tr> if no caption) -->
+    <tr><td align="center" style="padding:22px 12px 0 12px;">
+      <p style="margin:0;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:20px;line-height:1.34;letter-spacing:-0.02em;color:{{CAPTION_COLOR}};text-align:center;">{{CAPTION_HTML}}</p>
+    </td></tr>
+    <!-- /CAPTION ROW -->
+
+    <!-- CTA ROW (optional — delete the whole <tr> if no CTA) -->
+    <tr><td align="center" style="padding:22px 0 0 0;">
+      <!--[if mso]>
+      <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="{{CTA_HREF}}" style="height:56px;v-text-anchor:middle;width:264px;" arcsize="50%" stroke="false" fillcolor="#FF541E"><w:anchorlock/>
+      <center style="color:#000000;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-size:20px;font-weight:700;letter-spacing:3px;text-transform:uppercase;">{{CTA_TEXT}}</center></v:roundrect>
+      <![endif]-->
+      <!--[if !mso]><!-->
+      <table align="center" role="presentation" border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse;margin:0 auto;"><tbody><tr><td align="center" bgcolor="#FF541E" style="background-color:#FF541E;border-radius:999px;"><a class="cta-link" href="{{CTA_HREF}}" target="_blank" style="display:inline-block;padding:18px 40px;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:700;font-size:20px;line-height:1;letter-spacing:0.18em;text-transform:uppercase;color:#000000;text-decoration:none;border-radius:999px;white-space:nowrap;">{{CTA_TEXT}}</a></td></tr></tbody></table>
+      <!--<![endif]-->
+    </td></tr>
+    <!-- /CTA ROW -->
+
+  </tbody></table>
+</td></tr>

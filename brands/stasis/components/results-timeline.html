@@ -1,0 +1,123 @@
+<!--
+component: results-timeline  [PROPOSED — Bryce design review 2026-06-18; in-review, locks verbatim on first approved-build ship]
+PURPOSE: The "what to expect over time" benefits timeline — stacked HOURS / DAYS / WEEKS / MONTHS rows, each a small CIRCULAR portrait photo on the left, a dashed vertical connector line with a marker dot, a bold display label, and a body line of what to expect. Optional per-row "KEY INGREDIENTS:" pill tags. Repeatable: stack N rows for a benefit-over-time arc. This is the recurring "Commit to Consistency / Your Benefits Timeline / How Stasis supports you from" module (shipped ~10× across the catalog).
+SOURCE: PROPOSED 2026-06-17 — built to brands/stasis/tokens.json + the real Figma frames: idx 2 "PPF" (Stasis (Client Duplicate) (1)/PPF.png, "results timeline — Hours/Days/Weeks/Months rows, circular portrait photos"), idx 105 "Email 3" (Stasis (Client Duplicate) (10)/Email 3.png, "benefit timeline with photos — HOURS/DAYS/WEEKS/MONTHS circular FPO photos, dashed line"), and idx 128 "EMAIL 2_ What to Expect" (Stasis (Client Duplicate) (3)/EMAIL 2_ What to Expect.png, the "YOUR BENEFITS TIMELINE" rows with KEY INGREDIENTS pill tags). NOT yet extracted from a Bryce-approved build — locks verbatim after it ships in one.
+TYPE: paste-level FRAGMENT — a run of sibling <tr> rows (one optional header row + one <tr> per timeline step) that paste DIRECTLY into the 600px wrap table. Not wrapped in its own outer table. Drop the header row if a separate section-header component already sits above it.
+SLOTS (per step row; duplicate a STEP block to add steps, delete to remove — see DEPENDENCIES for the dashed-line top/bottom rule):
+  {{HEADER_HTML}} — inner HTML of the optional section header (h2). Approved instances: "Commit to Consistency for Cognitive Longevity" / "How Stasis supports you from" / "YOUR BENEFITS TIMELINE". Delete the header <tr> if unused.
+  {{STEPn_IMAGE}} — circular portrait photo for the step (production-hosted; sourced via email-image-source — gaps stop the build). Square master; rendered as a circle via border-radius. n = 1..N.
+  {{STEPn_ALT}} — image alt text.
+  {{STEPn_LABEL}} — the period label, uppercase (HOURS / DAYS / WEEKS / MONTHS). Baked display weight 500.
+  {{STEPn_BODY}} — what-to-expect copy, one short paragraph. Use &dagger; for the claim dagger seen in the originals.
+  {{STEPn_PILLS}} — OPTIONAL "KEY INGREDIENTS" block. If unused, delete the inner key-ingredients <table> entirely (Variant A rows have no pills). If used, it carries the "KEY INGREDIENTS:" eyebrow + one or more tint pills; duplicate a pill <td> per ingredient. Pill tint slot {{STEPn_PILL_BG}} (light brand tint, appears as bgcolor + background-color — fill both).
+KIND: mixed — repeatable step rows (slotted) over a fixed dashed-connector + circular-photo + label skeleton (fixed). Step count varies (originals run 3–4: HOURS/DAYS/WEEKS[/MONTHS]).
+REQUIRED MEDIA CLASSES (host must include inside @media only screen and (max-width:480px){...}):
+  .px{padding-left:24px !important;padding-right:24px !important;}
+  .tl-photo{width:64px !important;height:64px !important;}
+  .tl-img{width:64px !important;height:64px !important;}
+  .tl-label{font-size:24px !important;}
+  (Rows do NOT stack — the photo column stays fixed and only shrinks; .col-stack is intentionally not used here so the timeline reads as a timeline on mobile.)
+DEPENDENCIES:
+  - Light-only pin (§8.6) in host head; Antarctica @font-face kit (sans stack: 'Antarctica','Helvetica Neue',Arial,sans-serif).
+  - Image sourced via email-image-source (canonical masters only); for review it may point at a served-local image. Master should be square (1:1) so the border-radius:50% circle is not distorted.
+  - The vertical CONNECTOR is a dashed border-left on the middle column td (border-left:2px dashed #C9C9C9), plus a small filled marker dot aligned to each label. To keep the line continuous, EVERY step row carries the dashed border-left on its middle td. The line visually runs the full height because rows are flush. The marker dot is an inline 10px ink circle nudged onto the line.
+  - bg white #FFFFFF baked; ink #0E1A38 label + body; dashed line #C9C9C9 (neutral grey, NOT a brand hue — matches the originals' light dashed rule). KEY INGREDIENTS eyebrow #0E1A38; pill text #0E1A38; pill tints are LIGHT brand tints passed per row (Variant B used lime-tint / periwinkle-royal-tint / mint — e.g. #EEEF78 lime, #C3D4FF periwinkle, #BFE3D0 mint). header h2 weight 500 ink.
+  - EMAIL-SAFE INTERPRETATION: the originals are flat Figma art (static). No live behavior to emulate — the dashed connector + dots are CSS borders/inline blocks (no images, no SVG). Circular crop is border-radius:50% on a square <img> (Outlook desktop renders the square — acceptable degrade; the photo + label + body all remain legible).
+  - No VML/MSO needed (this fragment has no CTA pill; if a "GET IN TOUCH" support band follows in the original, that is a SEPARATE component — promo/cta — not part of this one).
+-->
+<!-- OPTIONAL SECTION HEADER ROW — delete this <tr> if a header component already sits above -->
+<tr><td class="px" bgcolor="#FFFFFF" style="background-color:#FFFFFF;padding:32px 50px 8px 50px;">
+  <p style="margin:0;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:30px;line-height:1.08;letter-spacing:-0.03em;color:#0E1A38;text-align:left;">{{HEADER_HTML}}</p>
+</td></tr>
+
+<!-- STEP 1 -->
+<tr><td class="px" bgcolor="#FFFFFF" style="background-color:#FFFFFF;padding:14px 50px;">
+  <table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0" style="width:100%;border-collapse:collapse;"><tbody><tr>
+    <td class="tl-photo" valign="top" width="92" style="width:92px;padding:0;vertical-align:top;">
+      <img class="tl-img" src="{{STEP1_IMAGE}}" alt="{{STEP1_ALT}}" width="84" height="84" style="width:84px;height:84px;border-radius:50%;display:block;border:0;object-fit:cover;"/>
+    </td>
+    <td valign="top" width="28" style="width:28px;padding:6px 0 0 0;vertical-align:top;border-left:2px dashed #C9C9C9;">
+      <div style="width:10px;height:10px;background-color:#0E1A38;border-radius:50%;font-size:0;line-height:0;margin:8px 0 0 -6px;">&nbsp;</div>
+    </td>
+    <td valign="top" style="vertical-align:top;padding:0 0 0 4px;">
+      <p class="tl-label" style="margin:0 0 6px 0;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:30px;line-height:1.0;letter-spacing:-0.02em;color:#0E1A38;text-transform:uppercase;">{{STEP1_LABEL}}</p>
+      <p style="margin:0;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:15px;line-height:1.5;letter-spacing:-0.01em;color:#0E1A38;">{{STEP1_BODY}}</p>
+      <!-- KEY INGREDIENTS pills (optional — delete this table for Variant A no-pill rows) -->
+      <table role="presentation" border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse;margin:14px 0 0 0;"><tbody>
+        <tr><td style="padding:0 0 8px 0;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:700;font-size:11px;line-height:1;letter-spacing:0.16em;text-transform:uppercase;color:#0E1A38;">KEY INGREDIENTS:</td></tr>
+        <tr><td>
+          <table role="presentation" border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse;display:inline-table;margin:0 8px 0 0;"><tbody><tr><td bgcolor="{{STEP1_PILL_BG}}" style="background-color:{{STEP1_PILL_BG}};border-radius:999px;padding:9px 18px;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:13px;line-height:1;letter-spacing:0.01em;color:#0E1A38;white-space:nowrap;">{{STEP1_PILL_1}}</td></tr></tbody></table><table role="presentation" border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse;display:inline-table;margin:0 8px 0 0;"><tbody><tr><td bgcolor="{{STEP1_PILL_BG}}" style="background-color:{{STEP1_PILL_BG}};border-radius:999px;padding:9px 18px;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:13px;line-height:1;letter-spacing:0.01em;color:#0E1A38;white-space:nowrap;">{{STEP1_PILL_2}}</td></tr></tbody></table>
+        </td></tr>
+      </tbody></table>
+    </td>
+  </tr></tbody></table>
+</td></tr>
+
+<!-- STEP 2 -->
+<tr><td class="px" bgcolor="#FFFFFF" style="background-color:#FFFFFF;padding:14px 50px;">
+  <table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0" style="width:100%;border-collapse:collapse;"><tbody><tr>
+    <td class="tl-photo" valign="top" width="92" style="width:92px;padding:0;vertical-align:top;">
+      <img class="tl-img" src="{{STEP2_IMAGE}}" alt="{{STEP2_ALT}}" width="84" height="84" style="width:84px;height:84px;border-radius:50%;display:block;border:0;object-fit:cover;"/>
+    </td>
+    <td valign="top" width="28" style="width:28px;padding:6px 0 0 0;vertical-align:top;border-left:2px dashed #C9C9C9;">
+      <div style="width:10px;height:10px;background-color:#0E1A38;border-radius:50%;font-size:0;line-height:0;margin:8px 0 0 -6px;">&nbsp;</div>
+    </td>
+    <td valign="top" style="vertical-align:top;padding:0 0 0 4px;">
+      <p class="tl-label" style="margin:0 0 6px 0;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:30px;line-height:1.0;letter-spacing:-0.02em;color:#0E1A38;text-transform:uppercase;">{{STEP2_LABEL}}</p>
+      <p style="margin:0;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:15px;line-height:1.5;letter-spacing:-0.01em;color:#0E1A38;">{{STEP2_BODY}}</p>
+      <!-- KEY INGREDIENTS pills (optional — delete this table for Variant A no-pill rows) -->
+      <table role="presentation" border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse;margin:14px 0 0 0;"><tbody>
+        <tr><td style="padding:0 0 8px 0;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:700;font-size:11px;line-height:1;letter-spacing:0.16em;text-transform:uppercase;color:#0E1A38;">KEY INGREDIENTS:</td></tr>
+        <tr><td>
+          <table role="presentation" border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse;display:inline-table;margin:0 8px 0 0;"><tbody><tr><td bgcolor="{{STEP2_PILL_BG}}" style="background-color:{{STEP2_PILL_BG}};border-radius:999px;padding:9px 18px;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:13px;line-height:1;letter-spacing:0.01em;color:#0E1A38;white-space:nowrap;">{{STEP2_PILL_1}}</td></tr></tbody></table><table role="presentation" border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse;display:inline-table;margin:0 8px 0 0;"><tbody><tr><td bgcolor="{{STEP2_PILL_BG}}" style="background-color:{{STEP2_PILL_BG}};border-radius:999px;padding:9px 18px;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:13px;line-height:1;letter-spacing:0.01em;color:#0E1A38;white-space:nowrap;">{{STEP2_PILL_2}}</td></tr></tbody></table>
+        </td></tr>
+      </tbody></table>
+    </td>
+  </tr></tbody></table>
+</td></tr>
+
+<!-- STEP 3 -->
+<tr><td class="px" bgcolor="#FFFFFF" style="background-color:#FFFFFF;padding:14px 50px;">
+  <table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0" style="width:100%;border-collapse:collapse;"><tbody><tr>
+    <td class="tl-photo" valign="top" width="92" style="width:92px;padding:0;vertical-align:top;">
+      <img class="tl-img" src="{{STEP3_IMAGE}}" alt="{{STEP3_ALT}}" width="84" height="84" style="width:84px;height:84px;border-radius:50%;display:block;border:0;object-fit:cover;"/>
+    </td>
+    <td valign="top" width="28" style="width:28px;padding:6px 0 0 0;vertical-align:top;border-left:2px dashed #C9C9C9;">
+      <div style="width:10px;height:10px;background-color:#0E1A38;border-radius:50%;font-size:0;line-height:0;margin:8px 0 0 -6px;">&nbsp;</div>
+    </td>
+    <td valign="top" style="vertical-align:top;padding:0 0 0 4px;">
+      <p class="tl-label" style="margin:0 0 6px 0;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:30px;line-height:1.0;letter-spacing:-0.02em;color:#0E1A38;text-transform:uppercase;">{{STEP3_LABEL}}</p>
+      <p style="margin:0;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:15px;line-height:1.5;letter-spacing:-0.01em;color:#0E1A38;">{{STEP3_BODY}}</p>
+      <!-- KEY INGREDIENTS pills (optional — delete this table for Variant A no-pill rows) -->
+      <table role="presentation" border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse;margin:14px 0 0 0;"><tbody>
+        <tr><td style="padding:0 0 8px 0;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:700;font-size:11px;line-height:1;letter-spacing:0.16em;text-transform:uppercase;color:#0E1A38;">KEY INGREDIENTS:</td></tr>
+        <tr><td>
+          <table role="presentation" border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse;display:inline-table;margin:0 8px 0 0;"><tbody><tr><td bgcolor="{{STEP3_PILL_BG}}" style="background-color:{{STEP3_PILL_BG}};border-radius:999px;padding:9px 18px;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:13px;line-height:1;letter-spacing:0.01em;color:#0E1A38;white-space:nowrap;">{{STEP3_PILL_1}}</td></tr></tbody></table><table role="presentation" border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse;display:inline-table;margin:0 8px 0 0;"><tbody><tr><td bgcolor="{{STEP3_PILL_BG}}" style="background-color:{{STEP3_PILL_BG}};border-radius:999px;padding:9px 18px;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:13px;line-height:1;letter-spacing:0.01em;color:#0E1A38;white-space:nowrap;">{{STEP3_PILL_2}}</td></tr></tbody></table>
+        </td></tr>
+      </tbody></table>
+    </td>
+  </tr></tbody></table>
+</td></tr>
+
+<!-- STEP 4 — delete this <tr> for a 3-step timeline (Variant idx 105 ran 4 steps; some run 3) -->
+<tr><td class="px" bgcolor="#FFFFFF" style="background-color:#FFFFFF;padding:14px 50px 28px 50px;">
+  <table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0" style="width:100%;border-collapse:collapse;"><tbody><tr>
+    <td class="tl-photo" valign="top" width="92" style="width:92px;padding:0;vertical-align:top;">
+      <img class="tl-img" src="{{STEP4_IMAGE}}" alt="{{STEP4_ALT}}" width="84" height="84" style="width:84px;height:84px;border-radius:50%;display:block;border:0;object-fit:cover;"/>
+    </td>
+    <td valign="top" width="28" style="width:28px;padding:6px 0 0 0;vertical-align:top;border-left:2px dashed #C9C9C9;">
+      <div style="width:10px;height:10px;background-color:#0E1A38;border-radius:50%;font-size:0;line-height:0;margin:8px 0 0 -6px;">&nbsp;</div>
+    </td>
+    <td valign="top" style="vertical-align:top;padding:0 0 0 4px;">
+      <p class="tl-label" style="margin:0 0 6px 0;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:30px;line-height:1.0;letter-spacing:-0.02em;color:#0E1A38;text-transform:uppercase;">{{STEP4_LABEL}}</p>
+      <p style="margin:0;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:15px;line-height:1.5;letter-spacing:-0.01em;color:#0E1A38;">{{STEP4_BODY}}</p>
+      <!-- KEY INGREDIENTS pills (optional — delete this table for Variant A no-pill rows) -->
+      <table role="presentation" border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse;margin:14px 0 0 0;"><tbody>
+        <tr><td style="padding:0 0 8px 0;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:700;font-size:11px;line-height:1;letter-spacing:0.16em;text-transform:uppercase;color:#0E1A38;">KEY INGREDIENTS:</td></tr>
+        <tr><td>
+          <table role="presentation" border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse;display:inline-table;margin:0 8px 0 0;"><tbody><tr><td bgcolor="{{STEP4_PILL_BG}}" style="background-color:{{STEP4_PILL_BG}};border-radius:999px;padding:9px 18px;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:13px;line-height:1;letter-spacing:0.01em;color:#0E1A38;white-space:nowrap;">{{STEP4_PILL_1}}</td></tr></tbody></table><table role="presentation" border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse;display:inline-table;margin:0 8px 0 0;"><tbody><tr><td bgcolor="{{STEP4_PILL_BG}}" style="background-color:{{STEP4_PILL_BG}};border-radius:999px;padding:9px 18px;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:13px;line-height:1;letter-spacing:0.01em;color:#0E1A38;white-space:nowrap;">{{STEP4_PILL_2}}</td></tr></tbody></table>
+        </td></tr>
+      </tbody></table>
+    </td>
+  </tr></tbody></table>
+</td></tr>

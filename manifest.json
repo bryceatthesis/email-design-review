@@ -1,0 +1,329 @@
+{
+  "schema": 1,
+  "generated_at": "2026-06-18T18:46:07Z",
+  "flows": [
+    {
+      "id": "mustard-seed",
+      "name": "Mustard Seed",
+      "variants": [
+        {
+          "id": "original",
+          "label": "Original send",
+          "status": "retired",
+          "steps": [
+            {
+              "step": 1,
+              "name": "Mustard Seed",
+              "file": "designs/mustard-seed/original/01-mustard-seed.html",
+              "approved": true,
+              "approved_date": "2026-06-02",
+              "claude_design_url": null,
+              "klaviyo_url": null,
+              "sha256": "0f49195eab61efc02b61512d5551919dcb57cea4a55ef04361f40feb8b4d481b"
+            }
+          ]
+        },
+        {
+          "id": "v9",
+          "label": "AI recreation",
+          "status": "in-review",
+          "steps": [
+            {
+              "step": 1,
+              "name": "Mustard Seed",
+              "file": "designs/mustard-seed/v9/01-mustard-seed.html",
+              "approved": false,
+              "approved_date": null,
+              "claude_design_url": null,
+              "klaviyo_url": null,
+              "sha256": "1d661ff012aa3e7b7d5f983adac6bd4b4c4695e1a86eb2579c24cb119488abc5",
+              "source_artifact_sha256": "f5b256d0f23286da3f6155505e8f4186587ac88f8ea66f32f46f2d1caa9c4b1c",
+              "derivation": "deterministic-flatten",
+              "provenance_note": "Recreation flattened to a standalone artifact: every image inlined as a data URI and verified byte-for-byte against the source canvas (see sha256 and source_artifact_sha256), with no runtime dependencies. Mobile reflow confirmed at 375px and 600px."
+            }
+          ]
+        }
+      ],
+      "type": "campaign"
+    },
+    {
+      "id": "welcome-quiz",
+      "name": "Welcome Flow",
+      "step_labels": [
+        "Welcome offer",
+        "Smarter Balance",
+        "The Science",
+        "Real People",
+        "First 30 Days"
+      ],
+      "variants": [
+        {
+          "id": "original",
+          "label": "Current live email (image slices)",
+          "status": "live",
+          "steps": [
+            {
+              "step": 1,
+              "name": "Welcome Email 1",
+              "file": "designs/welcome-quiz/original/01-welcome-email-1.html",
+              "approved": true,
+              "approved_date": "2026-06-05",
+              "claude_design_url": null,
+              "klaviyo_url": null,
+              "sha256": "6054dcdc005b2000f7dba095f369237e200e0d37db38ca0e75984beb097ee53e"
+            },
+            {
+              "step": 2,
+              "name": "Smarter Balance, Backed by Science",
+              "file": "designs/welcome-quiz/original/02-smarter-balance-backed-by-science.html",
+              "approved": true,
+              "approved_date": "2026-06-05",
+              "claude_design_url": null,
+              "klaviyo_url": null,
+              "sha256": "9cdb3c26453f846fbb01bb7ee683cc239cf813754bb0ad82075fceb927275a2c",
+              "provenance_note": "Klaviyo rendered template V8mxXx; 23 CloudFront slice images inlined as data URIs, each verified byte-for-byte against the welcome-flow module-map slice provenance."
+            },
+            {
+              "step": 3,
+              "name": "The Science That Powers Stasis",
+              "file": "designs/welcome-quiz/original/03-the-science-that-powers-stasis.html",
+              "approved": true,
+              "approved_date": "2026-06-05",
+              "claude_design_url": null,
+              "klaviyo_url": null,
+              "sha256": "db371734ca25dedb946f4420335a71f3faeb3f967f997998f24684d84b646376",
+              "provenance_note": "Klaviyo rendered template T42Tgm; 13 CloudFront slice images inlined as data URIs, each verified byte-for-byte against the welcome-flow module-map slice provenance."
+            },
+            {
+              "step": 4,
+              "name": "Real People, Real Results",
+              "file": "designs/welcome-quiz/original/04-real-people-real-results.html",
+              "approved": true,
+              "approved_date": "2026-06-05",
+              "claude_design_url": null,
+              "klaviyo_url": null,
+              "sha256": "88732f8a3896ecc3b7df4d680839d503a398dce73e75fa10117d7dff7c3549a0",
+              "provenance_note": "Klaviyo rendered template SQKnr4; 13 CloudFront slice images inlined as data URIs, each verified byte-for-byte against the welcome-flow module-map slice provenance."
+            },
+            {
+              "step": 5,
+              "name": "Your First 30 Days on Stasis",
+              "file": "designs/welcome-quiz/original/05-your-first-30-days-on-stasis.html",
+              "approved": true,
+              "approved_date": "2026-06-05",
+              "claude_design_url": null,
+              "klaviyo_url": null,
+              "sha256": "ad93342396c4f6d49dc9832ff90d91f836afb3a1345b5c8ac0884b14f50fccde",
+              "provenance_note": "Klaviyo rendered template WejCAH; 16 CloudFront slice images inlined as data URIs, each verified byte-for-byte against the welcome-flow module-map slice provenance."
+            }
+          ]
+        },
+        {
+          "id": "cc-from-spec",
+          "label": "New HTML rebuild — live text (for review)",
+          "status": "in-review",
+          "steps": [
+            {
+              "step": 1,
+              "name": "Welcome Email 1",
+              "file": "designs/welcome-quiz/cc-from-spec/01-welcome-email-1.html",
+              "approved": true,
+              "approved_date": "2026-06-11",
+              "claude_design_url": null,
+              "klaviyo_url": null,
+              "sha256": "031f705c8bc59f023f7fc5acaed07d6fd317414d557d784f4efff5e2591272ff",
+              "provenance_note": " Hosted-font swap 2026-06-11 (embedded woff2 -> Shopify Files CDN URLs): render-verified pixel-identical to the Bryce-approved 2026-06-11 build; approval retained."
+            },
+            {
+              "step": 2,
+              "name": "Smarter Balance, Backed by Science",
+              "file": "designs/welcome-quiz/cc-from-spec/02-smarter-balance-backed-by-science.html",
+              "approved": false,
+              "approved_date": null,
+              "claude_design_url": null,
+              "klaviyo_url": null,
+              "sha256": "1484482c42e86de20f5036a5121598834bef98b6390dab160502452bf9318f22"
+            },
+            {
+              "step": 3,
+              "name": "The Science That Powers Stasis",
+              "file": "designs/welcome-quiz/cc-from-spec/03-the-science-that-powers-stasis.html",
+              "approved": false,
+              "approved_date": null,
+              "claude_design_url": null,
+              "klaviyo_url": null,
+              "sha256": "13ad89190ffbf24b2b6a4c95d6d9c36b291061f0db9d5d380b35e0c50e05ed35"
+            },
+            {
+              "step": 4,
+              "name": "Real People, Real Results",
+              "file": "designs/welcome-quiz/cc-from-spec/04-real-people-real-results.html",
+              "approved": false,
+              "approved_date": null,
+              "claude_design_url": null,
+              "klaviyo_url": null,
+              "sha256": "5c1f35bb113a33029b4e97a9f687d702730ba06ef3dcad234c3deca3dd91ce10"
+            },
+            {
+              "step": 5,
+              "name": "Your First 30 Days on Stasis",
+              "file": "designs/welcome-quiz/cc-from-spec/05-your-first-30-days-on-stasis.html",
+              "approved": false,
+              "approved_date": null,
+              "claude_design_url": null,
+              "klaviyo_url": null,
+              "sha256": "96d23e44a810b0a4a9b247b8b9fda4ec2589db862a6bbb78babad83631817f1f"
+            }
+          ]
+        },
+        {
+          "id": "cc-send",
+          "label": "Klaviyo variant B — send-ready (hosted assets)",
+          "status": "in-review",
+          "steps": [
+            {
+              "step": 1,
+              "name": "Welcome Email 1",
+              "file": "designs/welcome-quiz/cc-send/01-welcome-email-1.html",
+              "approved": false,
+              "approved_date": null,
+              "claude_design_url": null,
+              "klaviyo_url": null,
+              "sha256": "24478399e42c65e883e13f063a8f68097cca1fb3d725453363fddc4225847df9"
+            },
+            {
+              "step": 2,
+              "name": "Smarter Balance, Backed by Science",
+              "file": "designs/welcome-quiz/cc-send/02-smarter-balance-backed-by-science.html",
+              "approved": false,
+              "approved_date": null,
+              "claude_design_url": null,
+              "klaviyo_url": null,
+              "sha256": "a88debd53cd8ec9f2d3741666636bb92a4779e634d29917a675f55461b9c8d33",
+              "provenance_note": "Coupon normalization 2026-06-12 (Bryce phone review): top yellow code row + black-band code now render in BOTH modes (mobile 18px bold / 17px); bare mid-body mobile code deleted."
+            },
+            {
+              "step": 3,
+              "name": "The Science That Powers Stasis",
+              "file": "designs/welcome-quiz/cc-send/03-the-science-that-powers-stasis.html",
+              "approved": false,
+              "approved_date": null,
+              "claude_design_url": null,
+              "klaviyo_url": null,
+              "sha256": "8d08076988efe857fb0c7b8fd685a91b52cd1f7f557f2ad29131091814282a7a",
+              "provenance_note": "Coupon normalization 2026-06-12: yellow code strip under the top black band now renders in BOTH modes (mobile 18px bold); bare mid-body mobile code deleted."
+            },
+            {
+              "step": 4,
+              "name": "Real People, Real Results",
+              "file": "designs/welcome-quiz/cc-send/04-real-people-real-results.html",
+              "approved": false,
+              "approved_date": null,
+              "claude_design_url": null,
+              "klaviyo_url": null,
+              "sha256": "4f3acf1c8ecf41a6350b098b0c5f95a27af0a36caef95437490f71868291cc16",
+              "provenance_note": "Coupon normalization 2026-06-12: bare mobile code between CTA and promo band deleted; band keeps its compliant desk/mob code pair."
+            },
+            {
+              "step": 5,
+              "name": "Your First 30 Days on Stasis",
+              "file": "designs/welcome-quiz/cc-send/05-your-first-30-days-on-stasis.html",
+              "approved": false,
+              "approved_date": null,
+              "claude_design_url": null,
+              "klaviyo_url": null,
+              "sha256": "1803962ad4657638c24618039e628faf2601f80c0f9376db366f1eba1140adf0",
+              "provenance_note": "Coupon normalization 2026-06-12: doubled bare mobile code above the promo band deleted; band keeps its compliant desk/mob pair. Dot grid re-verified 5x6=30 vs original composite (no change needed on disk; corrupted Klaviyo copy re-injected)."
+            }
+          ],
+          "note": "KNOWN DIVERGENCE (2026-06-18): send copies 02-05 still carry the 15px CTA (01 already ships the 20px CTA, byte-matching cc-from-spec); the verified 20px CTA fix was applied to cc-from-spec but intentionally NOT propagated here pending Bryce's call — cc-send is staged in Klaviyo as variant B of the locked WS-C A/B test, so changing the CTA alters the locked test creative and needs a Klaviyo re-push (Bryce's click). Fix local + re-stage together when decided."
+        }
+      ]
+    },
+    {
+      "id": "mens-health-week",
+      "name": "Men's Health Week — Antidote vs. redesign",
+      "step_labels": [
+        "Opener",
+        "Social proof",
+        "Father's Day"
+      ],
+      "variants": [
+        {
+          "id": "antidote",
+          "label": "Antidote (agency comp)",
+          "status": "reference",
+          "steps": [
+            {
+              "step": 1,
+              "name": "Opener — Antidote",
+              "file": "designs/mens-health-week/antidote/e1-antidote.html",
+              "approved": false,
+              "approved_date": null,
+              "claude_design_url": null,
+              "klaviyo_url": null,
+              "sha256": "e53351babd296505583b3b969156756357811995b2b0ee2ac6ab2703f5fdfce8"
+            },
+            {
+              "step": 2,
+              "name": "Social proof — Antidote",
+              "file": "designs/mens-health-week/antidote/e2-antidote.html",
+              "approved": false,
+              "approved_date": null,
+              "claude_design_url": null,
+              "klaviyo_url": null,
+              "sha256": "dab97d2886b9b714c383a0167169cf4da188d7e83128b6820b8b0eaf55413993"
+            },
+            {
+              "step": 3,
+              "name": "Father's Day — Antidote",
+              "file": "designs/mens-health-week/antidote/e3-antidote.html",
+              "approved": false,
+              "approved_date": null,
+              "claude_design_url": null,
+              "klaviyo_url": null,
+              "sha256": "c42042ae0e39c61de0828f9b49d23cf9a6e125facb0da0c87abe5f5032fbb7f8"
+            }
+          ]
+        },
+        {
+          "id": "redesign",
+          "label": "Redesign (final)",
+          "status": "in-review",
+          "steps": [
+            {
+              "step": 1,
+              "name": "Opener",
+              "file": "designs/mens-health-week/build/variants/e1-v2-rd.html",
+              "approved": false,
+              "approved_date": null,
+              "claude_design_url": null,
+              "klaviyo_url": null,
+              "sha256": "db2821b4b0b7fd5f237c3cec6931dd84c9b99a38cf121dbe201eeed1fa92129c"
+            },
+            {
+              "step": 2,
+              "name": "Social proof",
+              "file": "designs/mens-health-week/build/variants/e2-v3-rd.html",
+              "approved": false,
+              "approved_date": null,
+              "claude_design_url": null,
+              "klaviyo_url": null,
+              "sha256": "ad7f185d2b0f0fc35fe906694ee68b98ecd1b58b14d54fd1a2377563393b785a"
+            },
+            {
+              "step": 3,
+              "name": "Father's Day",
+              "file": "designs/mens-health-week/build/variants/e3-v1-rd.html",
+              "approved": false,
+              "approved_date": null,
+              "claude_design_url": null,
+              "klaviyo_url": null,
+              "sha256": "89f5fdffc23c07bd85966e5c018372e1c1ec74bffdac2c6f57c4e2130d8a9532"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

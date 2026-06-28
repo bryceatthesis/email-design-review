@@ -1,0 +1,32 @@
+<!--
+component: ingredient-spotlight-card  [PROPOSED — Bryce design review 2026-06-18; in-review, locks verbatim on first approved-build ship]
+PURPOSE: One ingredient/feature spotlight — a square product/ingredient image beside a name, a "what it does" line, and a "why we chose it / clinical" line. Repeatable: stack N for an ingredient breakdown. This is the MHW ingredient-breakdown module.
+SOURCE: PROPOSED 2026-06-17 — built to tokens.json; surfaced by the email-system component mining (shipped 15× as "How Stasis Steps In" ingredient spotlights). Reference slice in the asset-accounting salvage set. NOT yet extracted from a Bryce-approved build — locks verbatim after it ships in one.
+SLOTS:
+  {{ING_IMAGE}} — square-ish ingredient/product image (production-hosted; sourced via email-image-source — gaps stop the build).
+  {{ING_ALT}} — image alt text.
+  {{ING_NAME}} — ingredient name (e.g. Saffron (Affron&reg;)).
+  {{ING_WHAT}} — what it does, one line.
+  {{ING_WHY}} — why we chose it / clinical note (royal). Remove the <p> if unused.
+REQUIRED MEDIA CLASSES (host must include inside @media only screen and (max-width:480px){...}):
+  .px{padding-left:24px !important;padding-right:24px !important;}
+  .ing-stack{display:block !important;width:100% !important;}
+  .ing-img{width:100% !important;max-width:100% !important;height:auto !important;padding:0 0 16px 0 !important;}
+DEPENDENCIES:
+  - Light-only pin (§8.6) in host head; Antarctica @font-face kit.
+  - Image sourced via email-image-source (canonical masters only); for review it may point at a served-local image.
+  - bg white #FFFFFF baked; ink #0E1A38 name, charcoal #222427 body, royal #3D72E6 clinical line. To run several, repeat this <tr> (optionally alternate a hairline-rule between them).
+  - No VML/MSO.
+-->
+<tr><td class="px" bgcolor="#FFFFFF" style="background-color:#FFFFFF;padding:22px 50px;">
+  <table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0" style="width:100%;border-collapse:collapse;"><tbody><tr>
+    <td class="ing-stack ing-img" valign="top" width="120" style="width:120px;padding:0 22px 0 0;vertical-align:top;">
+      <img src="{{ING_IMAGE}}" alt="{{ING_ALT}}" width="120" style="width:120px;max-width:120px;height:auto;border-radius:12px;display:block;border:0;"/>
+    </td>
+    <td class="ing-stack" valign="top" style="vertical-align:top;">
+      <p style="margin:0 0 6px;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:600;font-size:20px;line-height:1.2;letter-spacing:-0.02em;color:#0E1A38;">{{ING_NAME}}</p>
+      <p style="margin:0 0 8px;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:15px;line-height:1.5;color:#222427;">{{ING_WHAT}}</p>
+      <p style="margin:0;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:400;font-size:14px;line-height:1.5;color:#3D72E6;">{{ING_WHY}}</p>
+    </td>
+  </tr></tbody></table>
+</td></tr>

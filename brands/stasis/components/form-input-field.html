@@ -1,0 +1,52 @@
+<!--
+component: form-input-field  [PROPOSED — Bryce design review 2026-06-18; in-review, locks verbatim on first approved-build ship]
+PURPOSE: The Stasis "input field" treatment as it actually renders in an EMAIL — a centered white box with a thin royal-blue (#3D72E6) hairline border and rounded corners, holding muted-gray prompt/value text (e.g. "Your email address", "Your mobile number", or a dynamic discount code), paired with the brand orange CTA pill directly beneath it. In the live product (quiz/sign-up screens) this is a real text input + CONTINUE button; in email there is no live form, so this is the EMAIL-SAFE interpretation: a static styled box that is itself a link to the hosted form/quiz, and a CTA pill that submits to that same hosted destination. Use it for quiz-recall / sign-up-to-claim modules.
+SOURCE: PROPOSED 2026-06-17 — built to brands/stasis/tokens.json + the real Figma frames, NOT yet extracted from a Bryce-approved build (locks verbatim after it ships in one).
+  Real frames studied (figma-frames/email-manifest.json):
+    · idx 5 / 150 "2.17 Quiz Leads" (sent email) — white box, thin royal hairline border, centered muted-gray "dynamic code" text, orange "CLAIM 20% OFF" pill below it (appears twice in that email: hero + repeat block). THIS is the email rendering the component mirrors.
+    · idx 134 "Step 1 - Mobile-1" (product/landing) — white rounded box, light-gray placeholder "Your email address", orange CONTINUE pill below.
+    · idx 135 "Step 1 - Mobile-2" (product/landing) — same box, placeholder "Your mobile number", consent microcopy above, orange CONTINUE pill.
+  Layout/colors/copy patterns taken from those frames; hex + CTA geometry taken from tokens.json (never invented).
+EMAIL-SAFE INTERPRETATION (documented, do not "fix" toward live behavior):
+  · No live <input>: HTML email cannot reliably/safely host form inputs across clients. The box is a styled <a> link (whole box clickable) to {{FIELD_HREF}} (the hosted form/quiz/landing page). For a non-interactive code-display use (the Quiz Leads "dynamic code" case) leave {{FIELD_HREF}} empty and the box renders as static text (see SLOTS).
+  · The CTA pill is the real action — it carries the §5.1 bulletproof VML+HTML pair and points at the same hosted destination ({{CTA_HREF}}).
+  · A live coupon code belongs in coupon-code-row-yellow.html (Klaviyo Liquid, send-copy only); THIS box is for a human-readable prompt/value or a display code, not the Liquid coupon row.
+SLOTS:
+  {{FIELD_VALUE}} — the box's text. Approved-pattern examples: Your email address · Your mobile number · dynamic code. Rendered muted gray (#7A7E87) to read as placeholder/prompt; for an entered/emphasis value swap the color inline to ink #0E1A38.
+  {{FIELD_HREF}} — destination the whole box links to (hosted form/quiz). OPTIONAL: if the box is a static code/value display (no link), delete the <a ...> open tag and its closing </a> and the text renders inert in the same box.
+  {{CTA_TEXT}} — pill label, uppercase. Approved examples: CONTINUE · CLAIM 20% OFF. (Re-measure the VML width if the label is materially longer than ~12 chars, or Outlook will clip it.)
+  {{CTA_HREF}} — pill destination (hosted form/quiz submit). Appears TWICE — the VML roundrect href AND the <a class="cta-link"> href — fill BOTH with the same URL.
+  {{CONSENT_HTML}} — OPTIONAL fine-print above the box (the mobile/SMS consent paragraph from idx 135). Delete the whole <tr> wrapping it if unused.
+REQUIRED MEDIA CLASSES (host must include, verbatim, inside @media only screen and (max-width:480px){ ... }):
+  .px{padding-left:24px !important;padding-right:24px !important;}
+  .field-box{font-size:16px !important;}            /* keeps the box text from shrinking on small screens */
+  .cta-link{white-space:normal !important;}
+  .m-cta{padding:15px 46px !important;}             /* only if you add the hero-variant class to the pill anchor */
+DEPENDENCIES:
+  - Light-only pin (§8.6) in host head; Antarctica @font-face kit (Stasis Shopify CDN).
+  - Sans stack inline: font-family:'Antarctica','Helvetica Neue',Arial,sans-serif. Box text weight 500; CTA weight 700, letter-spacing 0.18em (3px in VML), uppercase.
+  - Colors pinned from tokens.json: box bg white #FFFFFF; box border royal #3D72E6 (1px); prompt text muted gray #7A7E87 (swap to ink #0E1A38 for an entered value); CTA fill spice #FF541E, CTA label black #000000; consent fine-print charcoal #222427. No dark-mode-only colors.
+  - Box uses border-collapse:separate (required for border-radius + visible border in clients).
+  - VML/MSO: the CTA is a §5.1 bulletproof pair — keep the [if mso] roundrect (height 56px, width 264px, arcsize 50%, fill #FF541E) AND the [if !mso] table+anchor together; all four conditional-comment markers intact.
+  - Host td supplies outer page bg; this fragment sets its own white field box and centered alignment. Paste as a <tr> directly into the 600px .wrap table.
+-->
+<tr><td class="px" align="center" style="padding:8px 50px 28px 50px;text-align:center;">
+  <!-- OPTIONAL consent / fine-print (delete this whole table row if unused) -->
+  <table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0" style="width:100%;border-collapse:collapse;"><tbody><tr><td style="padding:0 0 16px 0;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:400;font-size:12px;line-height:1.55;color:#222427;text-align:center;">{{CONSENT_HTML}}</td></tr></tbody></table>
+  <!-- field box: a styled box that is a link to the hosted form (email-safe; no live input). For a static code/value display, delete the <a ...> and </a> tags below. -->
+  <table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0" style="width:100%;border-collapse:separate;"><tbody><tr>
+    <td class="field-box" align="center" bgcolor="#FFFFFF" style="background-color:#FFFFFF;border:1px solid #3D72E6;border-radius:8px;padding:18px 22px;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:18px;line-height:1.2;letter-spacing:-0.01em;color:#7A7E87;text-align:center;">
+      <a href="{{FIELD_HREF}}" target="_blank" style="display:block;text-decoration:none;color:#7A7E87;">{{FIELD_VALUE}}</a>
+    </td>
+  </tr></tbody></table>
+  <!-- CTA pill (§5.1 bulletproof pair) directly beneath the box -->
+  <table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0" style="width:100%;border-collapse:collapse;"><tbody><tr><td align="center" style="padding:14px 0 0 0;text-align:center;">
+    <!--[if mso]>
+    <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="{{CTA_HREF}}" style="height:56px;v-text-anchor:middle;width:264px;" arcsize="50%" stroke="false" fillcolor="#FF541E"><w:anchorlock/>
+    <center style="color:#000000;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-size:20px;font-weight:700;letter-spacing:3px;text-transform:uppercase;">{{CTA_TEXT}}</center></v:roundrect>
+    <![endif]-->
+    <!--[if !mso]><!-->
+    <table align="center" role="presentation" border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse;margin:0 auto;"><tbody><tr><td align="center" bgcolor="#FF541E" style="background-color:#FF541E;border-radius:999px;"><a class="cta-link" href="{{CTA_HREF}}" target="_blank" style="display:inline-block;padding:18px 40px;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:700;font-size:20px;line-height:1;letter-spacing:0.18em;text-transform:uppercase;color:#000000;text-decoration:none;border-radius:999px;white-space:nowrap;">{{CTA_TEXT}}</a></td></tr></tbody></table>
+    <!--<![endif]-->
+  </td></tr></tbody></table>
+</td></tr>

@@ -1,0 +1,46 @@
+<!--
+  COMPONENT · testimonial-card-photo
+  PURPOSE · §6.1 photo-top quote card (lifestyle photo inside the card, left-aligned multi-paragraph upright Tiempos quote, em-dash Antarctica attribution in the SAME cell) — the E2 Melinda pattern.
+
+  SOURCE · designs/welcome-quiz/cc-from-spec/02-smarter-balance-backed-by-science.html (Bryce-approved build, 2026-06-11), lines 197–210 (the module comment on line 196 is not part of the fragment).
+    Line 200 (photo provenance comment) became the {{PHOTO_PROVENANCE}} slot; line 201's embedded base64 src became {{PHOTO_SRC}}. Everything else is verbatim with copy slots.
+    NOTE · the cream Devon photo card (cc-from-spec/03 lines 160–173) is a structurally DIFFERENT pattern (separate quote + attribution rows, 17px quote, 14px/600 attribution) and lives in testimonial-card-photo-cream.html. Fidelity beats forced unification — do not borrow values across the two photo flavors.
+
+  APPROVED COLORWAY VALUE-SET (this structure has exactly one)
+    {{CARD_BG}} #EEEF78 lime · quote + attribution text #000000 (literal in fragment) · source lines 196–210
+
+  SLOTS
+    {{CARD_BG}}            card background; approved for this structure: #EEEF78 lime only.
+    {{PHOTO_PROVENANCE}}   HTML-comment provenance for the photo per §8.5 derived-crop rule: original send-slice sha256, crop box, embedded sha256. Approved instance (line 200): lifestyle photo (tired woman at laptop) cropped from slice e2-09, photo region only, baked white page margins + yellow frame removed. Source the bytes via the email-image-source skill; gaps stop the build.
+    {{PHOTO_SRC}}          the image src. The approved build embeds base64 (review); send copies host on production CDN per reference/send-prep-spec.md §3.
+    {{PHOTO_ALT}}          image alt text. Approved instance: Customer at her laptop
+    {{QUOTE_PARAGRAPHS}}   the serif quote paragraphs, replaced wholesale. Approved paragraph markup, verbatim from lines 204–206 — non-final paragraphs:
+                             <p style="margin:0 0 29px 0;font-family:'Tiempos Text',Georgia,'Times New Roman',serif;font-weight:400;font-size:21px;line-height:29px;letter-spacing:-0.01em;color:#000000;text-align:left;">…</p>
+                           final paragraph identical but margin:0. Approved instance is THREE paragraphs; opening &ldquo; on the first, closing &rdquo; on the last; curly-quote entities travel with the copy.
+    {{ATTRIBUTION}}        attribution name only; the &mdash; prefix is part of the fragment. Approved instance: Melinda
+                           Attribution in THIS pattern is Antarctica 400 at 20px (NOT 600/20 like the centered cards, NOT 600/14 like the cream photo card) — measured, do not normalize.
+
+  REQUIRED MEDIA CLASSES — copy verbatim into the host document's @media only screen and (max-width:480px){ } block (source lines 69–70):
+    .px{padding-left:24px !important;padding-right:24px !important;}
+    .kl-img-100{width:100% !important;height:auto !important;max-width:100% !important;}
+
+  DEPENDENCIES
+    · light-only pin: host carries the "light only" color-scheme metas + :root, body { color-scheme: light only; }
+    · fonts: Antarctica 400/500/600/700 + Tiempos Text 400 @font-face kit (Shopify Files CDN, per brands/stasis/design-language.md); stacks as inlined below
+    · testimonial serif is UPRIGHT, never italic (spec §3/§6.1, RESOLVED 2026-06-10)
+    · host shell: 600px .wrap table; the outer row is white (bgcolor #FFFFFF) with the E2 8px/11px vertical seam paddings — verbatim, do not retune
+    · photo: §8.5 derived crop — photo region ONLY, no baked text/margins; border-radius:14px and font-size:0/line-height:0 on the photo cell are load-bearing
+    · border-collapse:separate on the card table is required for border-radius; no VML/MSO parts in this fragment
+-->
+<tr><td align="center" bgcolor="#FFFFFF" class="px" style="padding:8px 35px 11px 35px;background-color:#FFFFFF;">
+  <table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0" style="width:100%;background-color:{{CARD_BG}};border-radius:18px;border-collapse:separate;"><tbody>
+    <tr><td align="center" style="padding:34px 22px 0 22px;font-size:0;line-height:0;">
+      <!-- source: {{PHOTO_PROVENANCE}} -->
+      <img alt="{{PHOTO_ALT}}" class="kl-img-100" width="485" src="{{PHOTO_SRC}}" style="display:block;width:485px;max-width:100%;height:auto;margin:0 auto;border-radius:14px;"/>
+    </td></tr>
+    <tr><td align="left" style="padding:32px 30px 36px 31px;">
+      {{QUOTE_PARAGRAPHS}}
+      <p style="margin:26px 0 0 0;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:400;font-size:20px;line-height:1.3;color:#000000;text-align:left;">&mdash; {{ATTRIBUTION}}</p>
+    </td></tr>
+  </tbody></table>
+</td></tr>

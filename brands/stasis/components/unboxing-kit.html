@@ -1,0 +1,38 @@
+<!--
+component: unboxing-kit  [PROPOSED — Bryce design review 2026-06-18; in-review, locks verbatim on first approved-build ship]
+PURPOSE: Welcome/gift-kit hero — one full-bleed product photo of the whole kit laid out together (open box + jars/canisters/travel tube/booklet, or a flat-lay group shot), with an OPTIONAL headline + caption stacked below it. The "YOUR BOLDEST MIND AWAITS" / open-box composition. Used as a content hero in welcome-kit, GWP, and bundle-offer campaigns.
+SOURCE: PROPOSED 2026-06-17, built to tokens.json + the Figma mining reference; NOT yet from an approved build. Surfaced by the email-system component mining as module_type "unboxing-kit" (figma-component-catalog.json components[34], frequency 3 across 0124-GWP / Black-Friday / [25]-October-Hightouch pages; sample_description: "Hero product photo of the full Welcome Kit laid out together (boxes, jars, travel tube, Mindshift book, Open phone) — the 'YOUR BOLDEST MIND AWAITS' / open-box composition"). No matching salvage slice exists in the asset-accounting salvage set (it holds stat panels, ingredient/science spotlights, and lockups only), so geometry here is built to tokens, not measured from a sha-pinned slice — it LOCKS verbatim only after it ships in one Bryce-approved build.
+SLOTS:
+  {{KIT_IMAGE}} — full-bleed kit product photo (production-hosted; sourced via email-image-source — canonical masters only, gaps stop the build). Composited group/open-box shot; full-bleed at 600px.
+  {{KIT_PROVENANCE}} — HTML-comment provenance for the photo per §8.5: original send-slice sha256 / crop box / embedded sha256 (or DAM/catalog asset id). Mandatory — sourced via email-image-source.
+  {{KIT_ALT}} — image alt text. e.g. The Stasis Welcome Kit laid out together
+  {{KIT_BG}} — background color for the image row AND the caption block. A CHOICE from the brand palette only (tokens.json): #FFFFFF white, #F4EFEB creme, #EEEF78 lime, #3D72E6 royal, #011D59 navy, #0E1A38 ink, #000000 black, #F7F7F7 panel. Pick light backgrounds with the dark text colors below; navy/ink/black/royal require switching {{HEADLINE_COLOR}}/{{CAPTION_COLOR}} to #FFFFFF.
+  {{HEADLINE}} — optional headline (display, weight 500). Plain text or inline <strong style="font-weight:700;"> emphasis. If unused, DELETE the entire headline <tr> (the <tr> whose td holds the .uk-h paragraph).
+  {{HEADLINE_COLOR}} — headline text color; a palette choice paired to {{KIT_BG}} (ink #0E1A38 on light bg; #FFFFFF on dark bg).
+  {{CAPTION}} — optional caption / supporting line below the headline (sans, weight 500). If unused, DELETE the entire caption <tr> (the <tr> whose td holds the .uk-cap paragraph).
+  {{CAPTION_COLOR}} — caption text color; a palette choice paired to {{KIT_BG}} (charcoal #222427 on light bg; #FFFFFF on dark bg).
+REQUIRED MEDIA CLASSES (host must include inside @media only screen and (max-width:480px){...}):
+  .uk-img{width:100% !important;max-width:100% !important;height:auto !important;}
+  .px{padding-left:24px !important;padding-right:24px !important;}
+  .uk-h{font-size:26px !important;}
+DEPENDENCIES:
+  - Light-only pin (§8.6) in host head: both color-scheme metas + :root, body { color-scheme: light only; }. No dark-mode-dependent colors — both text colorways are explicit palette choices baked via {{HEADLINE_COLOR}}/{{CAPTION_COLOR}}.
+  - Antarctica @font-face kit shipped by host; sans stack 'Antarctica','Helvetica Neue',Arial,sans-serif. Display headline weight 500 (NOT 900 — font-map.md); caption weight 500.
+  - Image sourced via email-image-source (canonical masters only); for review it may point at a served-local image. font-size:0/line-height:0 on the image cell is load-bearing.
+  - Image row is FULL-BLEED (no side padding) so the kit shot runs edge to edge in the 600px wrap; the caption block carries the standard .px side padding (40px desk / 24px mobile).
+  - No CTA in this module (the mined instances pair it with a separate pill/strip) — no VML/MSO parts. Drop cta-pill into a following host td if a button is needed.
+-->
+<tr><td bgcolor="{{KIT_BG}}" style="background-color:{{KIT_BG}};padding:0;font-size:0;line-height:0;">
+  <!-- source: {{KIT_PROVENANCE}} -->
+  <img alt="{{KIT_ALT}}" class="uk-img" width="600" src="{{KIT_IMAGE}}" style="display:block;width:600px;max-width:100%;height:auto;border:0;margin:0;"/>
+</td></tr>
+<tr><td class="px" align="center" bgcolor="{{KIT_BG}}" style="background-color:{{KIT_BG}};padding:28px 40px 32px 40px;">
+  <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="width:100%;border-collapse:collapse;"><tbody>
+    <tr><td align="center" style="padding:0;">
+      <p class="uk-h" style="margin:0;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:32px;line-height:1.1;letter-spacing:-0.02em;color:{{HEADLINE_COLOR}};text-align:center;">{{HEADLINE}}</p>
+    </td></tr>
+    <tr><td align="center" style="padding:14px 0 0 0;">
+      <p class="uk-cap" style="margin:0;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:15px;line-height:1.55;letter-spacing:-0.01em;color:{{CAPTION_COLOR}};text-align:center;">{{CAPTION}}</p>
+    </td></tr>
+  </tbody></table>
+</td></tr>

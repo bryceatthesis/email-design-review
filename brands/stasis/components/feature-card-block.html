@@ -1,0 +1,99 @@
+<!--
+component: feature-card-block  [PROPOSED — Bryce design review 2026-06-18; in-review, locks verbatim on first approved-build ship]
+PURPOSE: The Day/Night instruction-card pair — two feature cards side by side, a white DAYTIME card (thin ink border, orange sun icon) and a black NIGHTTIME card (solid ink fill, royal-blue moon icon). Each card is one unit: icon + bold uppercase label on a top row, a hairline divider rule, then a short body line below. An optional shared "SHOP THE DAY + NIGHT SET" CTA pill row sits beneath the pair. This is the canonical Stasis day/night dosage / feature module (DAYTIME = with-stimulant dosing, NIGHTTIME = before-bed dosing); the same anatomy also carries "feature" copy (e.g. "Helps regulate your stress response" / "Supports sleep and dopamine recovery").
+SOURCE: PROPOSED 2026-06-17 — built to tokens.json + real Figma frames the Stasis email-system frames/. Surfaced by the email-system component mining (the day/night card pattern appears in ~30 of 294 emails). Frames studied: idx 2 "PPF" (side-by-side white DAYTIME / black NIGHTTIME instruction cards, sun + moon icons, divider rule, body), idx 105 "Email 3" (same side-by-side pair), idx 156 "2.14 redesign v2" (stacked full-width variant, same icon/label/divider/body anatomy), idx 30 "Order Confirmation" (light + dark cards with numbered steps inside the body). NOT yet extracted from a Bryce-approved build — locks verbatim after it ships in one.
+SLOTS:
+  {{DAY_LABEL}}  — left card label, uppercase. Approved frame value: DAYTIME
+  {{DAY_BODY}}   — left card body line (inner HTML; supports inline <strong style="font-weight:600;">). Frame value: Take two capsules with your stimulant, before or after breakfast. (feature variant: Helps regulate your stress response to reduce emotional volatility)
+  {{NIGHT_LABEL}}— right card label, uppercase. Approved frame value: NIGHTTIME
+  {{NIGHT_BODY}} — right card body line (inner HTML). Frame value: Take two capsules 30 minutes before bed on an empty stomach. (feature variant: Supports sleep and dopamine recovery so you don't start the next day on empty)
+  {{CTA_TEXT}}   — shared CTA label, uppercase (in the optional CTA row; appears TWICE — VML <center> + <a>). Frame value: SHOP THE DAY + NIGHT SET
+  {{CTA_HREF}}   — shared CTA destination (appears TWICE — VML href + <a> href; fill both identically). Approved: https://takestasis.com/
+  NOTE: the orange sun glyph and royal moon glyph are baked inline emoji-free SVG-free Unicode-free shapes (a CSS-rounded "sun" badge and a crescent "moon" badge built from table cells); they are NOT slots. To swap them for hosted icon images, replace the icon <td> contents with an <img> sourced via email-image-source.
+  NOTE: the optional CTA row is delimited by the "CTA ROW — OPTIONAL" comment markers below. Delete that whole <tr>…</tr> block if the module ends at the card pair (idx 2 / idx 105 place the CTA after; idx 156 keeps it; idx 30 has no CTA in this module).
+REQUIRED MEDIA CLASSES (host must include, verbatim, inside @media only screen and (max-width:480px){...}):
+  .px{padding-left:24px !important;padding-right:24px !important;}
+  .col-stack{display:block !important;width:100% !important;}
+  .col-gap-l{padding:0 0 16px 0 !important;}
+  .col-gap-r{padding:0 !important;}
+  .fc-label{font-size:18px !important;}
+  .cta-link{white-space:normal !important;}
+DEPENDENCIES:
+  - Light-only pin (§8.6) in host head — the black NIGHTTIME card is #000000 by design; without the pin, dark-mode clients can invert the white DAYTIME card and break the contrast pairing.
+  - Sans stack: font-family:'Antarctica','Helvetica Neue',Arial,sans-serif; label weight 700 uppercase, body weight 500, CTA weight 700. Host must ship the Antarctica @font-face kit.
+  - Cards use border-collapse:separate (required for border-radius). DAY card bg #FFFFFF with 1.5px ink #0E1A38 border; NIGHT card bg #000000 (black token) no border. Day label/body ink #0E1A38; Night label/body #FFFFFF. Day divider 1px ink @ 0.18 alpha; Night divider 1px white @ 0.22 alpha. Sun badge fill spice #FF541E; moon badge fill royal #3D72E6. All baked from tokens.json.
+  - CTA ROW: §5.1 bulletproof pair — Outlook gets the v:roundrect inside [if mso] (height 56px, width 290px @ ~20 chars, arcsize 50%, fill #FF541E); everything else gets the table+anchor inside [if !mso]. Keep both halves + all four conditional-comment markers intact. CTA fill #FF541E, text #000000, tracking 0.18em (3px in VML). Re-measure VML width if {{CTA_TEXT}} differs materially from "SHOP THE DAY + NIGHT SET".
+  - EMAIL-SAFE INTERPRETATION: the Figma icons are vector sun/moon marks; here they are rebuilt as table-cell badge shapes (a rounded spice disc for the sun, an offset-disc crescent for the moon) so the module needs no hosted icon assets and no SVG. If the approved build prefers the exact Figma vector marks, swap each icon <td>'s inner markup for a hosted <img> (sun/moon PNGs sourced via email-image-source — gaps stop the build).
+  - This is a paste-level <tr> ROW FRAGMENT for the 600px wrap table. Paste directly into the wrap (it carries its own white bg + .px gutters); do NOT nest it inside the lime/black panel tables.
+-->
+<tr><td class="px" bgcolor="#FFFFFF" style="background-color:#FFFFFF;padding:8px 50px 20px 50px;">
+  <table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0" style="width:100%;border-collapse:collapse;"><tbody><tr>
+
+    <!-- LEFT — DAYTIME (white card) -->
+    <td class="col-stack col-gap-l" valign="top" width="50%" style="width:50%;padding:0 8px 0 0;vertical-align:top;">
+      <table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0" style="width:100%;background-color:#FFFFFF;border:1.5px solid #0E1A38;border-radius:16px;border-collapse:separate;"><tbody>
+        <tr><td style="padding:22px 22px 14px 22px;">
+          <table role="presentation" border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse;"><tbody><tr>
+            <td valign="middle" width="34" style="width:34px;padding:0 12px 0 0;vertical-align:middle;">
+              <!-- sun badge (spice disc) -->
+              <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="28" style="width:28px;border-collapse:separate;"><tbody><tr>
+                <td width="28" height="28" align="center" valign="middle" bgcolor="#FF541E" style="width:28px;height:28px;background-color:#FF541E;border-radius:999px;line-height:28px;font-size:0;">&nbsp;</td>
+              </tr></tbody></table>
+            </td>
+            <td valign="middle" style="vertical-align:middle;">
+              <p class="fc-label" style="margin:0;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:700;font-size:21px;line-height:1.1;letter-spacing:-0.01em;color:#0E1A38;text-transform:uppercase;">{{DAY_LABEL}}</p>
+            </td>
+          </tr></tbody></table>
+        </td></tr>
+        <tr><td style="padding:0 22px;font-size:0;line-height:0;"><div style="height:1px;background-color:#0E1A38;opacity:0.18;font-size:0;line-height:0;">&nbsp;</div></td></tr>
+        <tr><td style="padding:14px 22px 22px 22px;">
+          <p style="margin:0;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:16px;line-height:1.5;letter-spacing:-0.01em;color:#0E1A38;">{{DAY_BODY}}</p>
+        </td></tr>
+      </tbody></table>
+    </td>
+
+    <!-- RIGHT — NIGHTTIME (black card) -->
+    <td class="col-stack col-gap-r" valign="top" width="50%" style="width:50%;padding:0 0 0 8px;vertical-align:top;">
+      <table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0" style="width:100%;background-color:#000000;border-radius:16px;border-collapse:separate;"><tbody>
+        <tr><td style="padding:22px 22px 14px 22px;">
+          <table role="presentation" border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse;"><tbody><tr>
+            <td valign="middle" width="34" style="width:34px;padding:0 12px 0 0;vertical-align:middle;">
+              <!-- moon badge (royal crescent: royal disc with a black disc offset over it) -->
+              <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="28" style="width:28px;border-collapse:separate;"><tbody><tr>
+                <td width="28" height="28" align="right" valign="top" bgcolor="#3D72E6" style="width:28px;height:28px;background-color:#3D72E6;border-radius:999px;line-height:28px;font-size:0;">
+                  <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="20" style="width:20px;border-collapse:separate;margin-left:auto;"><tbody><tr>
+                    <td width="20" height="20" bgcolor="#000000" style="width:20px;height:20px;background-color:#000000;border-radius:999px;font-size:0;line-height:20px;">&nbsp;</td>
+                  </tr></tbody></table>
+                </td>
+              </tr></tbody></table>
+            </td>
+            <td valign="middle" style="vertical-align:middle;">
+              <p class="fc-label" style="margin:0;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:700;font-size:21px;line-height:1.1;letter-spacing:-0.01em;color:#FFFFFF;text-transform:uppercase;">{{NIGHT_LABEL}}</p>
+            </td>
+          </tr></tbody></table>
+        </td></tr>
+        <tr><td style="padding:0 22px;font-size:0;line-height:0;"><div style="height:1px;background-color:#FFFFFF;opacity:0.22;font-size:0;line-height:0;">&nbsp;</div></td></tr>
+        <tr><td style="padding:14px 22px 22px 22px;">
+          <p style="margin:0;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:16px;line-height:1.5;letter-spacing:-0.01em;color:#FFFFFF;">{{NIGHT_BODY}}</p>
+        </td></tr>
+      </tbody></table>
+    </td>
+
+  </tr></tbody></table>
+</td></tr>
+<!-- CTA ROW — OPTIONAL (delete this whole <tr>…</tr> if the module ends at the card pair) -->
+<tr><td class="px" bgcolor="#FFFFFF" align="center" style="background-color:#FFFFFF;padding:6px 50px 24px 50px;">
+  <!--[if mso]>
+<v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="{{CTA_HREF}}" style="height:56px;v-text-anchor:middle;width:290px;" arcsize="50%" stroke="false" fillcolor="#FF541E"><w:anchorlock/>
+<center style="color:#000000;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-size:20px;font-weight:700;letter-spacing:3px;text-transform:uppercase;">{{CTA_TEXT}}</center>
+</v:roundrect>
+<![endif]-->
+  <!--[if !mso]><!-->
+  <table role="presentation" border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse;"><tbody><tr>
+    <td align="center" bgcolor="#FF541E" style="background-color:#FF541E;border-radius:999px;">
+      <a class="cta-link" href="{{CTA_HREF}}" target="_blank" style="display:inline-block;padding:18px 40px;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:700;font-size:20px;line-height:1;letter-spacing:0.18em;text-transform:uppercase;color:#000000;text-decoration:none;border-radius:999px;white-space:nowrap;">{{CTA_TEXT}}</a>
+    </td>
+  </tr></tbody></table>
+  <!--<![endif]-->
+</td></tr>
+<!-- /CTA ROW — OPTIONAL -->

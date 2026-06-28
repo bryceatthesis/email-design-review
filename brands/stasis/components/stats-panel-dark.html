@@ -1,0 +1,143 @@
+<!-- ============================================================
+stats-panel-dark — Stasis component library (brands/stasis)
+
+PURPOSE: Black stats panel (spec §6.2, RESOLVED 2026-06-10) — 2-col icon grid (5 stat cells across 3 bands), each cell = flat brand-icon img + 1px white rule + 75px white numeral + 21px/500 label with designed line breaks, hand-capsule photo bleeding flush right across rows 2-3.
+
+SOURCE: designs/welcome-quiz/cc-from-spec/02-smarter-balance-backed-by-science.html
+(E2, Bryce-approved build), lines 247-328. Extracted verbatim 2026-06-12 (incl. the
+inline crop-provenance comments); only the slot values below were swapped for
+{{SLOT}} markers. Geometry per e2-grid-geometry.md: gutters 65/57/74px, cells 202px,
+icon grid at x65/x324 — do NOT retune.
+
+SLOTS (cells numbered in reading order: 1 = band-1 left, 2 = band-1 right,
+3 = band-2 left, 4 = band-3 left, 5 = band-3 right):
+  {{STATn_ICON_URL}}            — flat brand-icon crop for cell n. Approved E2 values: embedded
+                                  PNG data URIs, derived crops of slices e2-17/e2-18 (kit
+                                  crops-manifest.md); crop boxes + sha prefixes are pinned in
+                                  the inline comments kept beside each img.
+  {{STATn_ICON_W}}/{{STATn_ICON_H}} — icon display size in px (width/height attrs + inline style).
+                                  Approved E2 values: 1: 44x26 · 2: 38x38 · 3: 38x37 · 4: 30x38 · 5: 36x36
+  {{STATn_NUM}}                 — numeral. Approved E2 values: 1: 96% · 2: 95% · 3: 88% · 4: 63% · 5: 62%
+  {{STATn_LABEL}}               — label copy INCLUDING the designed <br class="dbr"/> breaks
+                                  (pinned; lines may overflow the 202px cell exactly as the baked
+                                  original does — that is the design). The trailing
+                                  <sup>&dagger;</sup> is fixed markup OUTSIDE the slot.
+                                  Approved E2 values:
+                                  1: say their stimulant <br class="dbr"/>crash has improved
+                                  2: reported a better <br class="dbr"/>stimulant experience
+                                  3: reported an <br class="dbr"/>improvement in <br class="dbr"/>stress levels
+                                  4: found it easier to <br class="dbr"/>transition from work <br class="dbr"/>to social situations
+                                  5: had less problems <br class="dbr"/>with sleep
+  {{BLEED_PHOTO_URL}}           — hand-capsule photo. Approved E2 value: embedded PNG data URI,
+                                  e2-17+e2-18 stitched crop (730,700,1200,1453) sha 813e9317… —
+                                  bleeds flush right and overflows down into band 3, as designed.
+                                  Display geometry (235x376, clip div height:244px,
+                                  margin:7px 0 0 auto) is pinned, not slotted.
+
+REQUIRED MEDIA CLASSES — host document must include, verbatim, inside
+@media only screen and (max-width:480px){ … }:
+  .stat-num{font-size:56px !important;}
+  .sgut{width:18px !important;}
+  .sgap{width:14px !important;}
+  .scell{width:auto !important;}
+  .photo-clip{height:auto !important;}
+  .hand-img{width:170px !important;height:272px !important;}
+  .slabel{width:auto !important;white-space:normal !important;}
+  .dbr{display:none !important;}
+
+DEPENDENCIES:
+  - Paste as a direct <tr> child of the host 600px wrap table.
+  - Light-only pin in host head (see hero-art-overlay header for the exact lines) —
+    panel is baked black (#000000 td + table), numerals/labels/rules are white.
+  - Font kit: Antarctica @font-face from the Stasis Shopify CDN; inline sans stack
+    font-family:'Antarctica','Helvetica Neue',Arial,sans-serif; numerals 500/75px
+    (display roles are 500, NOT 900 — font-map.md), labels 500/21px.
+  - White rules are <td height="1" bgcolor="#FFFFFF"> with mso-line-height-rule:exactly —
+    no images, Outlook-safe. No VML in this module.
+  - The &dagger; on every label requires the survey disclaimer in the host below the
+    panel (E2 pattern: lines 339-342 of the source build).
+  - The panel's closing CTA is NOT included — drop cta-pill into a black host td
+    (E2 pattern: lines 329-337 of the source build).
+============================================================ -->
+<!-- 10 · stats panel (black §6.2 RESOLVED 2026-06-10 — designed layout per e2-grid-geometry.md: 2-col icon grid at x65/x324 cells 202px, flat brand-icon crops, 1px white rules, WHITE 75px numerals, 21px/500 labels (designed line breaks pinned; lines may overflow the 202px cell exactly as the baked original does), hand-capsule photo bleeding flush right across rows 2-3; icons + photo are derived crops of slices e2-17/e2-18, kit crops-manifest.md) · module-map e2-17/18 -->
+<tr><td align="center" bgcolor="#000000" style="padding:0;background-color:#000000;">
+  <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="width:100%;border-collapse:collapse;background-color:#000000;"><tbody>
+    <tr>
+      <td class="sgut" width="65" style="width:65px;font-size:0;line-height:0;">&nbsp;</td>
+      <td class="scell" width="202" valign="top" style="width:202px;vertical-align:top;">
+        <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="width:100%;border-collapse:collapse;"><tbody>
+          <tr><td style="padding:69px 0 29px 0;font-size:0;line-height:0;">
+            <!-- e2-17 crop (129,138,218,190) sha 7a2540b3... -->
+            <img alt="" width="{{STAT1_ICON_W}}" height="{{STAT1_ICON_H}}" src="{{STAT1_ICON_URL}}" style="display:block;width:{{STAT1_ICON_W}}px;height:{{STAT1_ICON_H}}px;"/>
+          </td></tr>
+          <tr><td height="1" bgcolor="#FFFFFF" style="height:1px;background-color:#FFFFFF;font-size:0;line-height:0;mso-line-height-rule:exactly;">&nbsp;</td></tr>
+          <tr><td style="padding:27px 0 0 0;mso-line-height-rule:exactly;"><span class="stat-num" style="font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:75px;line-height:0.9;letter-spacing:-0.01em;color:#FFFFFF;">{{STAT1_NUM}}</span></td></tr>
+          <tr><td style="padding:17px 0 0 0;font-size:0;line-height:0;"><div class="slabel" style="width:202px;white-space:nowrap;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:21px;line-height:26px;letter-spacing:-0.01em;color:#FFFFFF;text-align:left;">{{STAT1_LABEL}}<sup style="font-size:13px;line-height:0;">&dagger;</sup></div></td></tr>
+        </tbody></table>
+      </td>
+      <td class="sgap" width="57" style="width:57px;font-size:0;line-height:0;">&nbsp;</td>
+      <td class="scell" width="202" valign="top" style="width:202px;vertical-align:top;">
+        <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="width:100%;border-collapse:collapse;"><tbody>
+          <tr><td style="padding:58px 0 28px 2px;font-size:0;line-height:0;">
+            <!-- e2-17 crop (651,117,728,193) sha 97741e7b... -->
+            <img alt="" width="{{STAT2_ICON_W}}" height="{{STAT2_ICON_H}}" src="{{STAT2_ICON_URL}}" style="display:block;width:{{STAT2_ICON_W}}px;height:{{STAT2_ICON_H}}px;"/>
+          </td></tr>
+          <tr><td height="1" bgcolor="#FFFFFF" style="height:1px;background-color:#FFFFFF;font-size:0;line-height:0;mso-line-height-rule:exactly;">&nbsp;</td></tr>
+          <tr><td style="padding:27px 0 0 0;mso-line-height-rule:exactly;"><span class="stat-num" style="font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:75px;line-height:0.9;letter-spacing:-0.01em;color:#FFFFFF;">{{STAT2_NUM}}</span></td></tr>
+          <tr><td style="padding:17px 0 0 0;font-size:0;line-height:0;"><div class="slabel" style="width:202px;white-space:nowrap;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:21px;line-height:26px;letter-spacing:-0.01em;color:#FFFFFF;text-align:left;">{{STAT2_LABEL}}<sup style="font-size:13px;line-height:0;">&dagger;</sup></div></td></tr>
+        </tbody></table>
+      </td>
+      <td class="sgut" width="74" style="width:74px;font-size:0;line-height:0;">&nbsp;</td>
+    </tr>
+    <tr><td colspan="5" height="54" style="height:54px;font-size:0;line-height:0;mso-line-height-rule:exactly;">&nbsp;</td></tr>
+    <tr>
+      <td class="sgut" width="65" style="width:65px;font-size:0;line-height:0;">&nbsp;</td>
+      <td class="scell" width="202" valign="top" style="width:202px;vertical-align:top;">
+        <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="width:100%;border-collapse:collapse;"><tbody>
+          <tr><td style="padding:0 0 16px 4px;font-size:0;line-height:0;">
+            <!-- e2-17 crop (137,686,213,760) sha 4148f1ae... -->
+            <img alt="" width="{{STAT3_ICON_W}}" height="{{STAT3_ICON_H}}" src="{{STAT3_ICON_URL}}" style="display:block;width:{{STAT3_ICON_W}}px;height:{{STAT3_ICON_H}}px;"/>
+          </td></tr>
+          <tr><td height="1" bgcolor="#FFFFFF" style="height:1px;background-color:#FFFFFF;font-size:0;line-height:0;mso-line-height-rule:exactly;">&nbsp;</td></tr>
+          <tr><td style="padding:27px 0 0 0;mso-line-height-rule:exactly;"><span class="stat-num" style="font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:75px;line-height:0.9;letter-spacing:-0.01em;color:#FFFFFF;">{{STAT3_NUM}}</span></td></tr>
+          <tr><td style="padding:17px 0 0 0;font-size:0;line-height:0;"><div class="slabel" style="width:202px;white-space:nowrap;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:21px;line-height:26px;letter-spacing:-0.01em;color:#FFFFFF;text-align:left;">{{STAT3_LABEL}}<sup style="font-size:13px;line-height:0;">&dagger;</sup></div></td></tr>
+        </tbody></table>
+      </td>
+      <td colspan="3" valign="top" style="padding:0;vertical-align:top;">
+        <div class="photo-clip" style="height:244px;font-size:0;line-height:0;">
+          <!-- e2-17+e2-18 stitched crop (730,700,1200,1453) sha 813e9317... — photo bleeds flush right and overflows down into row 3, as designed -->
+          <img class="hand-img" alt="Fingers holding a Stasis capsule" width="235" height="376" src="{{BLEED_PHOTO_URL}}" style="display:block;width:235px;height:376px;margin:7px 0 0 auto;"/>
+        </div>
+      </td>
+    </tr>
+    <tr><td colspan="5" height="54" style="height:54px;font-size:0;line-height:0;mso-line-height-rule:exactly;">&nbsp;</td></tr>
+    <tr>
+      <td class="sgut" width="65" style="width:65px;font-size:0;line-height:0;">&nbsp;</td>
+      <td class="scell" width="202" valign="top" style="width:202px;vertical-align:top;">
+        <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="width:100%;border-collapse:collapse;"><tbody>
+          <tr><td style="padding:0 0 15px 8px;font-size:0;line-height:0;">
+            <!-- e2-18 crop (145,91,204,166) sha a26c988e... -->
+            <img alt="" width="{{STAT4_ICON_W}}" height="{{STAT4_ICON_H}}" src="{{STAT4_ICON_URL}}" style="display:block;width:{{STAT4_ICON_W}}px;height:{{STAT4_ICON_H}}px;"/>
+          </td></tr>
+          <tr><td height="1" bgcolor="#FFFFFF" style="height:1px;background-color:#FFFFFF;font-size:0;line-height:0;mso-line-height-rule:exactly;">&nbsp;</td></tr>
+          <tr><td style="padding:27px 0 0 0;mso-line-height-rule:exactly;"><span class="stat-num" style="font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:75px;line-height:0.9;letter-spacing:-0.01em;color:#FFFFFF;">{{STAT4_NUM}}</span></td></tr>
+          <tr><td style="padding:17px 0 0 0;font-size:0;line-height:0;"><div class="slabel" style="width:202px;white-space:nowrap;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:21px;line-height:26px;letter-spacing:-0.01em;color:#FFFFFF;text-align:left;">{{STAT4_LABEL}}<sup style="font-size:13px;line-height:0;">&dagger;</sup></div></td></tr>
+        </tbody></table>
+      </td>
+      <td class="sgap" width="57" style="width:57px;font-size:0;line-height:0;">&nbsp;</td>
+      <td class="scell" width="202" valign="top" style="width:202px;vertical-align:top;">
+        <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="width:100%;border-collapse:collapse;"><tbody>
+          <tr><td style="padding:0 0 17px 2px;font-size:0;line-height:0;">
+            <!-- e2-18 crop (652,92,725,165) sha 902b6445... -->
+            <img alt="" width="{{STAT5_ICON_W}}" height="{{STAT5_ICON_H}}" src="{{STAT5_ICON_URL}}" style="display:block;width:{{STAT5_ICON_W}}px;height:{{STAT5_ICON_H}}px;"/>
+          </td></tr>
+          <tr><td height="1" bgcolor="#FFFFFF" style="height:1px;background-color:#FFFFFF;font-size:0;line-height:0;mso-line-height-rule:exactly;">&nbsp;</td></tr>
+          <tr><td style="padding:27px 0 0 0;mso-line-height-rule:exactly;"><span class="stat-num" style="font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:75px;line-height:0.9;letter-spacing:-0.01em;color:#FFFFFF;">{{STAT5_NUM}}</span></td></tr>
+          <tr><td style="padding:17px 0 0 0;font-size:0;line-height:0;"><div class="slabel" style="width:202px;white-space:nowrap;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:21px;line-height:26px;letter-spacing:-0.01em;color:#FFFFFF;text-align:left;">{{STAT5_LABEL}}<sup style="font-size:13px;line-height:0;">&dagger;</sup></div></td></tr>
+        </tbody></table>
+      </td>
+      <td class="sgut" width="74" style="width:74px;font-size:0;line-height:0;">&nbsp;</td>
+    </tr>
+    <tr><td colspan="5" height="37" style="height:37px;font-size:0;line-height:0;mso-line-height-rule:exactly;">&nbsp;</td></tr>
+  </tbody></table>
+</td></tr>

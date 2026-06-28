@@ -1,0 +1,26 @@
+<!--
+component: downside-ruled-list  [PROPOSED — Bryce design review 2026-06-18; in-review, locks verbatim on first approved-build ship]
+PURPOSE: Single-column ruled-list panel — a tinted (periwinkle) header bar reading like "The Bottom Line", then hairline-divided rows summarizing points/downsides. Header + ~3 ruled rows. The canonical "The Bottom Line" variant of the mined module; sibling variants (X-marked "Without Stasis" three-up, right-aligned checkmark benefit lists) share the ruled-row skeleton but are NOT this component.
+SOURCE: PROPOSED 2026-06-17, built to tokens.json + the Figma mining reference (figma-component-catalog.json module #27 "downside-ruled-list", frequency 8, sample_description "Bulleted/ruled list panel, often with a tinted (periwinkle) header bar reading like 'The Bottom Line', summarizing points or downsides"; matching the [25] Campaigns variant_notes "Periwinkle-headed bulleted panel in band B '20% OFF' frame"). NOT yet from a Bryce-approved build — locks verbatim after it ships in one. No salvage slice in asset-accounting/salvage/klaviyo/ matches this exact variant; markup style mirrors two-col-list / checklist-rows / ingredient-spotlight-card.
+SLOTS:
+  {{HEADER_FILL}} — periwinkle header-bar fill (a CHOICE color, not a fixed token). Intent default: #c3d4ff. Set the bgcolor attr AND the background-color style to the same value.
+  {{HEADER_HTML}} — inner HTML of the header bar. Intent default: The Bottom Line. Emphasis spans use inline <strong style="font-weight:700;">.
+  {{ITEM_1}} / {{ITEM_2}} — ruled list rows (each td carries border-bottom:1px solid rgba(14,26,56,0.32), the same hairline used in two-col-list). Inner emphasis via inline <strong style="font-weight:700;">.
+  {{ITEM_LAST}} — the LAST row, identical but with NO border-bottom (rules divide BETWEEN rows, never under the last — matches two-col-list). To change the row count, duplicate a ruled row ABOVE this one and keep the last row rule-less.
+REQUIRED MEDIA CLASSES (host must include, verbatim, inside @media only screen and (max-width:480px){...}):
+  .px{padding-left:24px !important;padding-right:24px !important;}
+DEPENDENCIES:
+  - Paste as a direct <tr> child of the host 600px wrap table (white-edged module; the panel/header carry their own bg).
+  - Light-only pin (§8.6) in host head; host must ship the Antarctica @font-face kit.
+  - Sans stack: font-family:'Antarctica','Helvetica Neue',Arial,sans-serif. Header weight 500 (display weights are 500, NOT 900 — font-map.md); row copy weight 500. Inline 700 for emphasis only.
+  - Colors: header text ink #0E1A38 on the periwinkle fill; row copy ink #0E1A38 on white #FFFFFF; hairline rgba(14,26,56,0.32) (ink @ 32%). All light-only safe — no dark-mode-dependent colors.
+  - Rows are border-bottom hairlines (no images) — render everywhere including Outlook. No CTA pill, so no VML/MSO roundrect needed.
+-->
+<tr><td class="px" bgcolor="#FFFFFF" style="background-color:#FFFFFF;padding:0 40px;">
+  <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="width:100%;border-collapse:collapse;"><tbody>
+    <tr><td bgcolor="{{HEADER_FILL}}" style="background-color:{{HEADER_FILL}};padding:16px 24px;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:24px;line-height:1.15;letter-spacing:-0.02em;color:#0E1A38;text-align:left;">{{HEADER_HTML}}</td></tr>
+    <tr><td style="padding:18px 24px;border-bottom:1px solid rgba(14,26,56,0.32);font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:18px;line-height:1.4;letter-spacing:-0.01em;color:#0E1A38;text-align:left;">{{ITEM_1}}</td></tr>
+    <tr><td style="padding:18px 24px;border-bottom:1px solid rgba(14,26,56,0.32);font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:18px;line-height:1.4;letter-spacing:-0.01em;color:#0E1A38;text-align:left;">{{ITEM_2}}</td></tr>
+    <tr><td style="padding:18px 24px;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:18px;line-height:1.4;letter-spacing:-0.01em;color:#0E1A38;text-align:left;">{{ITEM_LAST}}</td></tr>
+  </tbody></table>
+</td></tr>

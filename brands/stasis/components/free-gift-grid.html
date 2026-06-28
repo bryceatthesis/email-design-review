@@ -1,0 +1,101 @@
+<!--
+component: free-gift-grid  [PROPOSED — Bryce design review 2026-06-18; in-review, locks verbatim on first approved-build ship]
+PURPOSE: The gift-with-purchase (GWP) module. White cards on a creme/white section, each gift = product image + a strikethrough original price beside a royal FREE badge + bold gift name + an optional one-line "why" description. The first two gifts sit in a 50/50 two-up row (Carry-All pouch · earplugs); a third gift (the Open meditation app) is a full-width horizontal card (image left, copy right) — the recurring real-frame layout. Closes with the offer value pill ($204 → $79) and the GWP CTA. Repeatable: drop the 3rd card or the value/CTA rows if a build only needs the grid.
+SOURCE: PROPOSED 2026-06-17 — built to tokens.json + the REAL Figma frames. Studied frames: "1.29 GWP Final 48 Hours_A" (idx 3), "1.1 The Year of Balance" (idx 193), "Jan12_Meditation Without the Guilt" (idx 206). Surfaced by the email-system component mining (free-gift / GWP grid shipped ~43×). Observed in-frame: card $25 Carry-All Travel Pouch / $30 Tune Out Noise-Cancelling Earplugs / $20 1 Month of the Open Meditation App, each price struck through with a royal pill reading FREE in lime; value pill "$204 -> $79 when you subscribe to the Day + Night Set"; spice CTA "GET THE SUPPORT + GIFTS". NOT yet extracted from a Bryce-approved build — locks verbatim after it ships in one.
+SLOTS:
+  Two-up row (cards 1 & 2 — left/right):
+  {{GIFT1_IMAGE}} / {{GIFT2_IMAGE}} — product image (transparent PNG on white; production-hosted, sourced via email-image-source — gaps stop the build).
+  {{GIFT1_ALT}} / {{GIFT2_ALT}} — image alt text.
+  {{GIFT1_PRICE}} / {{GIFT2_PRICE}} — original price, shown struck through (e.g. $25). Approved frame values: $25 / $30.
+  {{GIFT1_NAME}} / {{GIFT2_NAME}} — gift name, bold display (e.g. Carry-All<br>Travel Pouch). Use <br> to control wrap as in-frame.
+  {{GIFT1_DESC}} / {{GIFT2_DESC}} — one-line "why" (e.g. Because your routine deserves a real home.). Remove the <p> if a build runs name-only.
+  Full-width third card (drop the whole <tr> if only 2 gifts):
+  {{GIFT3_IMAGE}} / {{GIFT3_ALT}} / {{GIFT3_PRICE}} / {{GIFT3_NAME}} / {{GIFT3_DESC}} — same meaning; horizontal card. Approved frame: $20 / 1 Month of the Open<br>Meditation App.
+  Value + CTA rows (drop both <tr>s if the host supplies its own offer/CTA):
+  {{VALUE_WAS}} — struck-through bundle value (e.g. $204).
+  {{VALUE_NOW}} — discounted price in the spice half of the pill (e.g. $79).
+  {{VALUE_TERM_HTML}} — inner HTML of the term line (e.g. when you <em>subscribe</em><br>to the Day + Night Set.).
+  {{CTA_TEXT}} — GWP button label, uppercase (VML <center> + <a>, 2 occurrences). Frame value: GET THE SUPPORT + GIFTS.
+  {{CTA_HREF}} — destination (VML href + <a> href, 2 occurrences). e.g. https://takestasis.com/.
+REQUIRED MEDIA CLASSES (host must include inside @media only screen and (max-width:480px){...}):
+  .px{padding-left:24px !important;padding-right:24px !important;}
+  .col-stack{display:block !important;width:100% !important;}
+  .col-gap-l{padding:0 0 16px 0 !important;}
+  .col-gap-r{padding:0 !important;}
+  .gift-stack{display:block !important;width:100% !important;}
+  .gift-img-h{width:100% !important;max-width:100% !important;height:auto !important;padding:0 0 16px 0 !important;}
+  .gift-card-pad{padding:22px !important;}
+  .btn{padding:16px 28px !important;letter-spacing:0.12em !important;}
+DEPENDENCIES:
+  - Light-only pin (§8.6) in host head; Antarctica @font-face kit (sans stack font-family:'Antarctica','Helvetica Neue',Arial,sans-serif). Name = display weight 500/600; price + FREE badge weight 700; description weight 500; CTA weight 700.
+  - All gift images sourced via email-image-source (canonical masters only); for review they may point at served-local images. The phone/app gift image is a product render, NOT a live screenshot — treat as a static hosted PNG.
+  - The FREE badge is a styled HTML pill (royal #3D72E6 fill, lime #EEEF78 label), NOT an image. The struck price uses text-decoration:line-through in muted royal #3D72E6. Cards: white #FFFFFF, 1px border rgba(14,26,56,0.12), 14px radius, border-collapse:separate (required for radius). Section bg creme #F4EFEB. Value-pill spice half #FF541E with lime #EEEF78 numeral; "was" half white with struck royal numeral; pill border 1px #3D72E6.
+  - VML/MSO: the value pill and CTA each get the §5.1 bulletproof treatment — Outlook sees only the [if mso] half, everything else only the [if !mso] half. Keep both halves + all four conditional-comment markers intact. The CTA VML box is 280px wide to fit "GET THE SUPPORT + GIFTS" (22 chars) — re-measure vml width if {{CTA_TEXT}} differs materially or Outlook will clip the label.
+  - EMAIL-SAFE INTERPRETATION: in-frame the app gift sometimes implies an interactive/video preview; here it is a static styled card + hosted product render. Any "ends at midnight / while supplies last" countdown in the source becomes baked static copy in {{VALUE_TERM_HTML}} or a separate host row, never a live timer.
+  - Paste this whole block of <tr>s directly into the 600px wrap table (it is a fixed-level fragment of full-width section rows, not a single card). The section's own padding lives on the row <td>s below.
+-->
+<!-- ===== free-gift-grid : two-up gift cards ===== -->
+<tr><td class="px" bgcolor="#F4EFEB" style="background-color:#F4EFEB;padding:24px 24px 12px 24px;">
+  <table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0" style="width:100%;border-collapse:collapse;"><tbody><tr>
+    <!-- gift 1 (left) -->
+    <td class="col-stack col-gap-l" valign="top" width="50%" style="width:50%;padding:0 8px 0 0;vertical-align:top;">
+      <table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0" style="width:100%;background-color:#FFFFFF;border:1px solid rgba(14,26,56,0.12);border-radius:14px;border-collapse:separate;"><tbody><tr><td class="gift-card-pad" style="padding:24px 22px 26px;text-align:center;">
+        <img src="{{GIFT1_IMAGE}}" alt="{{GIFT1_ALT}}" width="180" style="width:100%;max-width:180px;height:auto;display:block;margin:0 auto 14px;border:0;"/>
+        <p style="margin:0 0 12px;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-size:0;line-height:1;text-align:center;">
+          <span style="font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:700;font-size:18px;line-height:1;letter-spacing:-0.01em;color:#3D72E6;text-decoration:line-through;vertical-align:middle;">{{GIFT1_PRICE}}</span><span style="display:inline-block;margin-left:12px;background-color:#3D72E6;border-radius:999px;padding:6px 14px;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:700;font-size:13px;line-height:1;letter-spacing:0.08em;color:#EEEF78;text-transform:uppercase;vertical-align:middle;">FREE</span>
+        </p>
+        <p style="margin:0 0 8px;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:600;font-size:21px;line-height:1.15;letter-spacing:-0.02em;color:#0E1A38;text-align:center;">{{GIFT1_NAME}}</p>
+        <p style="margin:0;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:15px;line-height:1.45;color:#222427;text-align:center;">{{GIFT1_DESC}}</p>
+      </td></tr></tbody></table>
+    </td>
+    <!-- gift 2 (right) -->
+    <td class="col-stack col-gap-r" valign="top" width="50%" style="width:50%;padding:0 0 0 8px;vertical-align:top;">
+      <table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0" style="width:100%;background-color:#FFFFFF;border:1px solid rgba(14,26,56,0.12);border-radius:14px;border-collapse:separate;"><tbody><tr><td class="gift-card-pad" style="padding:24px 22px 26px;text-align:center;">
+        <img src="{{GIFT2_IMAGE}}" alt="{{GIFT2_ALT}}" width="180" style="width:100%;max-width:180px;height:auto;display:block;margin:0 auto 14px;border:0;"/>
+        <p style="margin:0 0 12px;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-size:0;line-height:1;text-align:center;">
+          <span style="font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:700;font-size:18px;line-height:1;letter-spacing:-0.01em;color:#3D72E6;text-decoration:line-through;vertical-align:middle;">{{GIFT2_PRICE}}</span><span style="display:inline-block;margin-left:12px;background-color:#3D72E6;border-radius:999px;padding:6px 14px;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:700;font-size:13px;line-height:1;letter-spacing:0.08em;color:#EEEF78;text-transform:uppercase;vertical-align:middle;">FREE</span>
+        </p>
+        <p style="margin:0 0 8px;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:600;font-size:21px;line-height:1.15;letter-spacing:-0.02em;color:#0E1A38;text-align:center;">{{GIFT2_NAME}}</p>
+        <p style="margin:0;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:15px;line-height:1.45;color:#222427;text-align:center;">{{GIFT2_DESC}}</p>
+      </td></tr></tbody></table>
+    </td>
+  </tr></tbody></table>
+</td></tr>
+<!-- ===== free-gift-grid : full-width third gift card (image left / copy right) — drop this <tr> if only 2 gifts ===== -->
+<tr><td class="px" bgcolor="#F4EFEB" style="background-color:#F4EFEB;padding:4px 24px 24px 24px;">
+  <table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0" style="width:100%;background-color:#FFFFFF;border:1px solid rgba(14,26,56,0.12);border-radius:14px;border-collapse:separate;"><tbody><tr><td class="gift-card-pad" style="padding:24px 24px;">
+    <table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0" style="width:100%;border-collapse:collapse;"><tbody><tr>
+      <td class="gift-stack gift-img-h" valign="middle" width="160" style="width:160px;padding:0 24px 0 0;vertical-align:middle;">
+        <img src="{{GIFT3_IMAGE}}" alt="{{GIFT3_ALT}}" width="160" style="width:160px;max-width:160px;height:auto;display:block;border:0;"/>
+      </td>
+      <td class="gift-stack" valign="middle" style="vertical-align:middle;">
+        <p style="margin:0 0 10px;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-size:0;line-height:1;text-align:left;">
+          <span style="font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:700;font-size:18px;line-height:1;letter-spacing:-0.01em;color:#3D72E6;text-decoration:line-through;vertical-align:middle;">{{GIFT3_PRICE}}</span><span style="display:inline-block;margin-left:12px;background-color:#3D72E6;border-radius:999px;padding:6px 14px;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:700;font-size:13px;line-height:1;letter-spacing:0.08em;color:#EEEF78;text-transform:uppercase;vertical-align:middle;">FREE</span>
+        </p>
+        <p style="margin:0 0 6px;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:600;font-size:21px;line-height:1.15;letter-spacing:-0.02em;color:#0E1A38;text-align:left;">{{GIFT3_NAME}}</p>
+        <p style="margin:0;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:15px;line-height:1.45;color:#222427;text-align:left;">{{GIFT3_DESC}}</p>
+      </td>
+    </tr></tbody></table>
+  </td></tr></tbody></table>
+</td></tr>
+<!-- ===== free-gift-grid : offer value pill ($was -> $now) — drop this <tr> if host supplies its own offer ===== -->
+<tr><td class="px" bgcolor="#F4EFEB" style="background-color:#F4EFEB;padding:8px 24px 4px 24px;text-align:center;">
+  <table align="center" role="presentation" border="0" cellpadding="0" cellspacing="0" style="border-collapse:separate;margin:0 auto;border:1px solid #3D72E6;border-radius:999px;"><tbody><tr>
+    <td align="center" bgcolor="#FFFFFF" style="background-color:#FFFFFF;border-radius:999px 0 0 999px;padding:14px 26px;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:700;font-size:34px;line-height:1;letter-spacing:-0.02em;color:#3D72E6;text-decoration:line-through;">{{VALUE_WAS}}</td>
+    <td align="center" bgcolor="#3D72E6" style="background-color:#3D72E6;border-radius:0 999px 999px 0;padding:14px 30px;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:700;font-size:34px;line-height:1;letter-spacing:-0.02em;color:#EEEF78;">{{VALUE_NOW}}</td>
+  </tr></tbody></table>
+</td></tr>
+<tr><td class="px" bgcolor="#F4EFEB" style="background-color:#F4EFEB;padding:16px 24px 4px 24px;text-align:center;">
+  <p style="margin:0;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:24px;line-height:1.18;letter-spacing:-0.02em;color:#0E1A38;text-align:center;">{{VALUE_TERM_HTML}}</p>
+</td></tr>
+<!-- ===== free-gift-grid : GWP CTA (VML roundrect + HTML pill pair) — drop this <tr> if host supplies its own CTA ===== -->
+<tr><td class="px" bgcolor="#F4EFEB" align="center" style="background-color:#F4EFEB;padding:24px 24px 32px 24px;text-align:center;">
+  <!--[if mso]>
+  <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="{{CTA_HREF}}" style="height:56px;v-text-anchor:middle;width:280px;" arcsize="50%" stroke="false" fillcolor="#FF541E"><w:anchorlock/>
+  <center style="color:#000000;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-size:20px;font-weight:700;letter-spacing:3px;text-transform:uppercase;">{{CTA_TEXT}}</center></v:roundrect>
+  <![endif]-->
+  <!--[if !mso]><!-->
+  <table align="center" role="presentation" border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse;margin:0 auto;"><tbody><tr><td align="center" bgcolor="#FF541E" style="background-color:#FF541E;border-radius:999px;"><a class="btn" href="{{CTA_HREF}}" target="_blank" style="display:inline-block;padding:18px 40px;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:700;font-size:20px;line-height:1;letter-spacing:0.18em;text-transform:uppercase;color:#000000;text-decoration:none;border-radius:999px;white-space:nowrap;">{{CTA_TEXT}}</a></td></tr></tbody></table>
+  <!--<![endif]-->
+</td></tr>
+<!-- ===== /free-gift-grid ===== -->

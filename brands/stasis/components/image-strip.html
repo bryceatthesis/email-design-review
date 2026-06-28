@@ -1,0 +1,36 @@
+<!--
+component: image-strip  [PROPOSED — Bryce design review 2026-06-18; in-review, locks verbatim on first approved-build ship]
+PURPOSE: Horizontal row of three small square product/kit thumbnail images (3-across) representing the kit contents — each tile is an image + alt, optionally linked. Tiles stack to one column on mobile via .strip-stack. This is the canonical "horizontal product-thumbnail strip" surfaced by component mining (9 pages: GWP/Sub/Winback/Transactional/Welcome/Campaigns/Quiz; sample = "Horizontal row of small product thumbnails representing the kit contents").
+SOURCE: PROPOSED 2026-06-17 — built to tokens.json + the Figma mining reference (figma-component-catalog.json image-strip sample_description; inventory/figma-modules/0124-gwp-campaigns.json "Horizontal row of small product thumbnails representing the kit contents", screenshot_ref masters/figma-renders/0124-gwp-campaigns.png). NOT yet extracted from a Bryce-approved build — no matching salvage slice exists; locks verbatim (paddings, tile size, count) after it ships in one approved build.
+SLOTS:
+  {{IMG_1}} / {{IMG_2}} / {{IMG_3}} — thumbnail image sources (production-hosted; sourced via email-image-source — canonical masters only, gaps stop the build). For review these may point at served-local images.
+  {{ALT_1}} / {{ALT_2}} / {{ALT_3}} — image alt text per tile.
+  {{HREF_1}} / {{HREF_2}} / {{HREF_3}} — per-tile link target. If a tile is not linked, drop the wrapping <a ...>…</a> for that tile and keep the bare <img/>.
+  {{BG}} — strip background color. CHOICE — must be a tokens.json value (default creme #F4EFEB; use white #FFFFFF or panel #F7F7F7 if the surrounding email is on those). Set both the bgcolor attr and the background-color style to the same value.
+  To change the count: this is a fixed 3-across grid (the intent). A 2-up or 4-up is a different variant — do not retrofit here without re-measuring tile width and gutters against the source render.
+REQUIRED MEDIA CLASSES (host must include inside @media only screen and (max-width:480px){...}):
+  .px{padding-left:24px !important;padding-right:24px !important;}
+  .strip-stack{display:block !important;width:100% !important;padding:0 0 16px 0 !important;}
+  .strip-gut{display:none !important;}
+  .strip-img{width:100% !important;max-width:100% !important;height:auto !important;}
+DEPENDENCIES:
+  - Light-only pin (§8.6) in host head.
+  - Images sourced via email-image-source (canonical masters only); square-ish thumbnails (rendered ~166px on desktop, full-width stacked on mobile).
+  - Token colors only: {{BG}} from tokens.json (default creme #F4EFEB); tile radius 12px matches ingredient-spotlight-card. No text in this fragment, so no font kit is strictly required, but the host already ships the Antarctica @font-face kit.
+  - No VML/MSO (no CTA pill in this module).
+-->
+<tr><td class="px" bgcolor="{{BG}}" style="background-color:{{BG}};padding:24px 50px;">
+  <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="width:100%;border-collapse:collapse;"><tbody><tr>
+    <td class="strip-stack strip-img" valign="top" width="166" style="width:166px;vertical-align:top;">
+      <a href="{{HREF_1}}" style="text-decoration:none;"><img src="{{IMG_1}}" alt="{{ALT_1}}" width="166" style="width:166px;max-width:166px;height:auto;border-radius:12px;display:block;border:0;"/></a>
+    </td>
+    <td class="strip-gut" width="26" style="width:26px;font-size:0;line-height:0;">&nbsp;</td>
+    <td class="strip-stack strip-img" valign="top" width="166" style="width:166px;vertical-align:top;">
+      <a href="{{HREF_2}}" style="text-decoration:none;"><img src="{{IMG_2}}" alt="{{ALT_2}}" width="166" style="width:166px;max-width:166px;height:auto;border-radius:12px;display:block;border:0;"/></a>
+    </td>
+    <td class="strip-gut" width="26" style="width:26px;font-size:0;line-height:0;">&nbsp;</td>
+    <td class="strip-stack strip-img" valign="top" width="166" style="width:166px;vertical-align:top;">
+      <a href="{{HREF_3}}" style="text-decoration:none;"><img src="{{IMG_3}}" alt="{{ALT_3}}" width="166" style="width:166px;max-width:166px;height:auto;border-radius:12px;display:block;border:0;"/></a>
+    </td>
+  </tr></tbody></table>
+</td></tr>

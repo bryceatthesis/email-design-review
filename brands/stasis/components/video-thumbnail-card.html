@@ -1,0 +1,75 @@
+<!--
+component: video-thumbnail-card  [PROPOSED — Bryce design review 2026-06-18; in-review, locks verbatim on first approved-build ship]
+PURPOSE: The "Watch: In Focus" episode player card — a faux video player: a black chrome bar (WATCH ▶ pill on the left, IN FOCUS wordmark on the right) sitting on top of a hosted poster image (portrait still with the episode eyebrow + title burned in), the whole poster linking out to the video. Below the card, a separate orange WATCH NOW pill CTA. Email-safe interpretation of an embedded video: there is no <video> in email, so this is image + play-badge overlay + link (the poster is a clickable hosted image, the chrome and CTA are live text/HTML so the card still reads when images are blocked).
+SOURCE: PROPOSED 2026-06-17 — built to brands/stasis/tokens.json + the real Figma frames. Grounded in idx 243 (5.22 The Medication Monologues) and idx 37 (5.22), both of which carry an explicit "video thumbnail card" section ("IN FOCUS player, woman, EPISODE 4 title" / "blonde woman portrait, episode 4 overlay"), plus the badge/title overlay language from idx 226 (episode5 1: yellow "IN FOCUS" pill + "EPISODE 5" label + "FOCUS, AT WHAT COST?" display headline). In the real sends the card sits on the mint/creme "Watch In Focus Episode N" section, above a standalone orange WATCH NOW pill. Surfaced by the email-system component mining (~3 of 294 emails — the In Focus editorial-episode sends). NOT yet extracted from a Bryce-approved build — locks verbatim after it ships in one.
+SLOTS:
+  {{POSTER_IMAGE}}  — portrait video still (production-hosted; sourced via email-image-source — gaps stop the build). Ships ~9:16 in the real frames; rendered here at 552px wide inside the card. The episode eyebrow + title are burned INTO this poster in the originals; the live-text overlay below is the image-blocked fallback (keep both — see note).
+  {{POSTER_ALT}}    — image alt text (e.g. "In Focus Episode 4: The Stimulant Stigma").
+  {{VIDEO_HREF}}    — destination the poster links to (the hosted episode / landing page). Appears TWICE (the poster <a> AND the WATCH ▶ chrome <a>) — fill both with the same URL.
+  {{EYEBROW}}       — overlay eyebrow over the poster, uppercase. Approved-pattern instance: IN FOCUS&nbsp;&nbsp;|&nbsp;&nbsp;EPISODE 4
+  {{EPISODE_TITLE}} — overlay title, uppercase display. Approved-pattern instance: THE STIMULANT STIGMA (may carry designed <br/> breaks).
+  {{CTA_TEXT}}      — orange pill label below the card, uppercase: VML <center> + <a> (2 occurrences). Approved-pattern instance: WATCH NOW
+  {{CTA_HREF}}      — orange pill destination: VML href + <a> href (2 occurrences). Usually the same as {{VIDEO_HREF}}.
+  (The "WATCH ▶" chrome label and the "IN FOCUS" chrome wordmark are baked copy in the approved pattern, not slots.)
+REQUIRED MEDIA CLASSES (host must include, verbatim, inside @media only screen and (max-width:480px){...}):
+  .px{padding-left:24px !important;padding-right:24px !important;}
+  .vtc-poster{width:100% !important;max-width:100% !important;height:auto !important;}
+  .vtc-title{font-size:24px !important;}
+  .cta-link{white-space:normal !important;}
+  .btn{padding:16px 28px !important;letter-spacing:0.12em !important;}
+DEPENDENCIES:
+  - Paste as a direct <tr> child of the host 600px wrap table (class="wrap", width:600px;max-width:600px) inside the [if mso] 600px wrapper table. This is a full <tr><td> row fragment (NOT a paste-level fragment) — it owns its section background (baked to creme #F4EFEB on the outer td to match the mint/creme "Watch In Focus" section; swap that one bgcolor + background-color pair if the host section differs — it is a baked color, not a slot).
+  - Light-only pin (§8.6) in host head: <meta name="color-scheme" content="light only"> + <meta name="supported-color-schemes" content="light only"> + :root, body { color-scheme: light only; }.
+  - Font kit: Antarctica @font-face 400/500/600/700 hosted on the Stasis Shopify CDN (mso-font-alt 'Helvetica Neue'); inline sans stack font-family:'Antarctica','Helvetica Neue',Arial,sans-serif. Display roles (episode title) are weight 500, NOT 900 (font-map.md); chrome label 700; CTA 700.
+  - Host img reset (img{border:0;display:block;height:auto;…}) — the poster <img> depends on it.
+  - Image sourced via email-image-source (canonical masters only); for review it may point at a served-local image. In the real sends the eyebrow + title are part of the poster pixels; the live-text overlay row here is the image-blocked fallback and intentionally duplicates that copy — keep both so the card never goes blank. If {{POSTER_IMAGE}} already carries no burned-in title, the overlay still renders correctly over the image.
+  - Colors pinned (tokens.json): card chrome bar black #000000, chrome label text white #FFFFFF; play glyph spice #FF541E (the brand orange the originals use for the play affordance); IN FOCUS overlay badge lime #EEEF78 with ink #0E1A38 text; overlay scrim + title white #FFFFFF on a dark gradient td (#0E1A38 fallback for image-blocked); section bg creme #F4EFEB; CTA fill #FF541E, CTA text #000000. No invented hex.
+  - VML/MSO: the WATCH NOW CTA ships as the §5.1 bulletproof pair — Outlook gets the v:roundrect inside [if mso] (arcsize 50%, height 56px, width 235px — sized for WATCH NOW, 9 chars; re-measure the VML width if {{CTA_TEXT}} differs materially or Outlook clips the label); everything else gets the table+anchor inside [if !mso]. Keep both halves and all conditional-comment markers intact. The chrome bar, play badge and overlay are pure HTML/CSS (no VML) — Outlook shows the poster image with the chrome bar above it and the title burned into the poster; the CSS overlay positioning degrades gracefully (Outlook drops it, the burned-in title carries).
+-->
+<tr><td class="px" bgcolor="#F4EFEB" style="background-color:#F4EFEB;padding:8px 48px 28px 48px;">
+  <!-- the player card: black chrome bar + poster, on a white card with 14px radius (border-collapse:separate required for radius) -->
+  <table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0" style="width:100%;background-color:#000000;border-radius:14px;border-collapse:separate;overflow:hidden;"><tbody>
+    <!-- chrome bar: WATCH ▶ pill (left) + IN FOCUS wordmark (right) -->
+    <tr><td style="padding:14px 18px;">
+      <table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0" style="width:100%;border-collapse:collapse;"><tbody><tr>
+        <td valign="middle" align="left" style="vertical-align:middle;">
+          <!-- WATCH ▶ pill — white outline pill, links to the video -->
+          <table role="presentation" border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse;"><tbody><tr>
+            <td align="center" style="border:1px solid #FFFFFF;border-radius:999px;padding:7px 16px;">
+              <a href="{{VIDEO_HREF}}" target="_blank" style="text-decoration:none;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:700;font-size:13px;line-height:1;letter-spacing:0.12em;text-transform:uppercase;color:#FFFFFF;white-space:nowrap;">WATCH&nbsp;&nbsp;<span style="color:#FF541E;">&#9658;</span></a>
+            </td>
+          </tr></tbody></table>
+        </td>
+        <td valign="middle" align="right" style="vertical-align:middle;text-align:right;">
+          <span style="font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:700;font-size:16px;line-height:1;letter-spacing:0.04em;text-transform:uppercase;color:#FFFFFF;">IN FOCUS</span>
+        </td>
+      </tr></tbody></table>
+    </td></tr>
+    <!-- poster: clickable hosted still, with live-text episode overlay anchored bottom-left as the image-blocked fallback -->
+    <tr><td align="center" valign="bottom" bgcolor="#0E1A38" background="{{POSTER_IMAGE}}" style="background-color:#0E1A38;background-image:url('{{POSTER_IMAGE}}');background-repeat:no-repeat;background-position:top center;background-size:cover;padding:0;">
+      <a href="{{VIDEO_HREF}}" target="_blank" style="text-decoration:none;display:block;">
+        <!-- the poster as an <img> so it always loads where backgrounds are stripped; overlay sits below via the dark td scrim -->
+        <img class="vtc-poster" src="{{POSTER_IMAGE}}" alt="{{POSTER_ALT}}" width="504" style="display:block;width:100%;max-width:504px;height:auto;border:0;"/>
+      </a>
+    </td></tr>
+    <!-- episode overlay (live-text fallback): lime IN FOCUS | EPISODE N eyebrow + white display title, on a dark band so it reads with or without the poster -->
+    <tr><td bgcolor="#0E1A38" style="background-color:#0E1A38;padding:18px 22px 22px 22px;">
+      <a href="{{VIDEO_HREF}}" target="_blank" style="text-decoration:none;display:block;">
+        <table role="presentation" border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse;"><tbody><tr>
+          <td bgcolor="#EEEF78" style="background-color:#EEEF78;border-radius:999px;padding:5px 12px;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:700;font-size:12px;line-height:1;letter-spacing:0.18em;text-transform:uppercase;color:#0E1A38;white-space:nowrap;">{{EYEBROW}}</td>
+        </tr></tbody></table>
+        <p class="vtc-title" style="margin:12px 0 0 0;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:30px;line-height:1.04;letter-spacing:-0.02em;text-transform:uppercase;color:#FFFFFF;text-align:left;">{{EPISODE_TITLE}}</p>
+      </a>
+    </td></tr>
+  </tbody></table>
+  <!-- standalone WATCH NOW pill below the card (§5.1 bulletproof pair) -->
+  <table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0" style="width:100%;border-collapse:collapse;"><tbody><tr><td align="center" style="padding:24px 0 0 0;text-align:center;">
+    <!--[if mso]>
+    <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="{{CTA_HREF}}" style="height:56px;v-text-anchor:middle;width:264px;" arcsize="50%" stroke="false" fillcolor="#FF541E"><w:anchorlock/>
+    <center style="color:#000000;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-size:20px;font-weight:700;letter-spacing:3px;text-transform:uppercase;">{{CTA_TEXT}}</center></v:roundrect>
+    <![endif]-->
+    <!--[if !mso]><!-->
+    <table align="center" role="presentation" border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse;margin:0 auto;"><tbody><tr><td align="center" bgcolor="#FF541E" style="background-color:#FF541E;border-radius:999px;"><a class="cta-link btn" href="{{CTA_HREF}}" target="_blank" style="display:inline-block;padding:18px 40px;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:700;font-size:20px;line-height:1;letter-spacing:0.18em;text-transform:uppercase;color:#000000;text-decoration:none;border-radius:999px;white-space:nowrap;">{{CTA_TEXT}}</a></td></tr></tbody></table>
+    <!--<![endif]-->
+  </td></tr></tbody></table>
+</td></tr>

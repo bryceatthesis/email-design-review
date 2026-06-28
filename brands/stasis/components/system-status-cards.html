@@ -1,0 +1,86 @@
+<!--
+component: system-status-cards  [PROPOSED — Bryce design review 2026-06-18; in-review, locks verbatim on first approved-build ship]
+PURPOSE: The "Three Systems in Sync" status block — a vertical stack of N (approved instance: 3) full-width rounded status cards, each a distinct soft brand color. Per card: a white status pill at top (a colored check-circle + a system name with its status word, uppercase) and a short body paragraph below. The canonical instance reads "Your Brain at 90 Days: Three Systems in Sync" → CORTISOL: BALANCED (lime) / DOPAMINE: SUPPORTED (periwinkle) / OXIDATIVE STRESS: DEFENDED (mint). Cards stack at all widths; on mobile they go edge-to-edge via .px and the pill rewraps via .stat-pill.
+SOURCE: PROPOSED 2026-06-17, built to brands/stasis/tokens.json + the Figma mining reference (module_type "system-status-cards", canonical variant in inventory/figma-modules/26-stasis-flows-live-do-not-edit.json: "Your Brain at 90 Days — Three Systems in Sync" / CORTISOL BALANCED yellow / DOPAMINE SUPPORTED blue-purple / OXIDATIVE STRESS DEFENDED green; mined frequency 6 across 6 pages). Fidelity checked against salvage slices the Stasis email-system reference and your-brain-at-90-days-3-systems-slice.jpeg. NOT yet from a Bryce-approved build — locks verbatim after it ships in one.
+SLOTS:
+  {{HEADING_LINE1_HTML}} — first heading line, ink (#0E1A38). Approved: Your Brain at 90 Days:
+  {{HEADING_LINE2_HTML}} — second heading line, royal (#3D72E6). Approved: Three Systems in Sync
+  {{CARD1_BG}} / {{CARD2_BG}} / {{CARD3_BG}} — card fill, one soft color per card (a choice; appears twice per card: bgcolor attr + background-color style — fill both). Approved instance: #EEEF78 (lime) / #C3D4FF (periwinkle) / #BFE9D6 (mint). The check-circle in each pill reuses the same color via its own slot below.
+  {{CARD1_CHECK_BG}} / {{CARD2_CHECK_BG}} / {{CARD3_CHECK_BG}} — fill of the check-circle inside each card's pill; set to match the card's {{CARDn_BG}} (kept separate so a build can tint it independently if needed).
+  {{CARD1_PILL_HTML}} / {{CARD2_PILL_HTML}} / {{CARD3_PILL_HTML}} — pill label HTML, the system name + status, uppercase ink. Approved: CORTISOL: BALANCED / DOPAMINE: SUPPORTED / OXIDATIVE STRESS: DEFENDED (a trailing claim marker is a copy choice, e.g. <sup style="font-size:11px;line-height:0;">*</sup> with a matching disclaimer module in the host).
+  {{CARD1_BODY_HTML}} / {{CARD2_BODY_HTML}} / {{CARD3_BODY_HTML}} — body paragraph HTML beneath each pill, charcoal-on-card ink. Approved card 1: Stimulants push your stress system hard. At 90 days, your body has the nutritional support it needs to find its footing again.
+  To change the card count, duplicate one inner card <tr> unit (the table.ssc-card row) and keep the inter-card spacer row pattern (every card except the last is followed by an 18px spacer row).
+REQUIRED MEDIA CLASSES (host must include inside @media only screen and (max-width:480px){...}):
+  .px{padding-left:24px !important;padding-right:24px !important;}
+  .ssc-pad{padding:22px 22px !important;}
+  .stat-pill{display:block !important;white-space:normal !important;}
+  .ssc-pill-cell{padding:14px 20px !important;}
+DEPENDENCIES:
+  - Light-only pin (§8.6) in host head; Antarctica @font-face kit (Gmail/Outlook fall back to the tuned sans stack).
+  - Sans stack: font-family:'Antarctica','Helvetica Neue',Arial,sans-serif. Heading weight 500 (NOT 900); pill label weight 600; body weight 500.
+  - Colors are tokens (tokens.json): heading line 1 + pill labels + body = ink #0E1A38; heading line 2 = royal #3D72E6; pill background = white #FFFFFF; check glyph = ink #0E1A38 on the per-card check-circle fill. Card fills are choices (slots) — approved lime/periwinkle/mint.
+  - Card corners use border-radius (radius token 24px here for the soft block, 999px for the pill). Outlook squares them; that is the accepted fallback (same as condition-pills / ingredient-spotlight-card — no VML).
+  - No CTA pill in this fragment, so no VML/MSO roundrect required. mso-line-height-rule:exactly is kept on spacer rows for Outlook.
+-->
+<tr><td class="px" bgcolor="#FFFFFF" style="background-color:#FFFFFF;padding:32px 40px 36px 40px;">
+  <!-- Heading -->
+  <p style="margin:0 0 26px 0;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:32px;line-height:1.08;letter-spacing:-0.03em;text-align:center;color:#0E1A38;">{{HEADING_LINE1_HTML}}<br/><span style="color:#3D72E6;">{{HEADING_LINE2_HTML}}</span></p>
+
+  <!-- Card stack -->
+  <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="width:100%;border-collapse:collapse;"><tbody>
+
+    <!-- Card 1 -->
+    <tr><td>
+      <table class="ssc-card" role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="width:100%;border-collapse:separate;background-color:{{CARD1_BG}};border-radius:24px;" bgcolor="{{CARD1_BG}}"><tbody>
+        <tr><td class="ssc-pad" style="padding:28px 32px;">
+          <table role="presentation" border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse;margin:0 auto 16px auto;"><tbody><tr><td class="ssc-pill-cell stat-pill" bgcolor="#FFFFFF" style="background-color:#FFFFFF;border-radius:999px;padding:14px 26px;">
+            <table role="presentation" border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse;"><tbody><tr>
+              <td valign="middle" width="22" style="width:22px;padding:0 10px 0 0;vertical-align:middle;">
+                <table role="presentation" border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse;"><tbody><tr><td align="center" valign="middle" width="22" height="22" bgcolor="{{CARD1_CHECK_BG}}" style="width:22px;height:22px;background-color:{{CARD1_CHECK_BG}};border-radius:999px;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:700;font-size:13px;line-height:22px;color:#0E1A38;text-align:center;">&#10003;</td></tr></tbody></table>
+              </td>
+              <td valign="middle" style="vertical-align:middle;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:600;font-size:16px;line-height:1.2;letter-spacing:0.04em;text-transform:uppercase;color:#0E1A38;">{{CARD1_PILL_HTML}}</td>
+            </tr></tbody></table>
+          </td></tr></tbody></table>
+          <p style="margin:0;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:16px;line-height:1.5;letter-spacing:-0.01em;text-align:center;color:#0E1A38;">{{CARD1_BODY_HTML}}</p>
+        </td></tr>
+      </tbody></table>
+    </td></tr>
+    <tr><td height="18" style="height:18px;font-size:0;line-height:0;mso-line-height-rule:exactly;">&nbsp;</td></tr>
+
+    <!-- Card 2 -->
+    <tr><td>
+      <table class="ssc-card" role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="width:100%;border-collapse:separate;background-color:{{CARD2_BG}};border-radius:24px;" bgcolor="{{CARD2_BG}}"><tbody>
+        <tr><td class="ssc-pad" style="padding:28px 32px;">
+          <table role="presentation" border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse;margin:0 auto 16px auto;"><tbody><tr><td class="ssc-pill-cell stat-pill" bgcolor="#FFFFFF" style="background-color:#FFFFFF;border-radius:999px;padding:14px 26px;">
+            <table role="presentation" border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse;"><tbody><tr>
+              <td valign="middle" width="22" style="width:22px;padding:0 10px 0 0;vertical-align:middle;">
+                <table role="presentation" border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse;"><tbody><tr><td align="center" valign="middle" width="22" height="22" bgcolor="{{CARD2_CHECK_BG}}" style="width:22px;height:22px;background-color:{{CARD2_CHECK_BG}};border-radius:999px;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:700;font-size:13px;line-height:22px;color:#0E1A38;text-align:center;">&#10003;</td></tr></tbody></table>
+              </td>
+              <td valign="middle" style="vertical-align:middle;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:600;font-size:16px;line-height:1.2;letter-spacing:0.04em;text-transform:uppercase;color:#0E1A38;">{{CARD2_PILL_HTML}}</td>
+            </tr></tbody></table>
+          </td></tr></tbody></table>
+          <p style="margin:0;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:16px;line-height:1.5;letter-spacing:-0.01em;text-align:center;color:#0E1A38;">{{CARD2_BODY_HTML}}</p>
+        </td></tr>
+      </tbody></table>
+    </td></tr>
+    <tr><td height="18" style="height:18px;font-size:0;line-height:0;mso-line-height-rule:exactly;">&nbsp;</td></tr>
+
+    <!-- Card 3 (last — no trailing spacer) -->
+    <tr><td>
+      <table class="ssc-card" role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="width:100%;border-collapse:separate;background-color:{{CARD3_BG}};border-radius:24px;" bgcolor="{{CARD3_BG}}"><tbody>
+        <tr><td class="ssc-pad" style="padding:28px 32px;">
+          <table role="presentation" border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse;margin:0 auto 16px auto;"><tbody><tr><td class="ssc-pill-cell stat-pill" bgcolor="#FFFFFF" style="background-color:#FFFFFF;border-radius:999px;padding:14px 26px;">
+            <table role="presentation" border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse;"><tbody><tr>
+              <td valign="middle" width="22" style="width:22px;padding:0 10px 0 0;vertical-align:middle;">
+                <table role="presentation" border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse;"><tbody><tr><td align="center" valign="middle" width="22" height="22" bgcolor="{{CARD3_CHECK_BG}}" style="width:22px;height:22px;background-color:{{CARD3_CHECK_BG}};border-radius:999px;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:700;font-size:13px;line-height:22px;color:#0E1A38;text-align:center;">&#10003;</td></tr></tbody></table>
+              </td>
+              <td valign="middle" style="vertical-align:middle;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:600;font-size:16px;line-height:1.2;letter-spacing:0.04em;text-transform:uppercase;color:#0E1A38;">{{CARD3_PILL_HTML}}</td>
+            </tr></tbody></table>
+          </td></tr></tbody></table>
+          <p style="margin:0;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:16px;line-height:1.5;letter-spacing:-0.01em;text-align:center;color:#0E1A38;">{{CARD3_BODY_HTML}}</p>
+        </td></tr>
+      </tbody></table>
+    </td></tr>
+
+  </tbody></table>
+</td></tr>

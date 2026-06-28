@@ -1,0 +1,26 @@
+<!--
+component: chart-infographic  [PROPOSED — Bryce design review 2026-06-18; in-review, locks verbatim on first approved-build ship]
+PURPOSE: Brand "science chart" module — a hosted chart graphic (the Dopamine/crash curve and its cortisol / oxidative-stress / comparison siblings) with a live-text eyebrow, title, and caption. Email renders the chart as an IMAGE (clients strip inline SVG); the editable vector master lives in the asset library (recreate-queue A1).
+SOURCE: PROPOSED 2026-06-17 — built to tokens.json + the Brand Book "Chart Visuals" spec (spice #FF541E = stimulant downside · royal #3D72E6 = Stasis-corrected · cream baseline; thin smooth curves, dotted baseline, end-dot caps-label legend). Surfaced by the email-system component mining (the chart class shipped 9×; the curve itself was specced brand-wide but never shipped to email). NOT yet extracted from a Bryce-approved build — locks verbatim after it ships in one.
+SLOTS:
+  {{EYEBROW}} — small uppercase royal label above the title (e.g. THE SCIENCE). Remove the eyebrow <div> if unused.
+  {{TITLE}} — chart headline (e.g. Forget the afternoon crash.).
+  {{CHART_URL}} — production-hosted PNG/SVG of the chart (legend STIMULANT / WITH STASIS is baked into the asset). The editable vector master is in the asset library.
+  {{CHART_ALT}} — alt text describing the chart (a11y + image-off fallback).
+  {{CAPTION}} — fine source/caption line below the chart. Remove the <p> if unused.
+REQUIRED MEDIA CLASSES (host must include inside @media only screen and (max-width:480px){...}):
+  .px{padding-left:24px !important;padding-right:24px !important;}
+  .h-chart{font-size:26px !important;}
+  .chart-img{max-width:100% !important;}
+DEPENDENCIES:
+  - Light-only pin (§8.6) in host head; Antarctica @font-face kit.
+  - Chart asset must be production-hosted (send-prep); for review it may point at a served-local render.
+  - bg cream #F4EFEB baked (the brand's chart surface); a different surface is a Bryce call.
+  - No VML/MSO; the chart is a plain <img> and degrades cleanly.
+-->
+<tr><td class="px" bgcolor="#F4EFEB" style="background-color:#F4EFEB;padding:44px 50px 46px;text-align:center;">
+  <div style="font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:700;font-size:13px;letter-spacing:0.2em;text-transform:uppercase;color:#3D72E6;padding-bottom:14px;">{{EYEBROW}}</div>
+  <h2 class="h-chart" style="margin:0 0 24px;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:30px;line-height:1.08;letter-spacing:-0.03em;color:#0E1A38;">{{TITLE}}</h2>
+  <img class="chart-img" src="{{CHART_URL}}" alt="{{CHART_ALT}}" width="500" style="width:100%;max-width:500px;height:auto;display:block;margin:0 auto;border:0;"/>
+  <p style="margin:18px 0 0;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:400;font-size:13px;line-height:1.5;color:#222427;">{{CAPTION}}</p>
+</td></tr>

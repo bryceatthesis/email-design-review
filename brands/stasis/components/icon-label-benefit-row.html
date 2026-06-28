@@ -1,0 +1,61 @@
+<!--
+component: icon-label-benefit-row  [PROPOSED — Bryce design review 2026-06-18; in-review, locks verbatim on first approved-build ship]
+PURPOSE: A vertical list of benefit rows; each row pairs a small icon (circular brand icon or checkmark) + a bold uppercase label in a left column with a one-line supporting-copy paragraph in a right column, rows separated by hairline rules (divider-between, none under the last). Built for ~3 rows; duplicate a row to add more. This is the icon+label benefit treatment (vs the text-only checklist-rows), shipped 15× across flows/campaigns (e.g. the [26] Quiz Flow "Proven Ingredients to Upgrade Your Stimulant Experience" section and the GWP intro panel).
+SOURCE: PROPOSED 2026-06-17 — built to brands/stasis/tokens.json + the Figma mining reference (figma-component-catalog.json module_type "icon-label-benefit-row", frequency 15; per-page descriptions in inventory/figma-modules/26-quiz-flow.json — "Four left-aligned benefit rows: a small colored icon … an uppercase bold label … and a paragraph of supporting copy at right, separated by hairline rules" — and 0124-gwp-flow-mindshift.json). Visual fidelity measured against masters/figma-renders/26-quiz-flow.png (left email, "Proven Ingredients" section): lime lightning / royal up-arrow / royal moon / spice brain icons, ~44%/56% split, black ink label + body. NOT yet extracted from a Bryce-approved build — locks verbatim after it ships in one.
+SLOTS (repeat the labeled <tr> block per row; this fragment ships 3):
+  {{ROW1_ICON}} / {{ROW2_ICON}} / {{ROW3_ICON}} — small icon image (production-hosted; sourced via email-image-source — canonical masters only, gaps stop the build). Displayed 32x32; supply a square crop (circular icon, checkmark, or flat brand glyph).
+  {{ROW1_ICON_ALT}} / {{ROW2_ICON_ALT}} / {{ROW3_ICON_ALT}} — icon alt text.
+  {{ROW1_LABEL}} / {{ROW2_LABEL}} / {{ROW3_LABEL}} — bold uppercase label (approved instances: LESS CRASH / BETTER MOOD / BETTER SLEEP). Plain text; wrapping is allowed (the design stacks two-word labels).
+  {{ROW1_COPY}} / {{ROW2_COPY}} / {{ROW3_COPY}} — one-line supporting copy paragraph (approved: "L-Theanine provides a steady state of focus and avoid the daily stimulant crash.").
+  To change the row count: duplicate a ruled <tr> block and keep the LAST row with border-bottom:none.
+REQUIRED MEDIA CLASSES (host must include inside @media only screen and (max-width:480px){...}):
+  .px{padding-left:24px !important;padding-right:24px !important;}
+  .col-stack{display:block !important;width:100% !important;}
+  .ben-left{padding:0 0 10px 0 !important;}
+  .ben-label{font-size:24px !important;}
+DEPENDENCIES:
+  - Light-only pin (§8.6) in host head; Antarctica @font-face kit (host ships it).
+  - Icons sourced via email-image-source (canonical masters only); for review they may point at a served-local image.
+  - bg white #FFFFFF baked; label + copy ink #0E1A38; hairline rule rgba(14,26,56,0.32) (the divider color used in two-col-list). Label weight 500 (display weight — NOT 900), copy weight 500. Icon color is a property of the supplied image, not a CSS slot.
+  - No VML/MSO (no CTA pill in this fragment).
+-->
+<tr><td class="px" bgcolor="#FFFFFF" style="background-color:#FFFFFF;padding:8px 50px 12px 50px;">
+  <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="width:100%;border-collapse:collapse;"><tbody>
+    <!-- ROW 1 (ruled) -->
+    <tr><td style="padding:24px 0 24px 0;border-bottom:1px solid rgba(14,26,56,0.32);">
+      <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="width:100%;border-collapse:collapse;"><tbody><tr>
+        <td class="col-stack ben-left" valign="top" width="44%" style="width:44%;padding:0 18px 0 0;vertical-align:top;">
+          <img src="{{ROW1_ICON}}" alt="{{ROW1_ICON_ALT}}" width="32" height="32" style="display:block;width:32px;height:32px;border:0;margin:0 0 12px 0;"/>
+          <p class="ben-label" style="margin:0;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:28px;line-height:1.05;letter-spacing:-0.02em;text-transform:uppercase;color:#0E1A38;text-align:left;">{{ROW1_LABEL}}</p>
+        </td>
+        <td class="col-stack" valign="top" width="56%" style="width:56%;vertical-align:top;">
+          <p style="margin:0;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:16px;line-height:1.45;letter-spacing:-0.01em;color:#0E1A38;text-align:left;">{{ROW1_COPY}}</p>
+        </td>
+      </tr></tbody></table>
+    </td></tr>
+    <!-- ROW 2 (ruled) -->
+    <tr><td style="padding:24px 0 24px 0;border-bottom:1px solid rgba(14,26,56,0.32);">
+      <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="width:100%;border-collapse:collapse;"><tbody><tr>
+        <td class="col-stack ben-left" valign="top" width="44%" style="width:44%;padding:0 18px 0 0;vertical-align:top;">
+          <img src="{{ROW2_ICON}}" alt="{{ROW2_ICON_ALT}}" width="32" height="32" style="display:block;width:32px;height:32px;border:0;margin:0 0 12px 0;"/>
+          <p class="ben-label" style="margin:0;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:28px;line-height:1.05;letter-spacing:-0.02em;text-transform:uppercase;color:#0E1A38;text-align:left;">{{ROW2_LABEL}}</p>
+        </td>
+        <td class="col-stack" valign="top" width="56%" style="width:56%;vertical-align:top;">
+          <p style="margin:0;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:16px;line-height:1.45;letter-spacing:-0.01em;color:#0E1A38;text-align:left;">{{ROW2_COPY}}</p>
+        </td>
+      </tr></tbody></table>
+    </td></tr>
+    <!-- ROW 3 (LAST — no border-bottom) -->
+    <tr><td style="padding:24px 0 0 0;">
+      <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="width:100%;border-collapse:collapse;"><tbody><tr>
+        <td class="col-stack ben-left" valign="top" width="44%" style="width:44%;padding:0 18px 0 0;vertical-align:top;">
+          <img src="{{ROW3_ICON}}" alt="{{ROW3_ICON_ALT}}" width="32" height="32" style="display:block;width:32px;height:32px;border:0;margin:0 0 12px 0;"/>
+          <p class="ben-label" style="margin:0;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:28px;line-height:1.05;letter-spacing:-0.02em;text-transform:uppercase;color:#0E1A38;text-align:left;">{{ROW3_LABEL}}</p>
+        </td>
+        <td class="col-stack" valign="top" width="56%" style="width:56%;vertical-align:top;">
+          <p style="margin:0;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:16px;line-height:1.45;letter-spacing:-0.01em;color:#0E1A38;text-align:left;">{{ROW3_COPY}}</p>
+        </td>
+      </tr></tbody></table>
+    </td></tr>
+  </tbody></table>
+</td></tr>

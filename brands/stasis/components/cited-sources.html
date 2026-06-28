@@ -1,0 +1,46 @@
+<!--
+component: cited-sources  [PROPOSED — Bryce design review 2026-06-18; in-review, locks verbatim on first approved-build ship]
+PURPOSE: A centered "CITED SOURCES" fine-print reference block — a numbered list of study/reference citations as muted-gray underlined links, with an optional gray asterisk methodology/survey footnote below. The clinical-substantiation footer that closes Stasis claims-heavy emails. Repeatable: add/remove numbered <tr> rows for any citation count.
+SOURCE: PROPOSED 2026-06-17 — built to tokens.json + real Figma frames idx 133 (Day 36), idx 145 (Day 5), idx 283 (Email 6_Day 5), all "CITED SOURCES, numbered underlined study citations." Heading sampled near-black (ink #0E1A38); citation links + footnote sampled muted gray (#7D7D7D); white ground. Appears ~3 of 294 emails. NOT yet extracted from a Bryce-approved build — locks verbatim after it ships in one.
+SLOTS:
+  {{CITE_1_HREF}} … {{CITE_N_HREF}} — destination URL for each citation link (the study/source). If a citation is not linked in the source email, replace the <a> with a plain <span> (same gray, keep the underline off) — most real instances DO link.
+  {{CITE_1_TEXT}} … {{CITE_N_TEXT}} — citation text (study title / journal line). Wraps to multiple centered lines. Approved instance (idx 133/145): "Effect of one-month treatment with methylphenidate on salivary cortisol level of attention deficit hyperactivity disorder children." Inline emphasis via <em style="font-style:italic;"> for journal/Latin binomials (e.g. Withania somnifera) is fine — italics are allowed in fine print (the §3 upright-only rule governs display/serif, not citation italics).
+  {{FOOTNOTE_HTML}} — inner HTML of the trailing gray asterisk paragraph (survey/methodology disclaimer). Approved instance (idx 145): "*Results are from an open-label, consumer perception survey conducted from July 2024 to September 2024 that included 175-178 customers who were taking Stasis for at least 30 days. …" Remove the ENTIRE footnote <tr> if the source email has no methodology note (idx 283 still carries one; some claims blocks do not).
+  (The "CITED SOURCES" heading is BAKED copy, not a slot. The list is numbered with literal "1." … "N." baked into each row, not auto-generated — keep them sequential when you add/remove rows.)
+REQUIRED MEDIA CLASSES (host must include inside @media only screen and (max-width:480px){...}):
+  .px{padding-left:24px !important;padding-right:24px !important;}
+  .cite-num{width:22px !important;}            /* keep the numeral gutter tight on small screens */
+  .cite-txt{font-size:11px !important;line-height:1.5 !important;}
+  .cite-foot{font-size:10px !important;line-height:1.5 !important;}
+  (No .col-stack needed — this block is single-column at every width.)
+DEPENDENCIES:
+  - Light-only pin (§8.6) in host head; Antarctica @font-face kit.
+  - Sans stack: font-family:'Antarctica','Helvetica Neue',Arial,sans-serif. Heading weight 500 (display weight), uppercase, letter-spacing 0.04em, ink #0E1A38. Citations weight 400, ~12px fine print, gray #7D7D7D, underlined. Footnote weight 400, ~11px, gray #7D7D7D.
+  - Colors baked: ground white #FFFFFF; heading ink #0E1A38; citation links + footnote #7D7D7D (the measured citation-gray — NOT a named token; it is the brand's fine-print gray, a lighter sibling of charcoal #222427. If you want a token-pure variant, swap #7D7D7D -> charcoal #222427; the render reads lighter, so #7D7D7D is the faithful match). All tokens-aligned, no dark-mode-only colors.
+  - No CTA inside this block. (The "TRY STASIS"/primary CTA that sits ABOVE the heading in the real frames is a SEPARATE component — cta-pill — not part of cited-sources.) Therefore NO VML/MSO is required in this fragment.
+  - Citation links are real <a> tags; gray + underline is the in-email link convention here (not royal/spice). Honor the source email's hrefs; gaps are a copy issue, not a build blocker.
+  - EMAIL-SAFE NOTE: nothing in the original needs live behavior (no countdown/video/form) — it is already static fine-print text + anchors, recreated 1:1 as live text.
+  - This is a paste-level <tr><td> ROW fragment for the 600px wrap table — drop it directly into the wrap, typically just below the closing CTA and above the brand sign-off/footer band.
+-->
+<tr><td class="px" bgcolor="#FFFFFF" style="background-color:#FFFFFF;padding:28px 40px 24px 40px;">
+  <!-- CITED SOURCES heading (baked) -->
+  <p style="margin:0 0 18px 0;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:18px;line-height:1.1;letter-spacing:0.04em;text-transform:uppercase;color:#0E1A38;text-align:center;">CITED SOURCES</p>
+  <!-- numbered citation list: number gutter + wrapping link text, centered text per the frames -->
+  <table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0" style="width:100%;border-collapse:collapse;"><tbody>
+    <tr>
+      <td class="cite-num" valign="top" width="24" style="width:24px;padding:0 6px 12px 0;vertical-align:top;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:400;font-size:12px;line-height:1.45;color:#7D7D7D;text-align:right;">1.</td>
+      <td class="cite-txt" valign="top" style="padding:0 0 12px 0;vertical-align:top;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:400;font-size:12px;line-height:1.45;color:#7D7D7D;text-align:center;"><a href="{{CITE_1_HREF}}" target="_blank" style="color:#7D7D7D;text-decoration:underline;">{{CITE_1_TEXT}}</a></td>
+    </tr>
+    <tr>
+      <td class="cite-num" valign="top" width="24" style="width:24px;padding:0 6px 12px 0;vertical-align:top;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:400;font-size:12px;line-height:1.45;color:#7D7D7D;text-align:right;">2.</td>
+      <td class="cite-txt" valign="top" style="padding:0 0 12px 0;vertical-align:top;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:400;font-size:12px;line-height:1.45;color:#7D7D7D;text-align:center;"><a href="{{CITE_2_HREF}}" target="_blank" style="color:#7D7D7D;text-decoration:underline;">{{CITE_2_TEXT}}</a></td>
+    </tr>
+    <tr>
+      <td class="cite-num" valign="top" width="24" style="width:24px;padding:0 6px 12px 0;vertical-align:top;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:400;font-size:12px;line-height:1.45;color:#7D7D7D;text-align:right;">3.</td>
+      <td class="cite-txt" valign="top" style="padding:0 0 12px 0;vertical-align:top;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:400;font-size:12px;line-height:1.45;color:#7D7D7D;text-align:center;"><a href="{{CITE_3_HREF}}" target="_blank" style="color:#7D7D7D;text-decoration:underline;">{{CITE_3_TEXT}}</a></td>
+    </tr>
+    <!-- To add citations: copy a <tr> above, bump the numeral and the {{CITE_n_*}} markers. To remove: delete whole <tr> rows and renumber. The last row keeps the same 12px bottom pad; the footnote <tr> below provides the separation. -->
+  </tbody></table>
+  <!-- OPTIONAL footnote (survey/methodology asterisk). Remove this whole <tr>-less <p> block if the source email has none. -->
+  <p class="cite-foot" style="margin:10px 0 0 0;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:400;font-size:11px;line-height:1.5;color:#7D7D7D;text-align:center;">{{FOOTNOTE_HTML}}</p>
+</td></tr>

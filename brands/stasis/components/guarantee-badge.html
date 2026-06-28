@@ -1,0 +1,42 @@
+<!--
+component: guarantee-badge  [PROPOSED — Bryce design review 2026-06-18; in-review, locks verbatim on first approved-build ship]
+PURPOSE: Money-back / risk-reversal reassurance card — a thin-bordered (1px ink hairline, 16px radius) rounded box on cream, with a centered "Still skeptical? We get it." headline, a one-line 30-day refund promise, and an orange CTA pill inside. The objection-handling closer that lowers purchase risk right before the final shop link. Repeatable as a single block near the email foot.
+SOURCE: PROPOSED 2026-06-17 — built to brands/stasis/tokens.json + the real Figma frames. Mined from the email-system asset accounting: ships as the bordered "Still skeptical?" guarantee card in idx 281 (Email 7_Day 6, "money-back guarantee card: bordered box, Still skeptical, 30-day guarantee") and idx 143 (Day 6, "money-back guarantee box: Still skeptical card, 30-day refund, SHOP set") — the ~2-of-294 frequency the catalog notes. Real-frame copy verbatim: heading "Still skeptical? We get it.", body "Try it for 30 days and if you don't love it, you're guaranteed your money back.", CTA "SHOP DAY + NIGHT SET". Box geometry follows the Bryce-approved outlined-infographic-box (border-collapse:separate + border + border-radius on a #F4EFEB cream host row); CTA pair follows cta-pill.html / pricing-cards-2col.html verbatim. NOT yet extracted from a Bryce-approved build — locks verbatim after it ships in one.
+SLOTS:
+  {{GUARANTEE_HEADING}} — inner HTML of the centered headline p (ink, weight 500). Approved instance: Still skeptical? We get it.
+  {{GUARANTEE_BODY}} — inner HTML of the centered body p (charcoal). Emphasis via inline <strong style="font-weight:600;">. Approved: Try it for 30 days and if you don&rsquo;t love it, you&rsquo;re <strong style="font-weight:600;">guaranteed your money back.</strong>
+  {{CTA_TEXT}} — button label, uppercase. Appears TWICE (VML <center> + <a>) — fill both. Approved: SHOP DAY + NIGHT SET. NOTE: this label is 17 chars and exceeds the default 264px VML pill — the VML width below is set to 300px for it; re-measure (or trim copy) if {{CTA_TEXT}} changes materially or Outlook will clip the label.
+  {{CTA_HREF}} — destination. Appears TWICE (VML href + <a> href) — fill both with the same URL. Approved instance: https://takestasis.com/
+REQUIRED MEDIA CLASSES (host must include, verbatim, inside @media only screen and (max-width:480px){...}):
+  .px{padding-left:24px !important;padding-right:24px !important;}
+  .gb-pad{padding:28px 22px 30px 22px !important;}
+  .gb-head{font-size:22px !important;}
+  .gb-body{font-size:14px !important;}
+  .cta-link{white-space:normal !important;}
+DEPENDENCIES:
+  - Light-only pin (§8.6) in host head; Antarctica @font-face kit from the Stasis Shopify CDN.
+  - Sans stack: font-family:'Antarctica','Helvetica Neue',Arial,sans-serif; heading weight 500 (display roles are 500, NOT bold — font-map.md), body weight 500 with inline 600 strong, CTA weight 700.
+  - Box border uses border-collapse:separate on the inner table (required for border-radius to render); do NOT switch to collapse. Border 1px solid rgba(14,26,56,0.45) — a hairline ink rule matching the real frame's lighter border (lighter than outlined-infographic-box's 1.5px). Host row bg #F4EFEB (cream) is part of the approved instance and is kept baked; if the host section above it is white, change the host td bgcolor + background-color to #FFFFFF (both colors are token-pinned, never invent).
+  - VML/MSO: the CTA is a §5.1 bulletproof pair — Outlook gets the [if mso] v:roundrect (height 56px, width 300px, arcsize 50%, fill #FF541E, label #000000); everything else gets the [if !mso] table+anchor. Keep both halves and all conditional-comment markers intact. The box border degrades to a square-cornered 1px rule in Outlook (accepted, same as outlined-infographic-box).
+  - Colors pinned from tokens.json: cream #F4EFEB host bg, ink #0E1A38 heading, charcoal #222427 body, CTA fill #FF541E, CTA text #000000. No dark-mode-only colors.
+EMAIL-SAFE INTERPRETATION:
+  - The source is a static reassurance card (no live behavior to emulate) — rendered 1:1 as live text + a bulletproof CTA pill; no image asset required, so no Step-0 sourcing gap. If a host instead wants a "badge" seal graphic, swap the heading cell for a hosted PNG via email-image-source (canonical masters only); the text card is the approved default.
+  - ALTERNATE NOT BUILT HERE (RISK-FREE trust callout, idx 90 / idx 203 "7.17"): a lavender/periwinkle royal-tint panel with a lime #EEEF78 pill label "RISK-FREE:" over "30-Day Money-Back Guarantee on your first purchase". That is a stats-panel-light/eyebrow-chip variant, not a bordered card — track it separately if mined; this fragment is the bordered "Still skeptical?" pattern only.
+-->
+<tr><td class="px gb-host" align="center" bgcolor="#F4EFEB" style="background-color:#F4EFEB;padding:18px 40px 24px 40px;">
+  <table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0" style="width:100%;border-collapse:separate;border:1px solid rgba(14,26,56,0.45);border-radius:16px;">
+    <tbody>
+    <tr><td class="gb-pad" align="center" style="padding:34px 36px 36px 36px;">
+      <p class="gb-head" style="margin:0 0 12px 0;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:26px;line-height:1.12;letter-spacing:-0.02em;color:#0E1A38;text-align:center;">{{GUARANTEE_HEADING}}</p>
+      <p class="gb-body" style="margin:0 0 24px 0;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:16px;line-height:1.5;letter-spacing:-0.01em;color:#222427;text-align:center;">{{GUARANTEE_BODY}}</p>
+      <!--[if mso]>
+      <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="{{CTA_HREF}}" style="height:56px;v-text-anchor:middle;width:300px;" arcsize="50%" stroke="false" fillcolor="#FF541E"><w:anchorlock/>
+      <center style="color:#000000;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-size:20px;font-weight:700;letter-spacing:3px;text-transform:uppercase;">{{CTA_TEXT}}</center></v:roundrect>
+      <![endif]-->
+      <!--[if !mso]><!-->
+      <table align="center" role="presentation" border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse;margin:0 auto;"><tbody><tr><td align="center" bgcolor="#FF541E" style="background-color:#FF541E;border-radius:999px;"><a class="cta-link" href="{{CTA_HREF}}" target="_blank" style="display:inline-block;padding:18px 40px;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:700;font-size:20px;line-height:1;letter-spacing:0.18em;text-transform:uppercase;color:#000000;text-decoration:none;border-radius:999px;white-space:nowrap;">{{CTA_TEXT}}</a></td></tr></tbody></table>
+      <!--<![endif]-->
+    </td></tr>
+    </tbody>
+  </table>
+</td></tr>

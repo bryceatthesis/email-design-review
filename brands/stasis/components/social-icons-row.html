@@ -1,0 +1,37 @@
+<!--
+component: social-icons-row  [PROPOSED — Bryce design review 2026-06-18; in-review, locks verbatim on first approved-build ship]
+PURPOSE: Footer contact + social block on a tinted band: a centered "For any questions, you can contact our Customer Service Team at hello@takestasis.com" line (royal), then a single centered row of three monochrome social glyphs (Instagram / Facebook / TikTok), each a hosted icon image linking out. The standard pre-legal-footer "we're reachable" module — appears in ~33 of 294 Figma frames (welcome flow, browse/checkout abandon, order confirmation, subscription).
+SOURCE: PROPOSED 2026-06-17 — built to brands/stasis/tokens.json + real Figma frames the Stasis email-system frames/. Ground truth read from idx 104 (Stasis (Client Duplicate) (10)/Email 2.png — full-res band), idx 108 (Email 4.png), idx 109 (Email 5.png), idx 126 (Order Confirmation_Update.png). Observed: creme #F4EFEB band (most common; white #FFFFFF also seen), royal #3D72E6 centered contact copy with the email as the last line, three royal/navy circular-or-glyph social icons centered in one row with wide even spacing. NOT yet extracted from a Bryce-approved build — markup + paddings are reconstructed, not verbatim; locks once it ships in an approved build.
+SLOTS:
+  {{BG}} — band background. Observed: #F4EFEB (creme, default) / #FFFFFF (white). Set bgcolor + background-color to the same value.
+  {{CONTACT_HTML}} — inner HTML of the contact paragraph. Observed verbatim: For any questions, you can contact our Customer Service Team at <a href="mailto:hello@takestasis.com" style="color:#3D72E6;text-decoration:none;">hello@takestasis.com</a> . Keep the email a mailto link in royal; line wraps are natural (no forced <br>).
+  {{IG_HREF}} / {{FB_HREF}} / {{TT_HREF}} — social profile destinations (Instagram / Facebook / TikTok). Observed brand handles point at the public profiles; fill all three.
+  {{IG_ICON_URL}} / {{FB_ICON_URL}} / {{TT_ICON_URL}} — hosted monochrome icon images (royal/navy glyph on transparent). §4 image-is-the-image rule: social marks are ALWAYS the approved icon asset (sha-pinned, production-hosted; sourced via email-image-source — gaps stop the build), NEVER an emoji or a font glyph. Display box is 36x36 (see geometry note). Use a single tint family across all three so the row reads as one set.
+  {{IG_ALT}} / {{FB_ALT}} / {{TT_ALT}} — icon alt text (e.g. "Stasis on Instagram"). Required — these are links.
+REQUIRED MEDIA CLASSES (host must include verbatim inside @media only screen and (max-width:480px){...}):
+  .px{padding-left:24px !important;padding-right:24px !important;}
+  .si-gap{padding-left:14px !important;padding-right:14px !important;}   /* tighten the inter-icon gutter on narrow screens */
+  .si-icon{width:32px !important;height:32px !important;}                 /* nudge icons down slightly on mobile */
+GEOMETRY NOTE: the icons are a fixed-size hosted-image set — display box 36x36 desktop / 32x32 mobile (.si-icon), gutter 22px desktop / 14px mobile (.si-gap). These are a matched pair; if the source icon art has different intrinsic proportions, re-measure the box rather than letting it scale arbitrarily. No countdown/video/form here, so no static-block substitution is needed.
+DEPENDENCIES:
+  - Light-only pin (§8.6) in host head: <meta name="color-scheme" content="light only">, <meta name="supported-color-schemes" content="light only">, :root/body{color-scheme:light only;}. Icons are monochrome PNGs on transparent — confirm they read against BOTH the creme and white band (no dark-mode-only inversion).
+  - Antarctica @font-face kit shipped by host. Sans stack font-family:'Antarctica','Helvetica Neue',Arial,sans-serif; contact copy weight 500.
+  - Colors pinned from tokens.json: band {{BG}} creme #F4EFEB / white #FFFFFF; contact copy + mailto link royal #3D72E6. No invented hex.
+  - Icons sourced via email-image-source (canonical masters only, sha-pinned); for review they may point at a served-local image. NEVER typed/emoji marks.
+  - No VML/MSO required in this fragment (no pill CTA). The icon row is a center-aligned nested table so Outlook holds the row on one line.
+  - Pairs with legal-footer.html on send copies: this band sits ABOVE the white legal footer, not in place of it.
+-->
+<tr><td align="center" bgcolor="{{BG}}" class="px" style="padding:40px 40px 36px 40px;background-color:{{BG}};text-align:center;">
+  <p style="margin:0 0 26px 0;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:15px;line-height:1.55;letter-spacing:-0.01em;color:#3D72E6;text-align:center;">{{CONTACT_HTML}}</p>
+  <table role="presentation" align="center" border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse;margin:0 auto;"><tbody><tr>
+    <td class="si-gap" align="center" valign="middle" style="padding:0 22px;vertical-align:middle;">
+      <a href="{{IG_HREF}}" target="_blank" style="text-decoration:none;"><img class="si-icon" src="{{IG_ICON_URL}}" width="36" height="36" alt="{{IG_ALT}}" border="0" style="display:block;width:36px;height:36px;border:0;"/></a>
+    </td>
+    <td class="si-gap" align="center" valign="middle" style="padding:0 22px;vertical-align:middle;">
+      <a href="{{FB_HREF}}" target="_blank" style="text-decoration:none;"><img class="si-icon" src="{{FB_ICON_URL}}" width="36" height="36" alt="{{FB_ALT}}" border="0" style="display:block;width:36px;height:36px;border:0;"/></a>
+    </td>
+    <td class="si-gap" align="center" valign="middle" style="padding:0 22px;vertical-align:middle;">
+      <a href="{{TT_HREF}}" target="_blank" style="text-decoration:none;"><img class="si-icon" src="{{TT_ICON_URL}}" width="36" height="36" alt="{{TT_ALT}}" border="0" style="display:block;width:36px;height:36px;border:0;"/></a>
+    </td>
+  </tr></tbody></table>
+</td></tr>

@@ -1,0 +1,70 @@
+<!--
+component: offer-headline-badge  [PROPOSED — Bryce design review 2026-06-18; in-review, locks verbatim on first approved-build ship]
+PURPOSE: The dominant promo headline module — a big centered offer/value headline with a colored inline value callout (e.g. royal "+ $75" or "$75 in FREE gifts"), an optional badge row above it (lime starburst-style chip + black urgency pill), an optional value/price subhead, and an optional orange CTA pill. This is the single most-recurring promo header across the catalog (mined in ~88 of 294 Figma frames). Covers two faces of the same module: the value-stack/free-gift headline (idx 178 "A full support system + $75 in tools…", idx 174 "$75 in FREE gifts. Only while supplies last.") and the discount/urgency headline (idx 211 "24 HOURS LEFT / SAVE 57% · ENDS TOMORROW / $387 Value — Today Only $166").
+SOURCE: PROPOSED 2026-06-17 — built to brands/stasis/tokens.json + the Stasis email-system frames/ (idx 178 "1.28 Why Stasis is an Essential Part of Your Year", idx 174 "Jan4_GWP Highlight", idx 211 "11.30 Sale 24 Hours Left"). Markup format, VML+HTML CTA pair, media-class discipline and slot conventions follow the extracted library (pricing-cards-2col.html, cta-pill.html, promo-strip-yellow.html). NOT yet extracted from a Bryce-approved build — locks verbatim only after it ships in one.
+
+EMAIL-SAFE INTERPRETATIONS (the original needs behavior/art this fragment renders statically):
+  - Starburst/star chip: in the real sends the "SAVE 57%" / "$75 IN FREE GIFTS" badge is an irregular green/lime starburst PNG. A jagged starburst is not reproducible in bulletproof HTML, so this fragment renders it as a rounded lime chip (live text, no image dependency). If the true starburst art is wanted, set {{BADGE_A_IMG}} to a hosted, sha-pinned PNG via email-image-source and the build can swap the text chip for that <img> (gaps stop the build).
+  - Countdown / "ENDS TOMORROW" / "24 HOURS LEFT": these are urgency states, not live timers. Rendered as static styled text (black pill + headline). No JS countdown; copy is fixed at build time and the live deadline belongs in the disclaimer/host, governed at send-prep.
+  - Coupon/discount codes: if {{HEADLINE_HTML}} or {{SUBHEAD_HTML}} references a code, the coupon zone is governed by reference/send-prep-spec.md §2 at send-prep time — do not bake a bare code line here (pair with promo-strip-yellow / coupon-code-row-yellow in the send copy).
+
+SLOTS:
+  {{ROW_BG}} — module background color. Approved faces: #FFFFFF (idx 178 value-stack, on white) or #F4EFEB creme. Light backgrounds only — this is a light-only module; do not pass a dark bg.
+  {{BADGE_BLOCK}} — OPTIONAL badge row above the headline. Leave EMPTY ("") for the no-badge face (idx 178). To show badges, paste the BADGE PARTIALS block documented below (lime chip and/or black urgency pill). The two real badge instances:
+        idx 211 → lime chip "SAVE 57%" + black pill "ENDS TOMORROW"
+        idx 174 → single lime chip "GET $75 IN FREE GIFTS" (no black pill)
+  {{HEADLINE_HTML}} — inner HTML of the big offer headline (ink #0E1A38 display, weight 500). Wrap the value/number in <span class="ohb-val"> to color it royal #3D72E6 (the inline value callout — idx 178 "+ $75", idx 174 "$75 in FREE gifts").
+        idx 178: A full support system <span class="ohb-val">+&nbsp;$75</span> in tools<br/>that make a difference.
+        idx 174: <span class="ohb-val">$75 in FREE gifts.</span>
+        idx 211 (all-caps urgency face): 24 HOURS LEFT
+  {{SUBHEAD_HTML}} — OPTIONAL value/price subhead under the headline (ink, lead size). Wrap a price/number in <strong style="font-weight:600;"> for emphasis. Remove the <p> if unused.
+        idx 174: Only while supplies last.
+        idx 211: $387 Value — Today Only <strong style="font-weight:600;">$166</strong>
+  {{CTA_TEXT}} / {{CTA_HREF}} — OPTIONAL orange CTA pill (VML + anchor pair; each href fills BOTH occurrences). Approved labels: GET $75 IN FREE GIFTS (idx 174) / CLAIM OFFER (idx 211). To omit the CTA, delete the whole CTA block (both the [if mso] roundrect and the [if !mso] table) between the CTA START/END markers.
+        NOTE: the VML pill is a FIXED pixel box (width 268px fits ~20 chars). If {{CTA_TEXT}} is materially shorter/longer, re-measure and adjust the v:roundrect width or Outlook will clip/float the label.
+
+BADGE PARTIALS — paste into {{BADGE_BLOCK}} (each is one inline-block table cell; show one or both):
+  Lime chip (starburst stand-in):
+    <td valign="middle" style="padding:0 8px 0 0;vertical-align:middle;"><span style="display:inline-block;background-color:#EEEF78;color:#0E1A38;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:700;font-size:13px;line-height:1;letter-spacing:0.04em;text-transform:uppercase;padding:9px 16px;border-radius:999px;white-space:nowrap;">SAVE 57%</span></td>
+  Black urgency pill:
+    <td valign="middle" style="vertical-align:middle;"><span style="display:inline-block;background-color:#000000;color:#FFFFFF;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:700;font-size:13px;line-height:1;letter-spacing:0.04em;text-transform:uppercase;padding:9px 16px;border-radius:999px;white-space:nowrap;">ENDS TOMORROW</span></td>
+
+REQUIRED MEDIA CLASSES (host must include, verbatim, inside @media only screen and (max-width:480px){...}):
+  .px{padding-left:24px !important;padding-right:24px !important;}
+  .ohb-h{font-size:30px !important;}            /* h1 mobile per tokens.type.h1.mobile (32) trimmed to fit centered offer copy */
+  .ohb-sub{font-size:18px !important;}
+  .cta-link{white-space:normal !important;}
+
+DEPENDENCIES:
+  - Paste as a direct <tr> child of the host 600px wrap table (it is a full row).
+  - Light-only pin (§8.6) in host head: both metas (color-scheme + supported-color-schemes "light only") and the :root,body{color-scheme:light only;} rule. No dark-mode-only colors are used here.
+  - Font kit: Antarctica @font-face from the Stasis Shopify CDN; inline sans stack font-family:'Antarctica','Helvetica Neue',Arial,sans-serif. Headline weight 500 (display), value span 600, subhead 500, badge/CTA 700.
+  - Tokens (never invent hex): ink #0E1A38 (headline/subhead), royal #3D72E6 (inline value callout .ohb-val), lime #EEEF78 (badge chip), black #000000 (urgency pill + CTA text), spice #FF541E (CTA fill), creme #F4EFEB / white #FFFFFF (row bg). Type from tokens.type: h1 40/32 wt500 lh1.02 tracking-0.04em; lead 20 wt600 for subhead; eyebrow 13/700/0.2em for badges.
+  - VML/MSO: the CTA is a §5.1 bulletproof pair — Outlook gets the v:roundrect inside [if mso], everything else gets the table+anchor inside [if !mso]. Keep both halves and all four conditional-comment markers intact, or remove the whole pair together if no CTA.
+  - Badges are live text chips (no image dependency) by default; the true starburst PNG is an optional email-image-source asset (see EMAIL-SAFE INTERPRETATIONS).
+-->
+<tr><td class="px" bgcolor="{{ROW_BG}}" align="center" style="background-color:{{ROW_BG}};padding:36px 40px 34px 40px;text-align:center;">
+
+  <!-- badge row (optional) -->
+  {{BADGE_BLOCK}}
+
+  <!-- offer / value headline (ink display 500, inline value callout in royal via .ohb-val) -->
+  <p class="ohb-h" style="margin:18px 0 0 0;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:40px;line-height:1.02;letter-spacing:-0.04em;color:#0E1A38;text-align:center;">{{HEADLINE_HTML}}</p>
+
+  <!-- value / price subhead (optional — remove this <p> if unused) -->
+  <p class="ohb-sub" style="margin:14px 0 0 0;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:20px;line-height:1.34;letter-spacing:-0.02em;color:#0E1A38;text-align:center;">{{SUBHEAD_HTML}}</p>
+
+  <!-- CTA pill (optional — delete from CTA START to CTA END to omit) -->
+  <!-- CTA START -->
+  <div style="margin-top:24px;">
+    <!--[if mso]>
+    <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="{{CTA_HREF}}" style="height:56px;v-text-anchor:middle;width:268px;" arcsize="50%" stroke="false" fillcolor="#FF541E"><w:anchorlock/>
+    <center style="color:#000000;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-size:20px;font-weight:700;letter-spacing:3px;text-transform:uppercase;">{{CTA_TEXT}}</center></v:roundrect>
+    <![endif]-->
+    <!--[if !mso]><!-->
+    <table align="center" role="presentation" border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse;margin:0 auto;"><tbody><tr><td align="center" bgcolor="#FF541E" style="background-color:#FF541E;border-radius:999px;"><a class="cta-link" href="{{CTA_HREF}}" target="_blank" style="display:inline-block;padding:18px 40px;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:700;font-size:20px;line-height:1;letter-spacing:0.18em;text-transform:uppercase;color:#000000;text-decoration:none;border-radius:999px;white-space:nowrap;">{{CTA_TEXT}}</a></td></tr></tbody></table>
+    <!--<![endif]-->
+  </div>
+  <!-- CTA END -->
+
+</td></tr>

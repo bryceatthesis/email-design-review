@@ -1,0 +1,124 @@
+<!-- ============================================================
+component: countdown-timer  [PROPOSED — Bryce design review 2026-06-18; in-review, locks verbatim on first approved-build ship]
+
+PURPOSE: Dark urgency band — a centered white display headline (e.g. "JUST 144
+HOURS LEFT"), a white scarcity/deadline subline, an OPTIONAL hosted countdown
+image (the digit-block "112 HOURS / 30 MINUTES / 11 SECONDS" timer), and a brand
+CTA pill. Email-safe interpretation of a live countdown: there is NO JavaScript
+and no animated dials in the document — the moving timer ships as a single hosted
+GIF in the {{COUNTDOWN_IMAGE}} slot (or the slot is omitted and the headline
+carries the urgency alone). Drop one of these as a full-width band near the top of
+a sale / final-call / GWP-ending email.
+
+SOURCE: PROPOSED 2026-06-17 — built to tokens.json + the real Figma frames.
+Surfaced by the email-system component mining (urgency/countdown family appears in
+~17 of 294 emails). Frames studied:
+  - idx 163 "1.24 Ending Soon_ GWP" §3 — "JUST 144 HOURS LEFT": white centered
+    two-line display headline + white scarcity subcopy ("We've already sold through
+    40% of our GWP inventory…") over a dark/navy photo backdrop, then a lime CTA
+    pill with ROYAL text "CLAIM YOUR GIFTS NOW". This is the design hint verbatim.
+  - idx 217 "5.26 Memorial Day Sale Last Chance" §4 — the live digit-block timer on
+    BLACK: huge white numerals "112 / 30 / 11" with "HOURS / MINUTES / SECONDS"
+    labels beneath, deadline line "Sale ends tonight at 11:59 PM PST", spice CTA
+    pill "GET 20% OFF FOR A LIMITED TIME". The animated dials are exactly what
+    becomes {{COUNTDOWN_IMAGE}} (hosted GIF).
+  - idx 211 "11.30 Sale 24 Hours Left" §2 — confirms the urgency-headline +
+    bold-percentage subcopy treatment.
+NOT yet extracted from a Bryce-approved build — locks verbatim after it ships in one.
+
+SLOTS:
+  {{HEADLINE_HTML}}    — inner HTML of the white display headline. Keep it short and
+                         loud; designed line break via <br/> (the original stacks
+                         "JUST 144" / "HOURS LEFT"). Approved-shape instance:
+                         JUST 144<br/>HOURS LEFT
+  {{SUBCOPY_HTML}}     — inner HTML of the white scarcity / deadline subline; inline
+                         <strong style="font-weight:700;"> for the emphasized number
+                         (matches the bolded "57% off" / "40%" pattern). Instance:
+                         We&rsquo;ve already sold through <strong style="font-weight:700;">40%</strong>
+                         of our GWP inventory. Once they&rsquo;re gone, they&rsquo;re gone.
+  {{COUNTDOWN_IMAGE}}  — OPTIONAL hosted timer GIF (production-hosted; sourced via
+                         email-image-source — a generated countdown GIF, NOT a
+                         canonical photo master). Shown at 480px wide on a 600px wrap.
+                         To omit the timer entirely, delete the whole
+                         "countdown image row" <tr> marked below (headline + subcopy
+                         + CTA still read as a complete urgency band, as in idx 163).
+  {{COUNTDOWN_ALT}}    — alt text for the timer GIF, e.g. 112 hours 30 minutes 11
+                         seconds left. ALWAYS write the live deadline in words too
+                         (see {{DEADLINE_HTML}}) — images are blocked by default and
+                         a clipped GIF must not be the only place the urgency lives.
+  {{DEADLINE_HTML}}    — OPTIONAL small white deadline line shown ABOVE the GIF (live
+                         text, never inside the image). Instance:
+                         Sale ends tonight at 11:59&nbsp;PM&nbsp;PST.
+                         Delete its <tr> if unused.
+  {{CTA_TEXT}}         — button label, uppercase (VML <center> + <a>, 2 occurrences).
+                         Instance: CLAIM YOUR GIFTS NOW
+  {{CTA_HREF}}         — destination (VML href + <a> href, 2 occurrences). Instance:
+                         https://takestasis.com/
+
+COLOR VARIANTS (pick ONE per instance; all values are tokens — never invent hex):
+  - Band background (baked on BOTH the host td bgcolor AND the inner table): default
+    ink #0E1A38 (the navy-photo band of idx 163). Black #000000 is the alternate for
+    the digit-timer treatment (idx 217). Swap both occurrences of the band color
+    together.
+  - CTA pill: this file ships the STANDARD spice pill — fill #FF541E, label #000000
+    (cta-pill.html geometry, verbatim). The idx-163 ALTERNATE is a lime pill with
+    royal text: change fillcolor/bgcolor #FF541E -> #EEEF78 (all 3 occurrences: VML
+    fillcolor, td bgcolor, td background-color) and the label color #000000 ->
+    #3D72E6 (both the VML <center> color and the <a> color). Do not mix.
+  The headline and subcopy are WHITE #FFFFFF on every variant (dark band only).
+
+REQUIRED MEDIA CLASSES — host document must include, verbatim, inside
+@media only screen and (max-width:480px){ … }:
+  .px{padding-left:24px !important;padding-right:24px !important;}
+  .ct-h{font-size:34px !important;}
+  .cdn-img{width:100% !important;max-width:100% !important;height:auto !important;}
+  .cta-link{white-space:normal !important;}
+
+DEPENDENCIES:
+  - Paste as a direct <tr> child of the host 600px wrap table (this fragment is the
+    full band row — headline, optional timer, optional deadline, CTA).
+  - Light-only pin (§8.6) in host head — band colors are baked dark (#0E1A38 / #000000)
+    with WHITE text; do NOT let a dark-mode client invert them. No dark-mode-only
+    colors are used; every color is an explicit token hex on an explicit bgcolor.
+  - Font kit: Antarctica @font-face from the Stasis Shopify CDN; inline sans stack
+    font-family:'Antarctica','Helvetica Neue',Arial,sans-serif. Display headline is
+    weight 500 (display roles are 500, never heavier — font-map.md); subcopy 500;
+    CTA 700/0.18em uppercase.
+  - {{COUNTDOWN_IMAGE}} is a generated countdown GIF sourced via email-image-source
+    (it is NOT a canonical photo master; gaps that block the GIF do not block the
+    build — the band reads without it). For review it may point at a served-local GIF.
+  - VML/MSO: keep the [if mso] roundrect and the [if !mso] table as a pair — Outlook
+    sees only the VML pill, everything else only the HTML pill. Outlook also will not
+    animate the GIF (shows frame 1) — that is acceptable and the reason the deadline
+    is ALSO live text.
+============================================================ -->
+<tr><td class="px" align="center" bgcolor="#0E1A38" style="padding:48px 40px 44px 40px;background-color:#0E1A38;">
+  <table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0" style="width:100%;border-collapse:collapse;background-color:#0E1A38;"><tbody>
+    <!-- headline -->
+    <tr><td align="center" style="padding:0 0 16px 0;mso-line-height-rule:exactly;">
+      <p class="ct-h" style="margin:0;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:44px;line-height:1.02;letter-spacing:-0.04em;color:#FFFFFF;text-align:center;text-transform:uppercase;">{{HEADLINE_HTML}}</p>
+    </td></tr>
+    <!-- subcopy -->
+    <tr><td align="center" style="padding:0 0 26px 0;">
+      <p style="margin:0 auto;max-width:420px;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:16px;line-height:1.5;letter-spacing:-0.01em;color:#FFFFFF;text-align:center;">{{SUBCOPY_HTML}}</p>
+    </td></tr>
+    <!-- deadline line (live text above the GIF — delete this <tr> if unused) -->
+    <tr><td align="center" style="padding:0 0 14px 0;">
+      <p style="margin:0;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:14px;line-height:1.3;letter-spacing:0;color:#FFFFFF;text-align:center;">{{DEADLINE_HTML}}</p>
+    </td></tr>
+    <!-- countdown image row (hosted timer GIF — delete this whole <tr> to ship a text-only urgency band) -->
+    <tr><td align="center" style="padding:0 0 28px 0;font-size:0;line-height:0;">
+      <img class="cdn-img" alt="{{COUNTDOWN_ALT}}" width="480" src="{{COUNTDOWN_IMAGE}}" style="display:block;width:480px;max-width:480px;height:auto;border:0;outline:none;text-decoration:none;margin:0 auto;"/>
+    </td></tr>
+    <!-- CTA pill (standard spice/ink — see COLOR VARIANTS for the lime/royal alternate) -->
+    <tr><td align="center" style="padding:0;">
+      <!--[if mso]>
+      <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="{{CTA_HREF}}" style="height:56px;v-text-anchor:middle;width:300px;" arcsize="50%" stroke="false" fillcolor="#FF541E"><w:anchorlock/>
+      <center style="color:#000000;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-size:20px;font-weight:700;letter-spacing:3px;text-transform:uppercase;">{{CTA_TEXT}}</center></v:roundrect>
+      <![endif]-->
+      <!--[if !mso]><!-->
+      <table align="center" role="presentation" border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse;margin:0 auto;"><tbody><tr><td align="center" bgcolor="#FF541E" style="background-color:#FF541E;border-radius:999px;"><a class="cta-link" href="{{CTA_HREF}}" target="_blank" style="display:inline-block;padding:18px 40px;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:700;font-size:20px;line-height:1;letter-spacing:0.18em;text-transform:uppercase;color:#000000;text-decoration:none;border-radius:999px;white-space:nowrap;">{{CTA_TEXT}}</a></td></tr></tbody></table>
+      <!--<![endif]-->
+    </td></tr>
+  </tbody></table>
+</td></tr>

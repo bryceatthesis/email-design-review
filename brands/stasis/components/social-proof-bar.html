@@ -1,0 +1,29 @@
+<!--
+component: social-proof-bar  [PROPOSED — Bryce design review 2026-06-18; in-review, locks verbatim on first approved-build ship]
+PURPOSE: Inline trust bar — a centered 5-star rating row (text glyphs, no images), a rating value, and a review count on one compact line. Used as a trust signal next to an offer (e.g. beside a guarantee on a hero, heading a testimonial panel, or under a CTA).
+SOURCE: PROPOSED 2026-06-17, built to tokens.json + the Figma mining reference; NOT yet from an approved build. Surfaced by the email-system component mining as module_type "social-proof-bar" (catalog frequency 14 / 13 pages; sample_description "Inline 5-star rating row used as a trust signal next to an offer."). Closest variant_notes: "Five black stars beside '50-DAY MONEY BACK GUARANTEE'… stars also head the testimonial panel" (0124 GWP Campaigns) and "Row of small star ratings / review-count chips beneath a CTA" (Combat Stress trio, [24] Campaigns). No matching salvage slice exists in the asset-accounting salvage set (those slices are stat panels / ingredient cards). The footer "social-proof-bar" instances are a SEPARATE social-icon pattern, not this star/rating bar — do not conflate. Stars are text glyphs (&#9733;), matching the brand's text-glyph convention (checklist-rows &#10003;, two-col-list text rules). Locks verbatim once it ships in a Bryce-approved build.
+SLOTS:
+  {{BAR_BG}} — bar background color (bgcolor attr + style). A choice from the closed palette: white #FFFFFF (default, on neutral bands), creme #F4EFEB, panel #F7F7F7, or lime #EEEF78 (when it heads a lime testimonial panel). Keep stars/text legible against it (the defaults below pair spice stars + ink/charcoal text, all light-safe).
+  {{STAR_COLOR}} — fill color for the five star glyphs. A choice: spice #FF541E (default brand "gold") or lime #EEEF78 (the alternate warm gold). The five glyphs are baked (5 of 5 = full-rating bar); a partial/half-star rating is a redesign, not a fill.
+  {{RATING_VALUE}} — the numeric rating, e.g. 4.8 (Antarctica 500, ink #0E1A38). Baked separator " · " sits between value and count.
+  {{REVIEW_COUNT}} — the review-count copy, e.g. 2,400+ reviews (Antarctica 500, charcoal #222427, muted). Keep it short — this is a one-line compact bar.
+REQUIRED MEDIA CLASSES (host must include inside @media only screen and (max-width:480px){...}):
+  .px{padding-left:24px !important;padding-right:24px !important;}
+  .sp-stars{font-size:18px !important;letter-spacing:2px !important;}
+  .sp-meta{font-size:14px !important;}
+DEPENDENCIES:
+  - Light-only pin (§8.6) in host head; every td carries bgcolor + style and every text element an explicit color (no dark-mode-dependent colors here).
+  - Sans stack: font-family:'Antarctica','Helvetica Neue',Arial,sans-serif; weight 500 (NOT 900). Host must ship the Antarctica @font-face kit. Star glyphs use the same stack (text, never images) so they reflow and recolor with the bar.
+  - All copy is slot-filled or baked punctuation; no brand lockup copy lives here.
+  - No CTA pill, so no VML/MSO roundrect is needed. mso-line-height-rule:exactly on the star row keeps the glyph row from gaining leading in Outlook.
+-->
+<tr><td class="px" align="center" bgcolor="{{BAR_BG}}" style="background-color:{{BAR_BG}};padding:18px 40px;text-align:center;">
+  <table role="presentation" border="0" cellpadding="0" cellspacing="0" align="center" style="border-collapse:collapse;margin:0 auto;"><tbody>
+    <tr>
+      <td class="sp-stars" align="center" style="padding:0 0 8px 0;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:20px;line-height:1;letter-spacing:3px;color:{{STAR_COLOR}};text-align:center;mso-line-height-rule:exactly;">&#9733;&#9733;&#9733;&#9733;&#9733;</td>
+    </tr>
+    <tr>
+      <td class="sp-meta" align="center" style="padding:0;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:15px;line-height:1.3;letter-spacing:-0.01em;color:#222427;text-align:center;"><span style="color:#0E1A38;">{{RATING_VALUE}}</span>&nbsp;&middot;&nbsp;{{REVIEW_COUNT}}</td>
+    </tr>
+  </tbody></table>
+</td></tr>

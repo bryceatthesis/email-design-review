@@ -1,0 +1,122 @@
+<!-- ============================================================
+component: hero-orbit-art  [PROPOSED — Bryce design review 2026-06-18; in-review, locks verbatim on first approved-build ship]
+
+PURPOSE: Dark hero row — the brand orbit/constellation radial motif (centered
+image slot) sitting behind/above live white text: optional eyebrow, H1 headline,
+subhead, and a pill CTA. Reads as a "cosmic / find-balance" hero on a deep navy
+(#011D59) or black (#000000) field. VML rect+textbox fallback keeps the white
+text legible in Outlook and when images are blocked; VML roundrect/HTML pair for
+the CTA. This is the brand orbit/constellation hero motif surfaced by the email-
+system component mining (the "hero-orbit-art" module).
+
+SOURCE: PROPOSED 2026-06-17 — built to brands/stasis/tokens.json + the Figma
+mining reference for module_type "hero-orbit-art" (figma-component-catalog.json:
+category Hero, status new, frequency 14, maps_to "brand orbit/constellation hero
+motif"; sample_description "Faint concentric circle / constellation / network
+orbit graphic used as a hero or background motif"). Dominant mined variants:
+black hero + glowing radial orbit sphere, headline white below ([25] Campaigns);
+blue circle-network hero on "FIND BALANCE WITH STASIS" ([24] Campaigns); faint
+concentric rings on cream/dark fields ([26] Campaigns). Structure modeled on the
+approved hero-art-overlay component (dark hero, live white text, VML rect+textbox,
+VML CTA pill, light-only); the orbit ships here as a discrete CENTERED image slot
+above the headline rather than a full-bleed background photo. NO matching salvage
+slice exists (the salvage set is stat/ingredient/science cards). NOT yet extracted
+from a Bryce-approved build — locks verbatim after it ships in one.
+
+SLOTS:
+  {{HERO_BG_COLOR}} — solid hero field color: td bgcolor + inline background-color
+                      + VML v:fill color (3 occurrences). A CHOICE, but constrained
+                      to the dark brand fields: navy #011D59 or black #000000 (token
+                      color.navy / color.black). Default intent: #011D59.
+  {{ORBIT_IMAGE}}   — the orbit / constellation / radial-glow graphic (production-
+                      hosted; sourced via email-image-source — canonical masters
+                      only, gaps stop the build). Centered, displayed 280px wide;
+                      must be a TEXT-FREE graphic on a transparent or {{HERO_BG_COLOR}}-
+                      matched field so it sits cleanly on the dark hero.
+  {{ORBIT_ALT}}     — orbit image alt text (decorative motif; keep short, e.g. "").
+  {{EYEBROW}}       — small uppercase eyebrow over the headline (hero-badge tracking
+                      +0.12em per spec §6). OPTIONAL — delete the eyebrow <tr> if unused.
+                      Example: BACKED BY SCIENCE.
+  {{HEADLINE}}      — H1 copy, uppercase; may carry designed <br class="dbr"/> breaks
+                      (hidden on mobile, where .h-hero rewraps). Example: FIND BALANCE<br/>WITH STASIS.
+  {{SUBHEAD}}       — subhead copy (sentence case). Example: where bold minds find their balance.
+  {{CTA_TEXT}}      — pill label, uppercase: VML <center> + HTML <a> (2 occurrences).
+                      Example: TRY STASIS. (Re-measure the VML width below if the label
+                      is materially longer than ~10 chars, or Outlook will clip it.)
+  {{CTA_HREF}}      — pill destination: VML href + HTML <a> href (2 occurrences).
+                      Example: https://takestasis.com/
+
+REQUIRED MEDIA CLASSES (host must include, verbatim, inside
+@media only screen and (max-width:480px){ … }):
+  .px{padding-left:24px !important;padding-right:24px !important;}
+  .m-hero{padding-top:36px !important;padding-bottom:36px !important;}
+  .orbit-img{width:200px !important;max-width:60% !important;height:auto !important;}
+  .h-hero{font-size:34px !important;line-height:0.98 !important;}
+  .m-sub{font-size:16px !important;}
+  .cta-link{white-space:normal !important;}
+  .m-cta{padding:15px 46px !important;}
+  .dbr{display:none !important;}
+  (.dbr only needed if HEADLINE/SUBHEAD copy uses <br class="dbr"/> designed breaks.)
+
+DEPENDENCIES:
+  - Paste as a direct <tr> child of the host 600px wrap table (class="wrap",
+    width:600px;max-width:600px) inside the [if mso] 600px wrapper table.
+  - Light-only pin (§8.6) in host head: <meta name="color-scheme" content="light only">
+    + <meta name="supported-color-schemes" content="light only"> +
+    :root, body { color-scheme: light only; }. No dark-mode-dependent colors are used
+    here — white text is pinned and the hero field is a dark token, so the light-only
+    pin only needs to stop clients from re-tinting the dark field.
+  - Font kit: Antarctica @font-face 400/500/600/700 hosted on the Stasis Shopify CDN
+    (mso-font-alt 'Helvetica Neue'); inline sans stack
+    font-family:'Antarctica','Helvetica Neue',Arial,sans-serif. Weights here:
+    eyebrow 700, H1 + subhead 500 (display roles are 500, NOT 900 — font-map.md),
+    CTA 700. (No serif in this component.)
+  - Image sourced via email-image-source (canonical masters only); for review it may
+    point at a served-local image.
+  - VML/MSO: Outlook replaces the field with v:rect + v:fill (solid {{HERO_BG_COLOR}})
+    + v:textbox ([if gte mso 9]); the CTA ships as v:roundrect (arcsize 50%,
+    height:56px, width re-measured per label) under [if mso] with the HTML pill under [if !mso].
+    Keep both halves of each conditional pair intact. The orbit <img> is decorative;
+    Outlook shows it inline above the text inside the textbox.
+  - Host img reset (img{border:0;display:block;height:auto;…}) — the orbit <img>
+    depends on it.
+  - Colors pinned: white text #FFFFFF, CTA fill #FF541E (spice), CTA label #000000.
+    {{HERO_BG_COLOR}} is the only color choice (navy #011D59 or black #000000).
+============================================================ -->
+<tr><td align="center" valign="top" bgcolor="{{HERO_BG_COLOR}}" class="px m-hero" style="background-color:{{HERO_BG_COLOR}};padding:48px 48px 46px 48px;text-align:center;">
+  <!--[if gte mso 9]>
+  <v:rect xmlns:v="urn:schemas-microsoft-com:vml" fill="true" stroke="false" style="width:600px;">
+  <v:fill type="tile" color="{{HERO_BG_COLOR}}"/>
+  <v:textbox style="mso-fit-shape-to-text:true" inset="0,0,0,0">
+  <![endif]-->
+  <div>
+  <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="width:100%;border-collapse:collapse;"><tbody>
+    <tr><td align="center" style="padding:0;text-align:center;font-size:0;line-height:0;">
+      <!-- brand orbit/constellation motif — decorative, text-free; sourced via email-image-source -->
+      <img src="{{ORBIT_IMAGE}}" alt="{{ORBIT_ALT}}" width="280" border="0" class="orbit-img" style="display:block;width:280px;max-width:280px;height:auto;margin:0 auto;border:0;"/>
+    </td></tr>
+    <tr><td align="center" style="padding:30px 0 0 0;text-align:center;">
+      <p style="margin:0;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:700;font-size:13px;line-height:1.2;letter-spacing:0.12em;text-transform:uppercase;color:#FFFFFF;text-align:center;">{{EYEBROW}}</p>
+    </td></tr>
+    <tr><td align="center" style="padding:14px 0 0 0;text-align:center;">
+      <h1 class="h-hero" style="margin:0;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:42px;line-height:1.0;letter-spacing:-0.04em;text-transform:uppercase;color:#FFFFFF;text-align:center;">{{HEADLINE}}</h1>
+    </td></tr>
+    <tr><td align="center" style="padding:16px 0 0 0;text-align:center;">
+      <p class="m-sub" style="margin:0;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:20px;line-height:1.34;letter-spacing:-0.02em;color:#FFFFFF;text-align:center;">{{SUBHEAD}}</p>
+    </td></tr>
+    <tr><td align="center" style="padding:30px 0 0 0;text-align:center;">
+      <!--[if mso]>
+      <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="{{CTA_HREF}}" style="height:56px;v-text-anchor:middle;width:264px;" arcsize="50%" stroke="false" fillcolor="#FF541E"><w:anchorlock/>
+      <center style="color:#000000;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-size:20px;font-weight:700;letter-spacing:3px;text-transform:uppercase;">{{CTA_TEXT}}</center></v:roundrect>
+      <![endif]-->
+      <!--[if !mso]><!-->
+      <table align="center" role="presentation" border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse;margin:0 auto;"><tbody><tr><td align="center" bgcolor="#FF541E" style="background-color:#FF541E;border-radius:999px;"><a class="cta-link m-cta" href="{{CTA_HREF}}" target="_blank" style="display:inline-block;padding:18px 40px;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:700;font-size:20px;line-height:1;letter-spacing:0.18em;text-transform:uppercase;color:#000000;text-decoration:none;border-radius:999px;white-space:nowrap;">{{CTA_TEXT}}</a></td></tr></tbody></table>
+      <!--<![endif]-->
+    </td></tr>
+  </tbody></table>
+  </div>
+  <!--[if gte mso 9]>
+  </v:textbox>
+  </v:rect>
+  <![endif]-->
+</td></tr>

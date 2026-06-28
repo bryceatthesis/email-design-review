@@ -1,0 +1,59 @@
+<!--
+component: feedback-reply-block  [PROPOSED — Bryce design review 2026-06-18; in-review, locks verbatim on first approved-build ship]
+PURPOSE: The "We're All Ears" feedback / reply-invite block — a rounded card whose lime-yellow left half carries a "We're All Ears" heading + a "Have questions, feedback, or concerns? Reply to this email or click below." prompt, beside a right-half lifestyle image (the vintage rotary-phone photo in the shipped sends), followed by a full-width orange GET IN TOUCH pill CTA. Invites the reader to REPLY to the email or get in touch — distinct from contact-support-block (that one lists hello@takestasis + an FAQ link; this one is a soft reply-or-click ask, no email/FAQ list).
+SOURCE: PROPOSED 2026-06-17 — built to brands/stasis/tokens.json + real Figma frames. Grounded in the shipped block seen in Email3_20%Off (idx 49), Email3_20%Off_R2-1 (idx 60), Email3_20%Off_R1 (idx 85) and the royal-panel sibling Email3_AMonthWithoutStasis_VersionA-1 (idx 76); enum-parts label "feedback / reply block", "We're All Ears yellow card, rotary phone photo, GET IN TOUCH button". Shipped ~15× across the email set (yellow-card and royal-panel forms). NOT yet extracted from a Bryce-approved live-text build — locks verbatim after it ships in one.
+
+FRAGMENT TYPE: paste-level — TWO sibling <tr> rows (the card row, then the CTA-pill row) for the 600px wrap table. Paste both rows; the host wrap table supplies the 600px width and outer page background.
+
+VARIANTS (both shipped — pick via the slots, structure is identical except the card fill/text colors and CTA placement):
+  • YELLOW SPLIT CARD (default, this file): lime #EEEF78 left half + photo right half, ink #0E1A38 heading & body, then a SEPARATE full-width orange GET IN TOUCH pill below the card. This is the dominant form (idx 49/60/85).
+  • ROYAL FULL PANEL (documented swap): single royal #3D72E6 panel, NO photo, white centered heading + body, with the GET IN TOUCH pill BAKED INSIDE the panel (black fill, see idx 76). To build this form: drop the photo <td>, set the card td bgcolor to #3D72E6 with the text centered/white, move the CTA-pill row INSIDE the panel td (centered), and keep the CTA fill — idx 76 uses a BLACK (#000000) inner pill with white label, not orange. Keep the same copy slots.
+
+SLOTS:
+  {{FB_HEADING}} — card heading. Shipped verbatim: We're All Ears
+  {{FB_BODY_HTML}} — inner HTML of the prompt paragraph. Shipped (yellow): Have questions, feedback, or concerns? Reply to this email or click below.  (royal idx 76 variant: Got questions, feedback, or concerns you want addressed right now? Reply to this email or click below.) — plain text, no inline emphasis in the originals.
+  {{FB_IMAGE}} — right-half lifestyle image (production-hosted; sourced via email-image-source — canonical masters only, gaps stop the build). Shipped master: the vintage cream rotary-phone-on-linen photo. Omit this <td> entirely for the royal-panel variant.
+  {{FB_ALT}} — image alt text (e.g. Vintage rotary telephone — reach out any time).
+  {{CTA_HREF}} — GET IN TOUCH destination. Appears TWICE (VML href + <a> href) — fill both with the same URL. (VML pill width 524px for the default label — re-measure per label.) Typical: mailto:hello@takestasis.com or https://takestasis.com/contact (a reply ask pairs naturally with a mailto).
+  (The CTA label "GET IN TOUCH" is baked copy in the shipped pattern, not a slot.)
+
+REQUIRED MEDIA CLASSES (host MUST include, verbatim, inside @media only screen and (max-width:480px){ … }):
+  .px{padding-left:24px !important;padding-right:24px !important;}
+  .col-stack{display:block !important;width:100% !important;}        /* stacks the yellow text half above the photo half */
+  .fb-text{padding:28px 28px 28px 28px !important;}                  /* restore even padding once stacked */
+  .fb-img{width:100% !important;max-width:100% !important;height:200px !important;}
+  .cta-link{white-space:normal !important;}
+
+DEPENDENCIES:
+  - Light-only pin (§8.6) in host head; Antarctica @font-face kit from the Stasis Shopify CDN. Light-only safe: no dark-mode-only colors — every surface (lime, royal, orange, white) and text (ink, white, black) is an explicit baked token.
+  - Image sourced via email-image-source (canonical masters only); for review it may point at a served-local image. The rotary-phone photo is a styling/lifestyle image, not a product master.
+  - Card table uses border-collapse:separate (required for border-radius:18px on the card). Half-split is a 2-col table: lime text td + image td, each ~50%, stacked on mobile via .col-stack.
+  - Colors pinned to tokens.json: card fill lime #EEEF78, heading/body ink #0E1A38; CTA fill spice #FF541E with black #000000 label. (Royal-panel variant: fill royal #3D72E6, text white #FFFFFF, inner CTA fill black #000000.)
+  - CTA is a §5.1 bulletproof pair (tokens.cta: 56px VML height, 20px/700/0.18em, black label on spice): keep the [if mso] v:roundrect AND the [if !mso] table+anchor together; Outlook sees only the VML, everything else only the HTML pill.
+  - EMAIL-SAFE INTERPRETATION: the "Reply to this email" ask is just live copy — no form is embedded (email clients strip forms). The reply behavior is the reader hitting their client's Reply; the GET IN TOUCH button is the explicit fallback (mailto or contact URL). No countdown/video/form — fully static.
+-->
+<!-- ROW 1 — the We're All Ears split card -->
+<tr><td class="px" bgcolor="#FFFFFF" style="background-color:#FFFFFF;padding:8px 40px 16px 40px;">
+  <table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0" style="width:100%;background-color:#EEEF78;border-radius:18px;border-collapse:separate;overflow:hidden;"><tbody><tr>
+    <td class="col-stack fb-text" valign="middle" width="50%" style="width:50%;padding:40px 28px 40px 40px;vertical-align:middle;background-color:#EEEF78;">
+      <p style="margin:0 0 12px 0;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:32px;line-height:1.05;letter-spacing:-0.03em;color:#0E1A38;text-align:left;">{{FB_HEADING}}</p>
+      <p style="margin:0;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:16px;line-height:1.4;letter-spacing:-0.01em;color:#0E1A38;text-align:left;">{{FB_BODY_HTML}}</p>
+    </td>
+    <td class="col-stack fb-img" valign="middle" width="50%" style="width:50%;padding:0;vertical-align:middle;font-size:0;line-height:0;">
+      <img src="{{FB_IMAGE}}" alt="{{FB_ALT}}" width="280" style="width:100%;max-width:280px;height:auto;display:block;border:0;"/>
+    </td>
+  </tr></tbody></table>
+</td></tr>
+<!-- ROW 2 — full-width GET IN TOUCH pill CTA -->
+<tr><td class="px" align="center" bgcolor="#FFFFFF" style="background-color:#FFFFFF;padding:8px 40px 24px 40px;text-align:center;">
+  <!--[if mso]>
+  <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="{{CTA_HREF}}" style="height:56px;v-text-anchor:middle;width:524px;" arcsize="50%" stroke="false" fillcolor="#FF541E"><w:anchorlock/>
+  <center style="color:#000000;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-size:20px;font-weight:700;letter-spacing:3px;text-transform:uppercase;">GET IN TOUCH</center></v:roundrect>
+  <![endif]-->
+  <!--[if !mso]><!-->
+  <table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0" style="width:100%;border-collapse:separate;"><tbody><tr>
+  <td align="center" bgcolor="#FF541E" style="background-color:#FF541E;border-radius:999px;">
+  <a class="cta-link" href="{{CTA_HREF}}" target="_blank" style="display:block;padding:18px 40px;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:700;font-size:20px;line-height:1;letter-spacing:0.18em;text-transform:uppercase;color:#000000;text-decoration:none;border-radius:999px;text-align:center;white-space:nowrap;">GET IN TOUCH</a>
+  </td></tr></tbody></table>
+  <!--<![endif]-->
+</td></tr>

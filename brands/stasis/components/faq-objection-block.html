@@ -1,0 +1,121 @@
+<!--
+component: faq-objection-block  [PROPOSED — Bryce design review 2026-06-18; in-review, locks verbatim on first approved-build ship]
+PURPOSE: Q&A / objection-handling block — a navy "Still on the fence?" heading over N stacked
+Q&A cards, each card = an italic-quoted question + hairline divider + an outlined-circle checkmark
+beside a benefit answer (key phrase highlighted royal). Sits near an offer; ships with the standard
+brand pill CTA below the cards (VML + anchor pair). Repeatable: 2–4 cards. This is the cart-recovery /
+last-call objection handler ("Will it work with my stimulant?" / "What if it doesn't work?" / "Is it
+worth the price?").
+SOURCE: PROPOSED 2026-06-17 — built to brands/stasis/tokens.json + the real Figma frames in
+the Stasis email-system frames/. Surfaced by component mining (~10 of 294 emails carry
+a FAQ/objection block). Primary reference frame: "7.21 Cart Recovery Blitz" (manifest idx 220 — navy
+"Still on the fence? Here's what we hear most." heading, three Q&A checkmark cards on warm-creme panels,
+royal-highlighted answers). Corroborated by "EMAIL 2_ What to Expect" (idx 128 — five-row FAQ accordion,
+royal question headings) and "1.25 Final Call GWP" (idx 151 — objection card + CTA). NOT yet extracted
+from a Bryce-approved build — markup/values lock verbatim only after it ships in one.
+SLOTS:
+  {{HEADING_LINE1}} — navy heading, line 1. Frame value: Still on the fence?
+  {{HEADING_LINE2}} — navy heading, line 2 (smaller emphasis sibling). Frame value: Here&rsquo;s what we hear most.
+                      Remove the second <p class="faq-h2"> if a one-line heading is wanted.
+  {{Q1}} / {{Q2}} / {{Q3}} — question text, set in quotes inside each card. Frame values:
+                      &ldquo;Will it work with my stimulant?&rdquo; / &ldquo;What if it doesn&rsquo;t work for me?&rdquo; / &ldquo;Is it worth the price?&rdquo;
+  {{A1_HTML}} / {{A2_HTML}} / {{A3_HTML}} — answer inner HTML; wrap the key phrase in
+                      <strong style="font-weight:700;color:#3D72E6;"> … </strong> for the royal highlight (frame: Yes&mdash;,
+                      complement, No stress., $221 off). Plain runs stay ink #0E1A38.
+  {{CTA_TEXT}} — pill label, uppercase (VML <center> + <a>, 2 occurrences). Frame value: GET STASIS NOW
+  {{CTA_HREF}} — pill destination (VML href + <a> href, 2 occurrences). e.g. https://takestasis.com/
+PADDING / COUNT:
+  - Ships 3 cards (the frame count). For 2 or 4: delete / duplicate a whole CARD wrapper td (the
+    "CARD n" labeled tr blocks below).
+    Inter-card gap is the card td's padding-bottom:14px; the LAST card keeps padding-bottom:0 (drop the gap),
+    same divider-between, not-after convention as two-col-list / checklist-rows.
+REQUIRED MEDIA CLASSES (host MUST include, verbatim, inside @media only screen and (max-width:480px){ … }):
+  .px{padding-left:24px !important;padding-right:24px !important;}
+  .faq-h1{font-size:26px !important;}
+  .faq-h2{font-size:20px !important;}
+  .faq-card-td{padding:22px 20px !important;}
+  .cta-link{white-space:normal !important;}
+  (.faq-q on each question <p> is NOT a required mobile class — it is an optional desktop+mobile styling
+   hook so the host can opt the questions into the frame's serif italic; see the SERIF RULE NOTE below.)
+DEPENDENCIES:
+  - Paste level: ROW — this fragment is a direct <tr> child of the host 600px .wrap table. The host td
+    supplies the outer creme background; cards are baked warm-creme on it.
+  - Light-only pin (§8.6) in host head; Antarctica @font-face kit (Stasis Shopify CDN) for the sans stack.
+    Serif stack ('Tiempos Text',Georgia,…) for the questions — host must also ship the Tiempos face OR
+    accept the Georgia fallback.
+  - SERIF RULE NOTE (tokens.json font.serif_rule = "UPRIGHT, never italic"): the real frame sets the
+    question in serif ITALIC inside curly quotes. This file ships the question UPRIGHT to honor the binding
+    token rule; to match the frame pixel-for-pixel after Bryce approves, add font-style:italic to the
+    .faq-q <p>. Default = upright.
+  - Colors pinned (never invent hex): page/card creme bg uses page #FFFFFF host + card #F4EFEB (frame:
+    white page, warm-creme cards); heading + question + plain answer ink #0E1A38; answer highlight royal
+    #3D72E6; checkmark circle stroke ink #0E1A38; CTA fill #FF541E (spice), CTA label #000000.
+  - Checkmark is an email-safe outlined circle: a 28px bordered round <td> holding the text glyph &#10003;
+    (no image), matching checklist-rows' "check is text, not an image" convention.
+  - CTA is the §5.1 bulletproof pair (standard cta-pill geometry: anchor 18px 40px, VML height:56px
+    width re-measured per label). GET STASIS NOW is 13 chars vs TRY STASIS's 10 — if the label changes materially,
+    re-measure the VML width or Outlook will clip/float it. Keep BOTH halves of every mso/!mso conditional.
+  - EMAIL-SAFE INTERPRETATION: an interactive FAQ accordion (idx 128) is NOT email-supported — it renders
+    here as always-open stacked Q&A cards (no toggle/JS). Any "expires in" urgency line that paired the
+    block in the source is a separate static row, not part of this component.
+-->
+<tr><td class="px" bgcolor="#FFFFFF" style="background-color:#FFFFFF;padding:40px 40px 36px 40px;">
+  <!-- heading -->
+  <p class="faq-h1" style="margin:0;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:32px;line-height:1.06;letter-spacing:-0.03em;color:#0E1A38;text-align:center;">{{HEADING_LINE1}}</p>
+  <p class="faq-h2" style="margin:6px 0 0 0;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:24px;line-height:1.1;letter-spacing:-0.02em;color:#0E1A38;text-align:center;">{{HEADING_LINE2}}</p>
+
+  <!-- cards -->
+  <table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0" style="width:100%;border-collapse:collapse;margin-top:28px;"><tbody>
+
+    <!-- CARD 1 -->
+    <tr><td style="padding:0 0 14px 0;">
+      <table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0" style="width:100%;background-color:#F4EFEB;border-radius:14px;border-collapse:separate;"><tbody><tr><td class="faq-card-td" style="padding:26px 28px;">
+        <p class="faq-q" style="margin:0 0 16px 0;font-family:'Tiempos Text',Georgia,'Times New Roman',serif;font-weight:400;font-size:19px;line-height:1.3;color:#0E1A38;text-align:left;">{{Q1}}</p>
+        <table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0" style="width:100%;border-collapse:collapse;border-top:1px solid rgba(14,26,56,0.28);"><tbody><tr>
+          <td valign="top" width="40" style="width:40px;padding:18px 14px 0 0;vertical-align:top;">
+            <table role="presentation" border="0" cellpadding="0" cellspacing="0" style="border-collapse:separate;"><tbody><tr><td align="center" valign="middle" width="28" height="28" style="width:28px;height:28px;border:1px solid #0E1A38;border-radius:999px;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-size:14px;line-height:28px;color:#0E1A38;text-align:center;">&#10003;</td></tr></tbody></table>
+          </td>
+          <td valign="top" style="padding:18px 0 0 0;vertical-align:top;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:17px;line-height:1.42;letter-spacing:-0.01em;color:#0E1A38;text-align:left;">{{A1_HTML}}</td>
+        </tr></tbody></table>
+      </td></tr></tbody></table>
+    </td></tr>
+
+    <!-- CARD 2 -->
+    <tr><td style="padding:0 0 14px 0;">
+      <table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0" style="width:100%;background-color:#F4EFEB;border-radius:14px;border-collapse:separate;"><tbody><tr><td class="faq-card-td" style="padding:26px 28px;">
+        <p class="faq-q" style="margin:0 0 16px 0;font-family:'Tiempos Text',Georgia,'Times New Roman',serif;font-weight:400;font-size:19px;line-height:1.3;color:#0E1A38;text-align:left;">{{Q2}}</p>
+        <table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0" style="width:100%;border-collapse:collapse;border-top:1px solid rgba(14,26,56,0.28);"><tbody><tr>
+          <td valign="top" width="40" style="width:40px;padding:18px 14px 0 0;vertical-align:top;">
+            <table role="presentation" border="0" cellpadding="0" cellspacing="0" style="border-collapse:separate;"><tbody><tr><td align="center" valign="middle" width="28" height="28" style="width:28px;height:28px;border:1px solid #0E1A38;border-radius:999px;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-size:14px;line-height:28px;color:#0E1A38;text-align:center;">&#10003;</td></tr></tbody></table>
+          </td>
+          <td valign="top" style="padding:18px 0 0 0;vertical-align:top;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:17px;line-height:1.42;letter-spacing:-0.01em;color:#0E1A38;text-align:left;">{{A2_HTML}}</td>
+        </tr></tbody></table>
+      </td></tr></tbody></table>
+    </td></tr>
+
+    <!-- CARD 3 (last — padding-bottom:0, no inter-card gap) -->
+    <tr><td style="padding:0;">
+      <table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0" style="width:100%;background-color:#F4EFEB;border-radius:14px;border-collapse:separate;"><tbody><tr><td class="faq-card-td" style="padding:26px 28px;">
+        <p class="faq-q" style="margin:0 0 16px 0;font-family:'Tiempos Text',Georgia,'Times New Roman',serif;font-weight:400;font-size:19px;line-height:1.3;color:#0E1A38;text-align:left;">{{Q3}}</p>
+        <table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0" style="width:100%;border-collapse:collapse;border-top:1px solid rgba(14,26,56,0.28);"><tbody><tr>
+          <td valign="top" width="40" style="width:40px;padding:18px 14px 0 0;vertical-align:top;">
+            <table role="presentation" border="0" cellpadding="0" cellspacing="0" style="border-collapse:separate;"><tbody><tr><td align="center" valign="middle" width="28" height="28" style="width:28px;height:28px;border:1px solid #0E1A38;border-radius:999px;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-size:14px;line-height:28px;color:#0E1A38;text-align:center;">&#10003;</td></tr></tbody></table>
+          </td>
+          <td valign="top" style="padding:18px 0 0 0;vertical-align:top;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:17px;line-height:1.42;letter-spacing:-0.01em;color:#0E1A38;text-align:left;">{{A3_HTML}}</td>
+        </tr></tbody></table>
+      </td></tr></tbody></table>
+    </td></tr>
+
+  </tbody></table>
+
+  <!-- CTA (standard cta-pill geometry — VML + anchor pair) -->
+  <table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0" style="width:100%;border-collapse:collapse;margin-top:30px;"><tbody><tr><td align="center" style="text-align:center;">
+    <!--[if mso]>
+    <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="{{CTA_HREF}}" style="height:56px;v-text-anchor:middle;width:264px;" arcsize="50%" stroke="false" fillcolor="#FF541E"><w:anchorlock/>
+    <center style="color:#000000;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-size:20px;font-weight:700;letter-spacing:3px;text-transform:uppercase;">{{CTA_TEXT}}</center></v:roundrect>
+    <![endif]-->
+    <!--[if !mso]><!-->
+    <table align="center" role="presentation" border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse;margin:0 auto;"><tbody><tr><td align="center" bgcolor="#FF541E" style="background-color:#FF541E;border-radius:999px;"><a class="cta-link" href="{{CTA_HREF}}" target="_blank" style="display:inline-block;padding:18px 40px;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:700;font-size:20px;line-height:1;letter-spacing:0.18em;text-transform:uppercase;color:#000000;text-decoration:none;border-radius:999px;white-space:nowrap;">{{CTA_TEXT}}</a></td></tr></tbody></table>
+    <!--<![endif]-->
+  </td></tr></tbody></table>
+</td></tr>

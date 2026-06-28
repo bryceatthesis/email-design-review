@@ -1,0 +1,41 @@
+<!--
+component: science-spotlight-card  [PROPOSED — Bryce design review 2026-06-18; in-review, locks verbatim on first approved-build ship]
+PURPOSE: Centered "Science Spotlight" education card — a small uppercase eyebrow, a headline, one or more supporting paragraphs (upright Tiempos serif) carrying an inline royal link, with an OPTIONAL small supporting graphic above the copy (icon/illustration) and an OPTIONAL supporting graphic below it (e.g. product-jar pair). The mechanism/education explainer that pairs lay copy with a "learn more" inline link.
+SOURCE: PROPOSED 2026-06-17 — built to tokens.json + the Figma mining reference for module_type "science-spotlight-card" (mined description: "Centered 'Science Spotlight' section: eyebrow label, headline, supporting copy and an inline link, sometimes with a small supporting product/jar image pair." — [25] October Campaigns / Brain Support + Shift emails; frequency 6 across 6 pages). Reference fidelity slice on disk: the Stasis email-system reference (centered pill icon on top, "Science Spotlight" headline, serif body with an inline royal "dopamine, norepinephrine, and cortisol" link, product-jar pair below). NOT yet extracted from a Bryce-approved build — locks verbatim after it ships in one.
+SLOTS:
+  {{EYEBROW}} — small uppercase royal label above the headline (e.g. SCIENCE SPOTLIGHT). Eyebrow token: sans 700 / 13px / 0.2em / uppercase / royal #3D72E6. Remove the eyebrow <div> if unused.
+  {{TOP_GRAPHIC_URL}} — OPTIONAL small supporting graphic above the copy (icon/illustration, e.g. the capsule). Production-hosted; sourced via email-image-source (canonical masters only — gaps stop the build). Remove the whole top-graphic <table> row if unused.
+  {{TOP_GRAPHIC_ALT}} — alt text for the top graphic.
+  {{HEADLINE}} — card headline (e.g. Science Spotlight). Sans 500, ink #0E1A38.
+  {{BODY_HTML}} — inner HTML of the serif body block. May contain multiple <p> paragraphs; the inline link is baked here as <a href="{{LINK_HREF}}" style="color:#3D72E6;font-weight:500;text-decoration:none;">…</a> (royal, the only "choice" color in the body). Approved-instance style: upright Tiempos, charcoal #222427, with a single royal inline link phrase.
+  {{LINK_HREF}} — href for the inline royal link inside {{BODY_HTML}}. (Lives inside the BODY_HTML <a>; documented here because it is the one href that varies.)
+  {{BOTTOM_GRAPHIC_URL}} — OPTIONAL supporting graphic below the copy (e.g. the product-jar pair). Production-hosted; sourced via email-image-source. Remove the whole bottom-graphic <table> row if unused.
+  {{BOTTOM_GRAPHIC_ALT}} — alt text for the bottom graphic.
+REQUIRED MEDIA CLASSES (host must include inside @media only screen and (max-width:480px){...}):
+  .px{padding-left:24px !important;padding-right:24px !important;}
+  .h-spot{font-size:26px !important;}
+  .spot-top-img{width:64px !important;height:auto !important;}
+  .spot-bot-img{width:100% !important;max-width:100% !important;height:auto !important;}
+DEPENDENCIES:
+  - Light-only pin (§8.6) in host head: <meta name="color-scheme" content="light only"> + <meta name="supported-color-schemes" content="light only"> + :root,body{color-scheme:light only;}.
+  - Fonts: Antarctica 400/500/600/700 + Tiempos Text 400 @font-face kit (Shopify Files CDN, per brands/stasis/design-language.md). Stacks used inline: 'Antarctica','Helvetica Neue',Arial,sans-serif and 'Tiempos Text',Georgia,'Times New Roman',serif.
+  - Body serif is UPRIGHT, never italic (spec §3) — font-style:normal on the serif body is load-bearing.
+  - Both image slots sourced via email-image-source (canonical masters only); for review they may point at a served-local image.
+  - bg white #FFFFFF baked (the slice's surface); eyebrow + inline link royal #3D72E6, headline ink #0E1A38, body charcoal #222427 — all from tokens.json; a different surface/accent is a Bryce call.
+  - Inline link only (no CTA pill) — no VML/MSO parts; the fragment degrades cleanly.
+-->
+<tr><td class="px" align="center" bgcolor="#FFFFFF" style="background-color:#FFFFFF;padding:44px 50px 46px;text-align:center;">
+  <table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0" style="width:100%;border-collapse:collapse;"><tbody>
+    <tr><td align="center" style="padding:0 0 22px 0;font-size:0;line-height:0;">
+      <img class="spot-top-img" src="{{TOP_GRAPHIC_URL}}" alt="{{TOP_GRAPHIC_ALT}}" width="80" style="width:80px;max-width:80px;height:auto;display:block;margin:0 auto;border:0;"/>
+    </td></tr>
+    <tr><td align="center" style="padding:0;">
+      <div style="font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:700;font-size:13px;letter-spacing:0.2em;text-transform:uppercase;color:#3D72E6;padding-bottom:14px;">{{EYEBROW}}</div>
+      <h2 class="h-spot" style="margin:0 0 20px;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:30px;line-height:1.08;letter-spacing:-0.03em;color:#0E1A38;text-align:center;">{{HEADLINE}}</h2>
+      <div style="font-family:'Tiempos Text',Georgia,'Times New Roman',serif;font-style:normal;font-weight:400;font-size:17px;line-height:1.55;color:#222427;text-align:center;">{{BODY_HTML}}</div>
+    </td></tr>
+    <tr><td align="center" style="padding:28px 0 0 0;font-size:0;line-height:0;">
+      <img class="spot-bot-img" src="{{BOTTOM_GRAPHIC_URL}}" alt="{{BOTTOM_GRAPHIC_ALT}}" width="320" style="width:320px;max-width:320px;height:auto;display:block;margin:0 auto;border:0;"/>
+    </td></tr>
+  </tbody></table>
+</td></tr>

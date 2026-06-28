@@ -1,0 +1,97 @@
+<!--
+component: bundle-offer  [PROPOSED — Bryce design review 2026-06-18; in-review, locks verbatim on first approved-build ship]
+PURPOSE: Itemized kit/bundle offer table on a tinted (lime) panel — each line item is a
+  name plus a struck-through original price and a sale/Free price, followed by a hairline
+  Total row, a savings callout line, and a primary CTA pill. The "itemized line-item price
+  table" bundle variant (vs the side-by-side pricing-cards-2col pattern). Repeatable rows:
+  duplicate an item <tr> for more line items; the LAST item row carries no hairline.
+SOURCE: PROPOSED 2026-06-17 — built to tokens.json + the Figma component mining reference
+  (figma-component-catalog.json module_type "bundle-offer": "itemized kit/bundle price table
+  (vs pricing-cards-2col)", frequency 7, sample_description "Itemized 'Welcome Kit + FREE
+  Travel Case' line-item price table (each item with struck-through original price and
+  Free/sale price), a Total row, ADD TO CART button, money-back-guarantee microcopy"; and the
+  0124-gwp-campaigns / 25-bfcm module entries: "Yellow rounded-rectangle offer panel … with
+  strikethrough original vs. sale price and explicit savings callout"). Visual reference:
+  masters/figma-renders/0124-gwp-campaigns__hi.png (Welcome Kit gift/price list). The page's
+  figma-components node was NOT mined (Figma REST 429), so exact pixel geometry is unverified;
+  this is built to tokens + the Figma mining reference; NOT yet from an approved build — it
+  locks verbatim after it ships in a Bryce-approved build.
+SLOTS:
+  {{PANEL_BG}} — panel background color (a CHOICE). Default tint = lime #EEEF78; the white
+                 rounded-card variant uses #FFFFFF. Set the matching bgcolor + style hex.
+  {{OFFER_HEADING}} — panel heading, e.g. Free gifts with your Welcome Kit (sans, ink, 500).
+  {{ITEM_1_NAME}} / {{ITEM_2_NAME}} / {{ITEM_LAST_NAME}} — line-item names. Approved-shape
+                 example: Welcome Kit / Travel Case / Mindshift &amp; Open. Duplicate an item
+                 <tr> for more rows; keep the LAST row rule-less.
+  {{ITEM_1_WAS}} / {{ITEM_2_WAS}} / {{ITEM_LAST_WAS}} — struck-through original price, rendered
+                 in <s> at muted ink (e.g. $79 / $19 / $24). For a Free gift leave the price
+                 text but mark the sale price below as Free.
+  {{ITEM_1_NOW}} / {{ITEM_2_NOW}} / {{ITEM_LAST_NOW}} — sale/Free price in spice (e.g. $79 /
+                 Free / Free). This is the emphasized current price.
+  {{TOTAL_LABEL}} — total-row label, e.g. Total today.
+  {{TOTAL_WAS}} — struck-through pre-discount total in <s> (e.g. $122). Remove the <s>…</s>
+                 span if no original-total comparison is wanted.
+  {{TOTAL_NOW}} — final total in spice, e.g. $79.
+  {{SAVINGS_LINE}} — savings callout, e.g. That's 35% off — you save $43 (sans, ink, 600).
+  {{CTA_TEXT}} — CTA pill label, uppercase (VML + <a>, 2 occurrences). E.g. ADD TO CART.
+  {{CTA_HREF}} — CTA destination (VML + <a>, 2 occurrences).
+  {{GUARANTEE_HTML}} — money-back / microcopy line under the CTA (sans, charcoal, 400).
+                 Remove the whole guarantee <tr> if unused.
+REQUIRED MEDIA CLASSES (host must include inside @media only screen and (max-width:480px){...}):
+  .px{padding-left:24px !important;padding-right:24px !important;}
+  .bo-name{font-size:17px !important;}
+  .bo-price{font-size:17px !important;}
+  .bo-total{font-size:20px !important;}
+  .cta-link{white-space:normal !important;}
+DEPENDENCIES:
+  - Light-only pin (§8.6) in host head; host must ship the Antarctica @font-face kit.
+  - Sans stack: font-family:'Antarctica','Helvetica Neue',Arial,sans-serif; heading/total
+    weight 500, names 500, savings line 600, guarantee 400 (NOT 900 — font-map.md).
+  - Colors baked from tokens.json: ink #0E1A38 (names/heading/total), spice #FF541E (sale/now
+    prices + CTA fill), charcoal #222427 (guarantee), struck prices use rgba(14,26,56,0.55)
+    (muted ink). Panel bg is the {{PANEL_BG}} choice (default lime #EEEF78). No dark-mode-only
+    colors — light-only safe.
+  - CTA pill carries the VML roundrect + HTML pair (cta-pill.html geometry: fill #FF541E,
+    label #000000, 264px/56px box fits ~10 chars; re-measure VML width if {{CTA_TEXT}} differs
+    materially or Outlook will clip the label). mso-line-height-rule:exactly on rule rows is
+    load-bearing for Outlook; keep it.
+-->
+<tr><td class="px" bgcolor="{{PANEL_BG}}" style="background-color:{{PANEL_BG}};padding:36px 40px 34px 40px;">
+  <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="width:100%;border-collapse:collapse;"><tbody>
+    <tr><td style="padding:0 0 20px 0;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:26px;line-height:1.1;letter-spacing:-0.02em;color:#0E1A38;text-align:left;">{{OFFER_HEADING}}</td></tr>
+    <tr><td style="padding:0;">
+      <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="width:100%;border-collapse:collapse;"><tbody>
+        <tr>
+          <td style="padding:14px 0;border-bottom:1px solid rgba(14,26,56,0.32);vertical-align:middle;"><span class="bo-name" style="font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:20px;line-height:1.2;letter-spacing:-0.01em;color:#0E1A38;">{{ITEM_1_NAME}}</span></td>
+          <td align="right" style="padding:14px 0;border-bottom:1px solid rgba(14,26,56,0.32);vertical-align:middle;text-align:right;white-space:nowrap;"><s class="bo-price" style="font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:20px;line-height:1.2;letter-spacing:-0.01em;color:rgba(14,26,56,0.55);">{{ITEM_1_WAS}}</s>&nbsp;&nbsp;<span class="bo-price" style="font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:600;font-size:20px;line-height:1.2;letter-spacing:-0.01em;color:#FF541E;">{{ITEM_1_NOW}}</span></td>
+        </tr>
+        <tr>
+          <td style="padding:14px 0;border-bottom:1px solid rgba(14,26,56,0.32);vertical-align:middle;"><span class="bo-name" style="font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:20px;line-height:1.2;letter-spacing:-0.01em;color:#0E1A38;">{{ITEM_2_NAME}}</span></td>
+          <td align="right" style="padding:14px 0;border-bottom:1px solid rgba(14,26,56,0.32);vertical-align:middle;text-align:right;white-space:nowrap;"><s class="bo-price" style="font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:20px;line-height:1.2;letter-spacing:-0.01em;color:rgba(14,26,56,0.55);">{{ITEM_2_WAS}}</s>&nbsp;&nbsp;<span class="bo-price" style="font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:600;font-size:20px;line-height:1.2;letter-spacing:-0.01em;color:#FF541E;">{{ITEM_2_NOW}}</span></td>
+        </tr>
+        <tr>
+          <td style="padding:14px 0;vertical-align:middle;"><span class="bo-name" style="font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:20px;line-height:1.2;letter-spacing:-0.01em;color:#0E1A38;">{{ITEM_LAST_NAME}}</span></td>
+          <td align="right" style="padding:14px 0;vertical-align:middle;text-align:right;white-space:nowrap;"><s class="bo-price" style="font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:20px;line-height:1.2;letter-spacing:-0.01em;color:rgba(14,26,56,0.55);">{{ITEM_LAST_WAS}}</s>&nbsp;&nbsp;<span class="bo-price" style="font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:600;font-size:20px;line-height:1.2;letter-spacing:-0.01em;color:#FF541E;">{{ITEM_LAST_NOW}}</span></td>
+        </tr>
+        <tr>
+          <td height="2" colspan="2" bgcolor="#0E1A38" style="height:2px;background-color:#0E1A38;font-size:0;line-height:0;mso-line-height-rule:exactly;">&nbsp;</td>
+        </tr>
+        <tr>
+          <td style="padding:16px 0 0 0;vertical-align:middle;"><span class="bo-total" style="font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:24px;line-height:1.1;letter-spacing:-0.02em;color:#0E1A38;">{{TOTAL_LABEL}}</span></td>
+          <td align="right" style="padding:16px 0 0 0;vertical-align:middle;text-align:right;white-space:nowrap;"><s class="bo-total" style="font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:24px;line-height:1.1;letter-spacing:-0.02em;color:rgba(14,26,56,0.55);">{{TOTAL_WAS}}</s>&nbsp;&nbsp;<span class="bo-total" style="font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:24px;line-height:1.1;letter-spacing:-0.02em;color:#FF541E;">{{TOTAL_NOW}}</span></td>
+        </tr>
+      </tbody></table>
+    </td></tr>
+    <tr><td style="padding:12px 0 22px 0;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:600;font-size:16px;line-height:1.4;letter-spacing:-0.01em;color:#0E1A38;text-align:left;">{{SAVINGS_LINE}}</td></tr>
+    <tr><td align="center" style="padding:0;">
+      <!--[if mso]>
+      <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="{{CTA_HREF}}" style="height:56px;v-text-anchor:middle;width:264px;" arcsize="50%" stroke="false" fillcolor="#FF541E"><w:anchorlock/>
+      <center style="color:#000000;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-size:20px;font-weight:700;letter-spacing:3px;text-transform:uppercase;">{{CTA_TEXT}}</center></v:roundrect>
+      <![endif]-->
+      <!--[if !mso]><!-->
+      <table align="center" role="presentation" border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse;margin:0 auto;"><tbody><tr><td align="center" bgcolor="#FF541E" style="background-color:#FF541E;border-radius:999px;"><a class="cta-link" href="{{CTA_HREF}}" target="_blank" style="display:inline-block;padding:18px 40px;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:700;font-size:20px;line-height:1;letter-spacing:0.18em;text-transform:uppercase;color:#000000;text-decoration:none;border-radius:999px;white-space:nowrap;">{{CTA_TEXT}}</a></td></tr></tbody></table>
+      <!--<![endif]-->
+    </td></tr>
+    <tr><td align="center" style="padding:16px 0 0 0;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:400;font-size:13px;line-height:1.5;letter-spacing:-0.01em;color:#222427;text-align:center;">{{GUARANTEE_HTML}}</td></tr>
+  </tbody></table>
+</td></tr>

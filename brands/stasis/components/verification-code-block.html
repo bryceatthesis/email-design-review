@@ -1,0 +1,46 @@
+<!--
+component: verification-code-block  [PROPOSED — Bryce design review 2026-06-18; in-review, locks verbatim on first approved-build ship]
+PURPOSE: Transactional one-time-code (OTP / login / verification) module — a centered greeting, a bold "Your login code is:" heading, a lime rounded box holding the masked-or-real code, and an expiry / next-step note below. The core trust element of Stasis "OT Password" sends. Drop it once per email near the top, under the wordmark row.
+SOURCE: PROPOSED 2026-06-17 — built to brands/stasis/tokens.json and grounded in three real Figma frames: "OT Password" emails idx 121 (Stasis (Client Duplicate) (3)), idx 32 + idx 43 (Stasis (Client Duplicate) (8)) from the Stasis email-system frames. All three render identically: centered "Hi Maddie," greeting, large bold "Your login code is:" heading, a lime #EEEF78 rounded box with the code centered + bold, then "This code expires in 5 minutes. if this was you, finish logging in to your account with this verification code." Appears in ~4 of 294 emails. NOT yet extracted from a Bryce-approved build — copy/geometry lock verbatim only after it ships in one.
+SLOTS:
+  {{GREETING}} — greeting line, e.g. Hi Maddie, (include the trailing comma). Remove the greeting <p> if the send opens straight on the heading.
+  {{HEADING}} — the bold lead-in. Real frames: Your login code is:
+  {{CODE}} — the code itself. Pass the masked placeholder (XXXXXXXXXX) for review, or the Klaviyo/transactional code merge tag for the send (e.g. the platform's verification-code variable). Bold, centered, large.
+  {{EXPIRY_NOTE}} — expiry + next-step copy under the box. Real frames: This code expires in 5 minutes. if this was you, finish logging in to your account with this verification code. (lowercase "if" is verbatim in the frames — match the live send before "fixing").
+  {{CTA_TEXT}} — OPTIONAL button label (uppercase). See OPTIONAL CTA note below — delete the whole [if mso]/[if !mso] pair AND its wrapping spacer <tr> if the send has no in-block button (the real OT Password frames do NOT — their only button is the marketing-footer SHOP NOW, which is a separate component).
+  {{CTA_HREF}} — OPTIONAL button destination (fills the VML href AND the <a> href — keep both in sync). Only present if CTA kept.
+REQUIRED MEDIA CLASSES (host must include, verbatim, inside @media only screen and (max-width:480px){ ... }):
+  .px{padding-left:24px !important;padding-right:24px !important;}
+  .vc-heading{font-size:32px !important;}
+  .vc-code{font-size:24px !important;}
+  .cta-link{white-space:normal !important;}   (only if the OPTIONAL CTA is kept)
+DEPENDENCIES:
+  - Light-only pin (§8.6) in host head; Antarctica @font-face kit shipped by host (sans stack baked inline: 'Antarctica','Helvetica Neue',Arial,sans-serif).
+  - Lives inside the 600px .wrap table, directly below a wordmark-row. This fragment is a self-contained <tr> stack (no host image sourcing required — there is no imagery in this block; transactional sends keep it text-only for deliverability).
+  - Colors pinned from tokens.json: code box fill lime #EEEF78; all type ink #0E1A38; box radius 18px. Heading + code weight 700 to match the rendered frames (heavier than the provisional type.h1 weight:500 in tokens.json — trust the rendered pixels; re-lock against an approved build later). CTA (if kept) fill #FF541E, label #000000.
+  - No dark-mode-only colors; box reads on white in light-only.
+  - VML/MSO: the OPTIONAL CTA is a §5.1 bulletproof pair (keep both halves + all four conditional-comment markers, or delete the whole pair). The code box itself uses NO VML — it is a plain bgcolor td with border-radius; Outlook squares the corners gracefully (acceptable, matches send-prep tolerance for rounded zones).
+  - EMAIL-SAFE INTERPRETATION: the source is a live transactional template — the "5 minutes" is a static string, not a live countdown. There is no form/input in email; the code is display-only text the recipient copies back into the login screen. No JS, no countdown timer, no <input>.
+-->
+<tr><td class="px" bgcolor="#FFFFFF" style="background-color:#FFFFFF;padding:8px 50px 0 50px;">
+  <p style="margin:0 0 24px 0;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:20px;line-height:1.3;letter-spacing:-0.01em;color:#0E1A38;text-align:center;">{{GREETING}}</p>
+  <p class="vc-heading" style="margin:0;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:700;font-size:40px;line-height:1.05;letter-spacing:-0.03em;color:#0E1A38;text-align:center;">{{HEADING}}</p>
+</td></tr>
+<tr><td class="px" bgcolor="#FFFFFF" style="background-color:#FFFFFF;padding:28px 50px 0 50px;">
+  <table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0" style="width:100%;border-collapse:separate;"><tbody><tr>
+    <td class="vc-code" align="center" bgcolor="#EEEF78" style="background-color:#EEEF78;border-radius:18px;padding:26px 24px;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:700;font-size:28px;line-height:1.2;letter-spacing:0.06em;color:#0E1A38;text-align:center;">{{CODE}}</td>
+  </tr></tbody></table>
+</td></tr>
+<tr><td class="px" bgcolor="#FFFFFF" style="background-color:#FFFFFF;padding:24px 50px 8px 50px;">
+  <p style="margin:0;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:20px;line-height:1.34;letter-spacing:-0.01em;color:#0E1A38;text-align:center;">{{EXPIRY_NOTE}}</p>
+</td></tr>
+<!-- OPTIONAL CTA — DELETE this entire <tr> (spacer + button) if the send has no in-block button. The three real OT Password frames do NOT include one. -->
+<tr><td class="px" bgcolor="#FFFFFF" align="center" style="background-color:#FFFFFF;padding:28px 50px 8px 50px;text-align:center;">
+  <!--[if mso]>
+  <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="{{CTA_HREF}}" style="height:56px;v-text-anchor:middle;width:264px;" arcsize="50%" stroke="false" fillcolor="#FF541E"><w:anchorlock/>
+  <center style="color:#000000;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-size:20px;font-weight:700;letter-spacing:3px;text-transform:uppercase;">{{CTA_TEXT}}</center></v:roundrect>
+  <![endif]-->
+  <!--[if !mso]><!-->
+  <table align="center" role="presentation" border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse;margin:0 auto;"><tbody><tr><td align="center" bgcolor="#FF541E" style="background-color:#FF541E;border-radius:999px;"><a class="cta-link" href="{{CTA_HREF}}" target="_blank" style="display:inline-block;padding:18px 40px;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:700;font-size:20px;line-height:1;letter-spacing:0.18em;text-transform:uppercase;color:#000000;text-decoration:none;border-radius:999px;white-space:nowrap;">{{CTA_TEXT}}</a></td></tr></tbody></table>
+  <!--<![endif]-->
+</td></tr>

@@ -1,0 +1,132 @@
+<!-- ============================================================
+component: numbered-tip-card  [PROPOSED — Bryce design review 2026-06-18; in-review, locks verbatim on first approved-build ship]
+
+PURPOSE: A list of short "how-to" tips, each led by a royal arrow glyph (→), a
+royal bold tip heading, and an ink body description, with a hairline rule between
+tips. The Stasis "reset guide" tip-list module (bedtime / routine tips). Repeatable:
+stack N tips; the last tip carries no bottom rule (divider-BETWEEN pattern, like
+two-col-list). An optional lead caption card (royal-tint rounded panel) can sit
+above the list — toggle it via the LEAD slots / remove that <tr>'s inner block.
+
+SOURCE: PROPOSED 2026-06-17 — built to brands/stasis/tokens.json + the real Figma
+frames. Mined from the email-system component survey (~7 of 294 emails carry a
+numbered/arrow tip list). Modeled directly on:
+  - figma-frames idx 148  "[Purchasers + Current Subs] 3.7 Daylight Saving Reset Guide" §5
+    "numbered tip list — four arrow-bulleted bedtime tips with divider rules"
+  - figma-frames idx 165  "[Non Purchasers] 3.7 Daylight Saving Reset Guide" §6
+    (same module: "→ Shift bedtime 30 minutes earlier tonight." / body / hairline)
+  - figma-frames idx 184  "2.12 The Bedtime Routine Test" §7 (numbered mechanism list, dashed dividers)
+  - related photo-card variant: idx 7 / 172 "1.21 ADHD Hacks" §4–10 (big 01–07 numerals over
+    color cards) — that richer image-card form is NOT this component; see VARIANT NOTE below.
+NOT yet extracted from a Bryce-approved build — locks verbatim after it ships in one.
+
+DESIGN NOTES (measured from the real frames):
+  - Each tip = royal arrow → + royal bold heading on one line, then an ink body line.
+  - A 1px hairline rule separates tips (under every tip EXCEPT the last).
+  - No per-tip card background; the whole module sits on white (creme also works — swap bg).
+  - The royal-tint rounded caption above the list is the §4/§5 "image-overlay subhead card"
+    flattened to a text panel; it is optional and lives in the first <tr>.
+  - The frames render a literal "→". For email safety this uses the HTML entity &#8594;
+    (renders everywhere incl. Outlook). To use real numerals instead (01, 02 …) swap the
+    arrow cell content for the {{TIP_N_NUM}} text — same cell, same royal color.
+
+VARIANT NOTE (email-safe interpretation): the "1.21 ADHD Hacks" form pairs each tip with
+a photo and an oversized numeral inside a lime/teal/creme card. That is a photo card and
+should be composed from hero-art-overlay + this heading/body pair, not forced into this
+text-only list. This component is the hairline-ruled text list (the dominant, ~7-email form).
+
+SLOTS:
+  {{LEAD_TITLE}}    — caption-card title (royal-tint panel). Frame value: Tonight, outsmart the clock.
+  {{LEAD_BODY}}     — caption-card body. Frame value: An intentional bedtime routine makes the transition easier on your brain.
+                      (To drop the caption card entirely, delete the first <tr>…</tr> block below.)
+  {{TIP_1_HEAD}}    — tip 1 heading (royal bold). Frame value: Shift bedtime 30 minutes earlier tonight.
+  {{TIP_1_BODY}}    — tip 1 body (ink). Frame value: Don&rsquo;t aim for the full hour&mdash;gradual shifts stick better.
+  {{TIP_2_HEAD}}    — Frame value: Dim lights 90 minutes before bed.
+  {{TIP_2_BODY}}    — Frame value: Light exposure directly signals dopamine timing.
+  {{TIP_3_HEAD}}    — Frame value: Set a wind-down cue.
+  {{TIP_3_BODY}}    — Frame value: Same shower, same tea, same playlist: repetition tells your brain it&rsquo;s safe to power down.
+  {{TIP_LAST_HEAD}} — LAST tip heading; its row has NO bottom hairline. Frame value: Avoid &ldquo;revenge bedtime procrastination.&rdquo;
+  {{TIP_LAST_BODY}} — LAST tip body. Frame value: Protect tomorrow&rsquo;s focus more than tonight&rsquo;s scroll.
+  COUNT: the frames carry 4 tips (3 ruled + 1 rule-less last). To change the count,
+  duplicate a ruled tip <tr> ABOVE the last tip — never after it (the last stays rule-less).
+
+REQUIRED MEDIA CLASSES (host must include, verbatim, inside @media only screen and (max-width:480px){ … }):
+  .px{padding-left:24px !important;padding-right:24px !important;}
+  .lead-pad{padding:22px 24px !important;}
+  .tip-head{font-size:18px !important;}
+  (no .col-stack needed — the arrow+heading row is a fixed 28px gutter cell + fluid text,
+   which already reflows; the body is a full-width row.)
+
+DEPENDENCIES:
+  - Paste as direct <tr> children of the host 600px wrap table (white module). This is a
+    <tr><td> row fragment, not a paste-level inline fragment.
+  - Light-only pin (§8.6) in host head; Antarctica @font-face kit from the Stasis Shopify CDN.
+  - Colors pinned from tokens.json: royal #3D72E6 (arrow + heading), ink #0E1A38 (body),
+    white #FFFFFF (module bg), royal-tint caption panel baked as opaque #E5ECFB
+    (= royal #3D72E6 at ~14% over white; opaque because email bgcolor + rgba is
+    unreliable) with ink text; hairline rgba(14,26,56,0.22). No dark-mode-only colors.
+  - Sans stack font-family:'Antarctica','Helvetica Neue',Arial,sans-serif; heading weight 500
+    (display weight), body weight 500, caption title weight 500.
+  - No VML/MSO needed in this fragment (text + CSS rules only; renders in Outlook). If a CTA
+    follows (the real guide places an orange pill after the list, e.g. "HOW STASIS SUPPORTS
+    SLEEP & FOCUS"), add it as a SEPARATE cta-pill.html row beneath this component.
+============================================================ -->
+<!-- ROW 1 — optional lead caption card (royal-tint rounded panel). Delete this <tr> to drop it. -->
+<tr><td class="px" bgcolor="#FFFFFF" style="background-color:#FFFFFF;padding:8px 40px 4px 40px;">
+  <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="width:100%;border-collapse:collapse;">
+    <tbody><tr><td class="lead-pad" align="center" bgcolor="#E5ECFB" style="background-color:#E5ECFB;border-radius:18px;padding:30px 34px 32px 34px;text-align:center;">
+      <p style="margin:0 0 10px 0;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:26px;line-height:1.1;letter-spacing:-0.02em;color:#0E1A38;text-align:center;">{{LEAD_TITLE}}</p>
+      <p style="margin:0;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:15px;line-height:1.5;letter-spacing:-0.01em;color:#0E1A38;text-align:center;">{{LEAD_BODY}}</p>
+    </td></tr></tbody>
+  </table>
+</td></tr>
+<!-- ROW 2 — the arrow-bulleted, hairline-ruled tip list -->
+<tr><td class="px" bgcolor="#FFFFFF" style="background-color:#FFFFFF;padding:18px 40px 28px 40px;">
+  <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="width:100%;border-collapse:collapse;"><tbody>
+
+    <!-- tip 1 (ruled) -->
+    <tr><td style="padding:18px 0 22px 0;border-bottom:1px solid rgba(14,26,56,0.22);">
+      <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="width:100%;border-collapse:collapse;"><tbody>
+        <tr>
+          <td valign="top" width="28" style="width:28px;padding:0;vertical-align:top;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:18px;line-height:1.25;color:#3D72E6;">&#8594;</td>
+          <td valign="top" class="tip-head" style="vertical-align:top;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:19px;line-height:1.25;letter-spacing:-0.01em;color:#3D72E6;">{{TIP_1_HEAD}}</td>
+        </tr>
+      </tbody></table>
+      <p style="margin:12px 0 0 28px;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:15px;line-height:1.5;letter-spacing:-0.01em;color:#0E1A38;">{{TIP_1_BODY}}</p>
+    </td></tr>
+
+    <!-- tip 2 (ruled) -->
+    <tr><td style="padding:18px 0 22px 0;border-bottom:1px solid rgba(14,26,56,0.22);">
+      <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="width:100%;border-collapse:collapse;"><tbody>
+        <tr>
+          <td valign="top" width="28" style="width:28px;padding:0;vertical-align:top;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:18px;line-height:1.25;color:#3D72E6;">&#8594;</td>
+          <td valign="top" class="tip-head" style="vertical-align:top;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:19px;line-height:1.25;letter-spacing:-0.01em;color:#3D72E6;">{{TIP_2_HEAD}}</td>
+        </tr>
+      </tbody></table>
+      <p style="margin:12px 0 0 28px;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:15px;line-height:1.5;letter-spacing:-0.01em;color:#0E1A38;">{{TIP_2_BODY}}</p>
+    </td></tr>
+
+    <!-- tip 3 (ruled) -->
+    <tr><td style="padding:18px 0 22px 0;border-bottom:1px solid rgba(14,26,56,0.22);">
+      <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="width:100%;border-collapse:collapse;"><tbody>
+        <tr>
+          <td valign="top" width="28" style="width:28px;padding:0;vertical-align:top;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:18px;line-height:1.25;color:#3D72E6;">&#8594;</td>
+          <td valign="top" class="tip-head" style="vertical-align:top;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:19px;line-height:1.25;letter-spacing:-0.01em;color:#3D72E6;">{{TIP_3_HEAD}}</td>
+        </tr>
+      </tbody></table>
+      <p style="margin:12px 0 0 28px;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:15px;line-height:1.5;letter-spacing:-0.01em;color:#0E1A38;">{{TIP_3_BODY}}</p>
+    </td></tr>
+
+    <!-- last tip (NO bottom rule — closes the list) -->
+    <tr><td style="padding:18px 0 0 0;">
+      <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="width:100%;border-collapse:collapse;"><tbody>
+        <tr>
+          <td valign="top" width="28" style="width:28px;padding:0;vertical-align:top;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:18px;line-height:1.25;color:#3D72E6;">&#8594;</td>
+          <td valign="top" class="tip-head" style="vertical-align:top;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:19px;line-height:1.25;letter-spacing:-0.01em;color:#3D72E6;">{{TIP_LAST_HEAD}}</td>
+        </tr>
+      </tbody></table>
+      <p style="margin:12px 0 0 28px;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:15px;line-height:1.5;letter-spacing:-0.01em;color:#0E1A38;">{{TIP_LAST_BODY}}</p>
+    </td></tr>
+
+  </tbody></table>
+</td></tr>

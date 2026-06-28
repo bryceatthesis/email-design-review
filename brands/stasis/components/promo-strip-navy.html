@@ -1,0 +1,107 @@
+<!-- ============================================================
+component: promo-strip-navy  [PROPOSED — Bryce design review 2026-06-18; in-review, locks verbatim on first approved-build ship]
+
+PURPOSE: Full-width dark announcement strip (module 1 / top-of-email or mid-email
+break) — one centered line of Antarctica-500 WHITE copy on a solid royal-blue
+ground. The dark/blue sibling of promo-strip-yellow.html: same one-line band
+geometry, inverted to a dark ground with white text. Optional inline emphasis
+span (lime or white-bold) for the offer fragment, and an OPTIONAL trailing CTA
+pill for the variant that puts a button inside the band (real frame idx 198).
+Seen in ~27 of 294 frames as the recurring "Save an Extra 20% OFF — Discount
+Applied at Checkout" / "$75 in FREE gifts…" promo bar.
+
+SOURCE: PROPOSED 2026-06-17 — built to brands/stasis/tokens.json + real Figma
+frames. Grounded in:
+  · idx 232 "5.25 Consumer Trial Claims…" §1 promo announcement bar — royal-blue
+    full-width bar, single centered WHITE line "Save an Extra 20% OFF — Discount
+    Applied at Checkout", em-dash separator. (CANONICAL — this fragment mirrors it.)
+  · idx 19 "5.25" §1 — identical thin royal bar, white text, same copy.
+  · idx 259 "1.6 Review Email (Social Proof)" §1 — near-black/navy bar with the
+    offer line "$75 in FREE gifts when you subscribe to the Day + Night Set"
+    (dark-ground swap; see STRIP_BG note + lime/royal text variant).
+Markup mirrors brands/stasis/components/promo-strip-yellow.html (the yellow
+sibling) verbatim in structure; only the ground/text colors are inverted and the
+optional emphasis + CTA rows are added. NOT yet extracted from a Bryce-approved
+build — promotion is not approval; this locks verbatim only after it ships in one.
+
+SLOTS:
+  {{STRIP_COPY}} — strip copy, one line, rendered WHITE. May contain ONE inline
+                   emphasis span for the offer fragment, e.g.
+                     Save an extra <strong style="font-weight:700;color:#EEEF78;">20% OFF</strong> — discount applied at checkout
+                   Use the em-dash "—" separator (matches the real frames). Keep it
+                   to a single visual line; long copy wraps gracefully but the band
+                   is designed for one line.
+                   NOTE: if the copy references a discount CODE, the coupon zone is
+                   governed by reference/send-prep-spec.md §2 at send-prep time — a
+                   bare code line does not belong in this strip; surface codes via
+                   promo-band-black.html's coupon zone instead.
+  {{CTA_HREF}}   — OPTIONAL. Destination for the trailing in-band CTA pill. Appears
+                   TWICE (VML href + <a> href) — fill both with the same URL. (VML pill width 217px for the default label — re-measure per label.)
+                   If you do NOT want a button in the band, DELETE the entire
+                   "OPTIONAL trailing CTA" block (the comment-delimited row below).
+  {{CTA_TEXT}}   — OPTIONAL. In-band CTA label, uppercase (VML <center> + <a>, 2
+                   occurrences). Only used when the CTA block is kept. The VML pill
+                   is a fixed 196px box sized for ~12-char labels (e.g. SHOP NOW,
+                   SUMMER WITH STASIS clipped to SHOP THE SET); re-measure the VML
+                   width if the label is materially longer or Outlook will clip it.
+
+REQUIRED MEDIA CLASSES — host document must include, verbatim, inside
+@media only screen and (max-width:480px){ … }:
+  .px{padding-left:24px !important;padding-right:24px !important;}
+  .m-banner-td{padding-top:11px !important;padding-bottom:11px !important;}
+  .m-banner{font-size:15px !important;}
+  .cta-link{white-space:normal !important;}   (only when the CTA block is kept)
+
+DEPENDENCIES:
+  - Paste as a direct <tr> child of the host 600px .wrap table. This IS a <tr><td>
+    row fragment (not a paste-inside-a-td fragment).
+  - Light-only pin (§8.6) in host head — host carries the "light only" color-scheme
+    metas + :root, body { color-scheme: light only; }. The white text on a dark
+    ground is the exact case dark-mode clients would invert; the light-only pin is
+    what keeps this band readable.
+  - Font kit: Antarctica @font-face from the Stasis Shopify CDN (tokens.json
+    font.cdn_base); inline sans stack font-family:'Antarctica','Helvetica Neue',
+    Arial,sans-serif; strip copy weight 500 (display weight), optional emphasis 700.
+  - COLORS (all from tokens.json, none invented):
+      ground   royal #3D72E6  (STRIP_BG — the canonical bright announcement-bar
+                              blue; real frames 232/19). For the DEEPER dark variant
+                              (idx 259-style near-black/navy bar) swap STRIP_BG to
+                              navy #011D59 or ink #0E1A38 — change BOTH the bgcolor
+                              attribute AND the inline background-color on the <td>,
+                              and the [if mso] mso-table fill if present. Keep text
+                              white. If you want the lime/royal text treatment of
+                              idx 259, set STRIP_COPY's emphasis span to color
+                              #EEEF78 (lime) — text stays legible on navy.
+      text     white #FFFFFF  (baked)
+      emphasis lime  #EEEF78  (optional, in the STRIP_COPY span — offer fragment)
+      CTA      fill spice #FF541E, label black #000000 (the §5.1 brand pill, kept
+                              identical to cta-pill.html / pricing-cards-2col.html)
+  - VML/MSO: the band itself needs NO VML — a plain td bgcolor carries the solid
+    ground in Outlook (same as promo-strip-yellow). The OPTIONAL trailing CTA is the
+    §5.1 bulletproof pair: Outlook gets the [if mso] v:roundrect, everything else the
+    [if !mso] table+anchor. Keep both halves if the CTA block is kept; delete the
+    whole block (both halves) if not.
+  - EMAIL-SAFE INTERPRETATIONS: some real promo bars in the set animate (a CSS/GIF
+    "marquee" repeating the offer — idx 168/233 lime marquee) or imply a live
+    countdown. This component is the STATIC band: render the offer once as styled
+    live text. For a repeating-marquee look, that is a separate pattern
+    (promo-strip-yellow handles the lime marquee ground) — do not reach for a
+    <marquee> tag or JS here (stripped by every major client). For urgency/
+    countdown copy, bake the static deadline as text (e.g. "Ends Sunday") rather
+    than a live timer.
+============================================================ -->
+<!-- 1 · promo strip (navy/royal) · module-map proposed-promo-strip-navy -->
+<tr><td align="center" bgcolor="#3D72E6" class="px m-banner-td" style="background-color:#3D72E6;padding:16px 24px;text-align:center;">
+  <p class="m-banner" style="margin:0;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:22px;line-height:1.3;letter-spacing:0;color:#FFFFFF;text-align:center;">{{STRIP_COPY}}</p>
+  <!-- ===== OPTIONAL trailing CTA (delete this whole block — both halves — if the band carries copy only) ===== -->
+  <!--[if mso]>
+  <table role="presentation" border="0" cellpadding="0" cellspacing="0" align="center" style="margin:14px auto 0 auto;"><tr><td>
+  <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="{{CTA_HREF}}" style="height:50px;v-text-anchor:middle;width:217px;" arcsize="50%" stroke="false" fillcolor="#FF541E"><w:anchorlock/>
+  <center style="color:#000000;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-size:18px;font-weight:700;letter-spacing:3px;text-transform:uppercase;">{{CTA_TEXT}}</center></v:roundrect>
+  </td></tr></table>
+  <![endif]-->
+  <!--[if !mso]><!-->
+  <table align="center" role="presentation" border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse;margin:14px auto 0 auto;"><tbody><tr><td align="center" bgcolor="#FF541E" style="background-color:#FF541E;border-radius:999px;"><a class="cta-link" href="{{CTA_HREF}}" target="_blank" style="display:inline-block;padding:16px 40px;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:700;font-size:18px;line-height:1;letter-spacing:0.18em;text-transform:uppercase;color:#000000;text-decoration:none;border-radius:999px;white-space:nowrap;">{{CTA_TEXT}}</a></td></tr></tbody></table>
+  <!--<![endif]-->
+  <!-- ===== /OPTIONAL trailing CTA ===== -->
+</td></tr>

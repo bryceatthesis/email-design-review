@@ -1,0 +1,86 @@
+<!--
+component: outlined-infographic-box
+PURPOSE: Bordered (1.5px #0E1A38, 16px radius) infographic box on cream: uppercase headline cell, full-width divider, then a content cell with the 30-dot progress grid (CSS shapes, not an asset) beside side copy.
+SOURCE: designs/welcome-quiz/cc-from-spec/05-your-first-30-days-on-stasis.html lines 102-162 (modules 2+3 · outlined 30-days box, CSS rebuild), verbatim. Host row bg #F4EFEB (cream) is part of the approved instance and is kept baked.
+SLOTS:
+  {{HEADLINE}} — inner HTML of the h1.h1 headline cell, uppercase. Approved: WHERE WILL YOU BE&nbsp;IN 30 DAYS? (note the &nbsp; pinning the designed line break).
+  {{SIDE_COPY}} — inner HTML of p.box-copy in the right 50% cell. Approved: After just 30 days of taking Stasis, <strong style="font-weight:600;">95% of participants had a better experience with their stimulant.<sup style="font-size:11px;vertical-align:top;">&dagger;</sup></strong> (emphasis = inline 600 strong; footnote marker = dagger sup; the dagger must have a matching disclaimer module in the host email).
+GRID INTEGRITY (part of the approved design — verify after ANY edit):
+  The grid is 5 rows x 6 td.dot-cell = 30 cells total. Cells 1-29 hold div.dot (13px solid #000000 circle); the 30th (LAST cell of row 5) holds div.dot-ring (27px dashed #FF541E ring) wrapping div.dot-ring-in (13px solid #FF541E). Counts to re-verify in the fragment body below this header: 30 td elements whose class attr equals dot-cell, 29 divs whose class attr equals dot exactly, 1 div whose class attr equals dot-ring. The dot count IS the "30 days" claim; never let an edit change it.
+REQUIRED MEDIA CLASSES (host must include inside @media only screen and (max-width:480px){...}) — copied verbatim from the E5 build; note .h1 is 27px in E5 (NOT E3's 34px):
+  .h1{font-size:27px !important;}
+  .box-td{padding:8px 20px 0 20px !important;}
+  .box-head{padding:24px 20px 20px 20px !important;}
+  .box-grid{padding:20px 20px 22px 20px !important;}
+  .box-copy{font-size:14px !important;}
+  .dot-cell{width:20px !important;height:20px !important;}
+  .dot{width:9px !important;height:9px !important;}
+  .dot-ring{width:16px !important;height:16px !important;}
+  .dot-ring-in{width:9px !important;height:9px !important;margin:3px auto 0 auto !important;}
+DEPENDENCIES:
+  - Light-only pin (§8.6) in host head.
+  - Sans stack: font-family:'Antarctica','Helvetica Neue',Arial,sans-serif; headline weight 500 (display roles are 500, NOT 900 — font-map.md); side copy weight 400 with inline 600 strong. Host must ship the Antarctica @font-face kit.
+  - Box border uses border-collapse:separate on the inner table (required for border-radius to render); do not switch to collapse.
+  - No VML/MSO requirements; the grid is pure td/div CSS shapes and degrades to square-ish dots in Outlook (accepted in the approved build).
+-->
+<tr><td class="box-td" align="center" bgcolor="#F4EFEB" style="background-color:#F4EFEB;padding:8px 40px 0 40px;">
+  <table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0" style="width:100%;border-collapse:separate;border:1.5px solid #0E1A38;border-radius:16px;">
+    <tbody>
+    <tr><td class="box-head" align="center" style="padding:40px 32px 36px 32px;border-bottom:1.5px solid #0E1A38;">
+      <h1 class="h1" style="margin:0;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:42px;line-height:0.98;letter-spacing:-0.04em;color:#0E1A38;text-align:center;text-transform:uppercase;">{{HEADLINE}}</h1>
+    </td></tr>
+    <tr><td class="box-grid" style="padding:32px 32px 36px 32px;">
+      <table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0" style="width:100%;border-collapse:collapse;"><tbody><tr>
+        <td valign="middle" width="50%" style="width:50%;padding:0 12px 0 0;vertical-align:middle;">
+          <!-- 30-dot grid: 6×5, last dot Spice with dashed ring (CSS shapes, not an asset) -->
+          <table role="presentation" border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse;"><tbody>
+            <tr>
+              <td class="dot-cell" width="38" height="38" align="center" valign="middle" style="width:38px;height:38px;"><div class="dot" style="width:13px;height:13px;border-radius:50%;background-color:#000000;font-size:0;line-height:0;">&nbsp;</div></td>
+              <td class="dot-cell" width="38" height="38" align="center" valign="middle" style="width:38px;height:38px;"><div class="dot" style="width:13px;height:13px;border-radius:50%;background-color:#000000;font-size:0;line-height:0;">&nbsp;</div></td>
+              <td class="dot-cell" width="38" height="38" align="center" valign="middle" style="width:38px;height:38px;"><div class="dot" style="width:13px;height:13px;border-radius:50%;background-color:#000000;font-size:0;line-height:0;">&nbsp;</div></td>
+              <td class="dot-cell" width="38" height="38" align="center" valign="middle" style="width:38px;height:38px;"><div class="dot" style="width:13px;height:13px;border-radius:50%;background-color:#000000;font-size:0;line-height:0;">&nbsp;</div></td>
+              <td class="dot-cell" width="38" height="38" align="center" valign="middle" style="width:38px;height:38px;"><div class="dot" style="width:13px;height:13px;border-radius:50%;background-color:#000000;font-size:0;line-height:0;">&nbsp;</div></td>
+              <td class="dot-cell" width="38" height="38" align="center" valign="middle" style="width:38px;height:38px;"><div class="dot" style="width:13px;height:13px;border-radius:50%;background-color:#000000;font-size:0;line-height:0;">&nbsp;</div></td>
+            </tr>
+            <tr>
+              <td class="dot-cell" width="38" height="38" align="center" valign="middle" style="width:38px;height:38px;"><div class="dot" style="width:13px;height:13px;border-radius:50%;background-color:#000000;font-size:0;line-height:0;">&nbsp;</div></td>
+              <td class="dot-cell" width="38" height="38" align="center" valign="middle" style="width:38px;height:38px;"><div class="dot" style="width:13px;height:13px;border-radius:50%;background-color:#000000;font-size:0;line-height:0;">&nbsp;</div></td>
+              <td class="dot-cell" width="38" height="38" align="center" valign="middle" style="width:38px;height:38px;"><div class="dot" style="width:13px;height:13px;border-radius:50%;background-color:#000000;font-size:0;line-height:0;">&nbsp;</div></td>
+              <td class="dot-cell" width="38" height="38" align="center" valign="middle" style="width:38px;height:38px;"><div class="dot" style="width:13px;height:13px;border-radius:50%;background-color:#000000;font-size:0;line-height:0;">&nbsp;</div></td>
+              <td class="dot-cell" width="38" height="38" align="center" valign="middle" style="width:38px;height:38px;"><div class="dot" style="width:13px;height:13px;border-radius:50%;background-color:#000000;font-size:0;line-height:0;">&nbsp;</div></td>
+              <td class="dot-cell" width="38" height="38" align="center" valign="middle" style="width:38px;height:38px;"><div class="dot" style="width:13px;height:13px;border-radius:50%;background-color:#000000;font-size:0;line-height:0;">&nbsp;</div></td>
+            </tr>
+            <tr>
+              <td class="dot-cell" width="38" height="38" align="center" valign="middle" style="width:38px;height:38px;"><div class="dot" style="width:13px;height:13px;border-radius:50%;background-color:#000000;font-size:0;line-height:0;">&nbsp;</div></td>
+              <td class="dot-cell" width="38" height="38" align="center" valign="middle" style="width:38px;height:38px;"><div class="dot" style="width:13px;height:13px;border-radius:50%;background-color:#000000;font-size:0;line-height:0;">&nbsp;</div></td>
+              <td class="dot-cell" width="38" height="38" align="center" valign="middle" style="width:38px;height:38px;"><div class="dot" style="width:13px;height:13px;border-radius:50%;background-color:#000000;font-size:0;line-height:0;">&nbsp;</div></td>
+              <td class="dot-cell" width="38" height="38" align="center" valign="middle" style="width:38px;height:38px;"><div class="dot" style="width:13px;height:13px;border-radius:50%;background-color:#000000;font-size:0;line-height:0;">&nbsp;</div></td>
+              <td class="dot-cell" width="38" height="38" align="center" valign="middle" style="width:38px;height:38px;"><div class="dot" style="width:13px;height:13px;border-radius:50%;background-color:#000000;font-size:0;line-height:0;">&nbsp;</div></td>
+              <td class="dot-cell" width="38" height="38" align="center" valign="middle" style="width:38px;height:38px;"><div class="dot" style="width:13px;height:13px;border-radius:50%;background-color:#000000;font-size:0;line-height:0;">&nbsp;</div></td>
+            </tr>
+            <tr>
+              <td class="dot-cell" width="38" height="38" align="center" valign="middle" style="width:38px;height:38px;"><div class="dot" style="width:13px;height:13px;border-radius:50%;background-color:#000000;font-size:0;line-height:0;">&nbsp;</div></td>
+              <td class="dot-cell" width="38" height="38" align="center" valign="middle" style="width:38px;height:38px;"><div class="dot" style="width:13px;height:13px;border-radius:50%;background-color:#000000;font-size:0;line-height:0;">&nbsp;</div></td>
+              <td class="dot-cell" width="38" height="38" align="center" valign="middle" style="width:38px;height:38px;"><div class="dot" style="width:13px;height:13px;border-radius:50%;background-color:#000000;font-size:0;line-height:0;">&nbsp;</div></td>
+              <td class="dot-cell" width="38" height="38" align="center" valign="middle" style="width:38px;height:38px;"><div class="dot" style="width:13px;height:13px;border-radius:50%;background-color:#000000;font-size:0;line-height:0;">&nbsp;</div></td>
+              <td class="dot-cell" width="38" height="38" align="center" valign="middle" style="width:38px;height:38px;"><div class="dot" style="width:13px;height:13px;border-radius:50%;background-color:#000000;font-size:0;line-height:0;">&nbsp;</div></td>
+              <td class="dot-cell" width="38" height="38" align="center" valign="middle" style="width:38px;height:38px;"><div class="dot" style="width:13px;height:13px;border-radius:50%;background-color:#000000;font-size:0;line-height:0;">&nbsp;</div></td>
+            </tr>
+            <tr>
+              <td class="dot-cell" width="38" height="38" align="center" valign="middle" style="width:38px;height:38px;"><div class="dot" style="width:13px;height:13px;border-radius:50%;background-color:#000000;font-size:0;line-height:0;">&nbsp;</div></td>
+              <td class="dot-cell" width="38" height="38" align="center" valign="middle" style="width:38px;height:38px;"><div class="dot" style="width:13px;height:13px;border-radius:50%;background-color:#000000;font-size:0;line-height:0;">&nbsp;</div></td>
+              <td class="dot-cell" width="38" height="38" align="center" valign="middle" style="width:38px;height:38px;"><div class="dot" style="width:13px;height:13px;border-radius:50%;background-color:#000000;font-size:0;line-height:0;">&nbsp;</div></td>
+              <td class="dot-cell" width="38" height="38" align="center" valign="middle" style="width:38px;height:38px;"><div class="dot" style="width:13px;height:13px;border-radius:50%;background-color:#000000;font-size:0;line-height:0;">&nbsp;</div></td>
+              <td class="dot-cell" width="38" height="38" align="center" valign="middle" style="width:38px;height:38px;"><div class="dot" style="width:13px;height:13px;border-radius:50%;background-color:#000000;font-size:0;line-height:0;">&nbsp;</div></td>
+              <td class="dot-cell" width="38" height="38" align="center" valign="middle" style="width:38px;height:38px;"><div class="dot-ring" style="width:27px;height:27px;border:2px dashed #FF541E;border-radius:50%;font-size:0;line-height:0;"><div class="dot-ring-in" style="width:13px;height:13px;border-radius:50%;background-color:#FF541E;margin:7px auto 0 auto;font-size:0;line-height:0;">&nbsp;</div></div></td>
+            </tr>
+          </tbody></table>
+        </td>
+        <td valign="middle" width="50%" style="width:50%;vertical-align:middle;">
+          <p class="box-copy" style="margin:0;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:400;font-size:17px;line-height:1.4;letter-spacing:-0.01em;color:#0E1A38;text-align:left;">{{SIDE_COPY}}</p>
+        </td>
+      </tr></tbody></table>
+    </td></tr>
+    </tbody>
+  </table>
+</td></tr>

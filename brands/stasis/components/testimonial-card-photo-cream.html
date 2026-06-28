@@ -1,0 +1,44 @@
+<!--
+  COMPONENT · testimonial-card-photo-cream
+  PURPOSE · §6.1 cream photo-top quote card (lifestyle photo, single left-aligned upright Tiempos quote, em-dash Antarctica attribution, each in its OWN row) — the E3 Devon pattern, and the only approved cream-colorway testimonial.
+
+  SOURCE · designs/welcome-quiz/cc-from-spec/03-the-science-that-powers-stasis.html (Bryce-approved build, 2026-06-11), lines 160–173 (the module comment on line 159 is not part of the fragment).
+    Line 163 (photo provenance comment) became the {{PHOTO_PROVENANCE}} slot; line 164's embedded base64 src became {{PHOTO_SRC}}. Everything else is verbatim with copy slots.
+    NOTE · this is structurally distinct from BOTH testimonial-card-centered.html (E4: no photo, centered, uppercase heading) and testimonial-card-photo.html (E2: quote + attribution merged in one cell, 21px quote, 400/20px attribution). It was extracted as its own file rather than force-merged — fidelity beats forced unification. Do not borrow sizes or paddings across flavors.
+
+  APPROVED COLORWAY VALUE-SET (this structure has exactly one)
+    {{CARD_BG}} #F4EFEB cream · quote + attribution text #0E1A38 (literal in fragment) · source lines 159–173
+
+  SLOTS
+    {{CARD_BG}}            card background; approved for this structure: #F4EFEB cream only.
+    {{PHOTO_PROVENANCE}}   HTML-comment provenance per §8.5 derived-crop rule: original send-slice sha256, crop box, crop sha256, embedded sha256. Approved instance (line 163): laughing-couple lifestyle photo, derived crop e3-couple-photo.png (kit crops-manifest.md) from send slice e3-09 — photo only, NO baked quote text (quote renders live below, upright Tiempos per §3/§6.1). Source the bytes via the email-image-source skill; gaps stop the build.
+    {{PHOTO_SRC}}          the image src. The approved build embeds base64 (review); send copies host on production CDN per reference/send-prep-spec.md §3.
+    {{PHOTO_ALT}}          image alt text. Approved instance: Two laughing customers enjoying their day
+    {{QUOTE_PARAGRAPHS}}   inner text of the single 17px/1.5 Tiempos paragraph (this pattern is ONE serif paragraph). Approved instance is wrapped in &ldquo;…&rdquo;; curly-quote entities travel with the copy.
+    {{ATTRIBUTION}}        attribution name only; the &mdash; prefix is part of the fragment. Approved instance: Devon F.
+                           Attribution in THIS pattern is Antarctica 600 at 14px — measured, do not normalize.
+
+  REQUIRED MEDIA CLASSES — none. The fragment carries no media-query classes; mobile behavior comes from width:100% fluid sizing inside the host's .wrap{width:100% !important;} override at ≤480.
+
+  DEPENDENCIES
+    · light-only pin: host carries the "light only" color-scheme metas + :root, body { color-scheme: light only; }
+    · fonts: Antarctica 400/500/600/700 + Tiempos Text 400 @font-face kit (Shopify Files CDN, per brands/stasis/design-language.md); stacks as inlined below
+    · testimonial serif is UPRIGHT, never italic (spec §3/§6.1, RESOLVED 2026-06-10)
+    · host shell: 600px .wrap table on white; the 32px side gutters + 8px bottom seam live on the outer td — verbatim, do not retune
+    · photo: §8.5 derived crop — photo region only; border-radius:14px on the img is load-bearing
+    · border-collapse:separate on the card table is required for border-radius; no VML/MSO parts in this fragment
+-->
+<tr><td style="padding:0 32px 8px 32px;">
+  <table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0" style="width:100%;background-color:{{CARD_BG}};border-radius:18px;border-collapse:separate;"><tbody>
+    <tr><td style="padding:26px 28px 0 28px;">
+      <!-- source: {{PHOTO_PROVENANCE}} -->
+      <img src="{{PHOTO_SRC}}" width="480" alt="{{PHOTO_ALT}}" style="display:block;width:100%;max-width:100%;height:auto;border-radius:14px;"/>
+    </td></tr>
+    <tr><td style="padding:22px 28px 4px 28px;">
+      <p style="margin:0;font-family:'Tiempos Text',Georgia,'Times New Roman',serif;font-weight:400;font-size:17px;line-height:1.5;color:#0E1A38;text-align:left;">{{QUOTE_PARAGRAPHS}}</p>
+    </td></tr>
+    <tr><td style="padding:14px 28px 28px 28px;">
+      <p style="margin:0;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:600;font-size:14px;line-height:1.3;color:#0E1A38;text-align:left;">&mdash; {{ATTRIBUTION}}</p>
+    </td></tr>
+  </tbody></table>
+</td></tr>

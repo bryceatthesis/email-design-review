@@ -1,0 +1,49 @@
+<!--
+component: ugc-community-grid  [PROPOSED — Bryce design review 2026-06-18; in-review, locks verbatim on first approved-build ship]
+PURPOSE: The "YOUR COMMUNITY AWAITS" social-invite block — a centered dark heading, a two-up grid of square lifestyle/UGC photos (customer selfie + product-in-hand ritual shot), and a single centered orange pill CTA below ("START ON INSTAGRAM" / "JOIN THE CONVERSATION"). White-background section that typically sits just above the cream contact/social footer. Drives the recipient to the brand's social community.
+SOURCE: PROPOSED 2026-06-17 — built to brands/stasis/tokens.json + the real Figma frames. Surfaced by the email-system component mining (appears ~16× across the 294-frame set). Studied frames: idx 34 "Order Confirmation_Update-1" (heading + UGC two-up + START ON INSTAGRAM), idx 108 "Email 4" (YOUR COMMUNITY AWAITS, two lifestyle photos), idx 110 "Email 1 - V2" (centered heading + two-up + START ON INSTAGRAM pill), idx 289 "Order Confirmation_[90 DAY GIFTING]" (centered heading + two-up + JOIN THE CONVERSATION pill). NOT yet extracted from a Bryce-approved build — locks verbatim after it ships in one.
+SLOTS:
+  {{HEADING}} — section heading, uppercase. Approved instance: YOUR COMMUNITY AWAITS.
+  {{IMG_LEFT}} — left photo (square-ish lifestyle/UGC; production-hosted, sourced via email-image-source — gaps stop the build). Real frames: a customer selfie / lifestyle portrait.
+  {{IMG_LEFT_ALT}} — left image alt text.
+  {{IMG_RIGHT}} — right photo (square-ish; product-in-hand / ritual shot in the real frames). Production-hosted.
+  {{IMG_RIGHT_ALT}} — right image alt text.
+  {{CTA_TEXT}} — pill label, uppercase. Approved instances: START ON INSTAGRAM (idx 34/110), JOIN THE CONVERSATION (idx 289). Note the VML pill is a fixed-width box (264px here, fits the ~19-char labels above) — re-measure v:roundrect width if {{CTA_TEXT}} is materially longer/shorter, or Outlook will clip/float the label.
+  {{CTA_HREF}} — destination (Instagram profile / community URL). Appears TWICE: the VML roundrect href AND the <a class="cta-link"> href — fill BOTH with the same URL.
+REQUIRED MEDIA CLASSES (host must include, verbatim, inside @media only screen and (max-width:480px){...}):
+  .px{padding-left:24px !important;padding-right:24px !important;}
+  .col-stack{display:block !important;width:100% !important;}
+  .ugc-l{padding:0 0 12px 0 !important;}   /* left cell: drop the right-gutter, add a bottom gap when stacked */
+  .ugc-r{padding:0 !important;}            /* right cell: drop the left-gutter when stacked */
+  .ugc-img{width:100% !important;max-width:100% !important;height:auto !important;}
+  .cta-link{white-space:normal !important;}
+DEPENDENCIES:
+  - Paste as a <tr> directly into the 600px wrap table (this fragment IS a full section row; it is NOT a sub-row of a panel like pricing-cards-2col).
+  - Light-only pin (§8.6) in host head; Antarctica @font-face kit shipped by host.
+  - Both images sourced via email-image-source (canonical masters only); for review they may point at served-local images.
+  - Colors pinned from tokens.json: section bg white #FFFFFF baked; heading ink #0E1A38; CTA fill spice #FF541E, CTA label black #000000. No dark-mode-only colors.
+  - Photos use 12px border-radius (matches the rounded UGC tiles in the real frames); the two-up table uses border-collapse:collapse, images get border-radius inline. Outlook ignores the radius (square fallback) — acceptable, consistent with the rest of the kit.
+  - Sans stack: font-family:'Antarctica','Helvetica Neue',Arial,sans-serif; heading weight 500 (display), CTA weight 700 / letter-spacing 0.18em / uppercase.
+  - VML/MSO: the CTA is a §5.1 bulletproof pair — Outlook sees only the [if mso] v:roundrect; everything else only the [if !mso] table+anchor. Keep both halves and all four conditional-comment markers intact.
+  - EMAIL-SAFE INTERPRETATION: the live emails link these tiles/CTA to Instagram. There is no live IG embed/feed — the two photos are plain hosted <img> (static, hosted masters), and the single pill is the only interactive element. If a future build wants the photos themselves clickable, wrap each <img> in an <a href="{{CTA_HREF}}"> (keep the pill as the primary, screen-reader-labeled action).
+-->
+<tr><td class="px" bgcolor="#FFFFFF" style="background-color:#FFFFFF;padding:34px 40px 36px 40px;">
+  <p style="margin:0 0 22px 0;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:30px;line-height:1.08;letter-spacing:-0.03em;color:#0E1A38;text-align:center;text-transform:uppercase;">{{HEADING}}</p>
+  <table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0" style="width:100%;border-collapse:collapse;"><tbody><tr>
+    <td class="col-stack ugc-l" valign="top" width="50%" style="width:50%;padding:0 6px 0 0;vertical-align:top;">
+      <img class="ugc-img" src="{{IMG_LEFT}}" alt="{{IMG_LEFT_ALT}}" width="253" style="width:100%;max-width:253px;height:auto;border-radius:12px;display:block;border:0;"/>
+    </td>
+    <td class="col-stack ugc-r" valign="top" width="50%" style="width:50%;padding:0 0 0 6px;vertical-align:top;">
+      <img class="ugc-img" src="{{IMG_RIGHT}}" alt="{{IMG_RIGHT_ALT}}" width="253" style="width:100%;max-width:253px;height:auto;border-radius:12px;display:block;border:0;"/>
+    </td>
+  </tr></tbody></table>
+  <table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0" style="width:100%;border-collapse:collapse;"><tbody><tr><td align="center" style="padding:26px 0 0 0;text-align:center;">
+    <!--[if mso]>
+    <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="{{CTA_HREF}}" style="height:56px;v-text-anchor:middle;width:264px;" arcsize="50%" stroke="false" fillcolor="#FF541E"><w:anchorlock/>
+    <center style="color:#000000;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-size:20px;font-weight:700;letter-spacing:3px;text-transform:uppercase;">{{CTA_TEXT}}</center></v:roundrect>
+    <![endif]-->
+    <!--[if !mso]><!-->
+    <table align="center" role="presentation" border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse;margin:0 auto;"><tbody><tr><td align="center" bgcolor="#FF541E" style="background-color:#FF541E;border-radius:999px;"><a class="cta-link" href="{{CTA_HREF}}" target="_blank" style="display:inline-block;padding:18px 40px;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:700;font-size:20px;line-height:1;letter-spacing:0.18em;text-transform:uppercase;color:#000000;text-decoration:none;border-radius:999px;white-space:nowrap;">{{CTA_TEXT}}</a></td></tr></tbody></table>
+    <!--<![endif]-->
+  </td></tr></tbody></table>
+</td></tr>

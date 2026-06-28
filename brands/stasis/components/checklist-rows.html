@@ -1,0 +1,38 @@
+<!-- ============================================================
+checklist-rows — Stasis component library (brands/stasis)
+
+PURPOSE: Module-9 benefit checklist — hairline-ruled rows with benefit copy left and a &#10003; check glyph right; final row closes the list with a bottom rule and deep padding.
+
+SOURCE: designs/welcome-quiz/cc-from-spec/02-smarter-balance-backed-by-science.html
+(E2, Bryce-approved build), lines 239-245. Extracted verbatim 2026-06-12; only the
+slot values below were swapped for {{SLOT}} markers.
+
+SLOTS:
+  {{ROW_1_COPY}} — Approved E2 value: Ward off the daily crash &amp; irritability
+  {{ROW_2_COPY}} — Approved E2 value: Tackle the day with clarity and focus
+  {{ROW_3_COPY}} — Approved E2 value: Experience improved sleep &amp; healthier brain
+
+STRUCTURE NOTE: the approved build has exactly 3 rows. Row 3 carries border-bottom +
+58px bottom padding by design (it closes the list). To extend, duplicate a middle-row
+<tr> ABOVE the final row — never after it.
+
+REQUIRED MEDIA CLASSES — host document must include, verbatim, inside
+@media only screen and (max-width:480px){ … }:
+  .px{padding-left:24px !important;padding-right:24px !important;}
+
+DEPENDENCIES:
+  - Paste as a direct <tr> child of the host 600px wrap table (white module).
+  - Light-only pin in host head (see hero-art-overlay header for the exact lines).
+  - Font kit: Antarctica @font-face from the Stasis Shopify CDN; inline sans stack
+    font-family:'Antarctica','Helvetica Neue',Arial,sans-serif; copy weight 400 at
+    22px, check glyph &#10003; (text, not an image) weight 400 at 26px.
+  - Rules are 1px solid #000000 border-top (plus border-bottom on the final row) —
+    no images, renders everywhere including Outlook.
+============================================================ -->
+<tr><td align="center" bgcolor="#FFFFFF" class="px" style="padding:26px 40px 0 41px;background-color:#FFFFFF;">
+  <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="width:100%;border-collapse:collapse;"><tbody>
+    <tr><td style="padding:28px 0 30px 0;border-top:1px solid #000000;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:400;font-size:22px;line-height:1.3;letter-spacing:0;color:#000000;text-align:left;">{{ROW_1_COPY}}</td><td style="padding:28px 30px 30px 0;border-top:1px solid #000000;text-align:right;vertical-align:middle;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:400;font-size:26px;line-height:1;color:#000000;">&#10003;</td></tr>
+    <tr><td style="padding:28px 0 30px 0;border-top:1px solid #000000;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:400;font-size:22px;line-height:1.3;letter-spacing:0;color:#000000;text-align:left;">{{ROW_2_COPY}}</td><td style="padding:28px 30px 30px 0;border-top:1px solid #000000;text-align:right;vertical-align:middle;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:400;font-size:26px;line-height:1;color:#000000;">&#10003;</td></tr>
+    <tr><td style="padding:28px 0 58px 0;border-top:1px solid #000000;border-bottom:1px solid #000000;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:400;font-size:22px;line-height:1.3;letter-spacing:0;color:#000000;text-align:left;">{{ROW_3_COPY}}</td><td style="padding:28px 30px 58px 0;border-top:1px solid #000000;border-bottom:1px solid #000000;text-align:right;vertical-align:middle;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:400;font-size:26px;line-height:1;color:#000000;">&#10003;</td></tr>
+  </tbody></table>
+</td></tr>

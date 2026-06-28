@@ -1,0 +1,578 @@
+<!doctype html>
+<html lang="en" data-theme="light" data-width="desktop">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Stasis Design Review</title>
+<style>
+  :root{
+    --desktop-w: 600px;   /* standard email body width */
+    --mobile-w: 375px;    /* iPhone-class single-column width */
+    --gap: 24px;
+    --bar-h: 56px;
+    --step-h: 46px;
+  }
+
+  /* ---- page chrome themes (the app shell, not the email) ---- */
+  html[data-theme="light"]{
+    --bg:#f4f5f7; --fg:#1c1d21; --muted:#6b6f76;
+    --panel-bg:#ffffff; --panel-line:#e3e5e9;
+    --bar-bg:#ffffff; --bar-line:#e3e5e9;
+    --btn-bg:#ffffff; --btn-fg:#1c1d21; --btn-line:#cfd2d8;
+    --btn-on-bg:#1c1d21; --btn-on-fg:#ffffff;
+    --canvas:#ffffff; --canvas-line:#e3e5e9;
+    --link:#2a6df4;
+  }
+  html[data-theme="dark"]{
+    --bg:#16171a; --fg:#f1f2f4; --muted:#9a9ea6;
+    --panel-bg:#1f2125; --panel-line:#2c2f35;
+    --bar-bg:#1f2125; --bar-line:#2c2f35;
+    --btn-bg:#26282d; --btn-fg:#f1f2f4; --btn-line:#3a3d44;
+    --btn-on-bg:#f1f2f4; --btn-on-fg:#16171a;
+    --canvas:#1a1a1a; --canvas-line:#33363c;
+    --link:#6ea8ff;
+  }
+
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0;
+    font:14px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:var(--bg); color:var(--fg);
+    display:flex; flex-direction:column;
+  }
+
+  /* ---- top toolbar ---- */
+  .bar{
+    height:var(--bar-h); flex:0 0 auto;
+    display:flex; align-items:center; gap:18px;
+    padding:0 18px; background:var(--bar-bg);
+    border-bottom:1px solid var(--bar-line);
+    position:sticky; top:0; z-index:10;
+  }
+  .bar h1{font-size:14px; font-weight:600; margin:0; white-space:nowrap}
+  .bar .spacer{flex:1 1 auto}
+  .group{display:flex; align-items:center; gap:8px}
+  .group .lbl{color:var(--muted); font-size:12px; text-transform:uppercase; letter-spacing:.04em}
+
+  select{
+    appearance:none; background:var(--btn-bg); color:var(--btn-fg);
+    border:1px solid var(--btn-line); border-radius:8px;
+    padding:7px 28px 7px 12px; font-size:13px; font-weight:500; cursor:pointer;
+    background-image:linear-gradient(45deg,transparent 50%,var(--muted) 50%),
+                     linear-gradient(135deg,var(--muted) 50%,transparent 50%);
+    background-position:calc(100% - 15px) 16px, calc(100% - 10px) 16px;
+    background-size:5px 5px,5px 5px; background-repeat:no-repeat;
+  }
+
+  .seg{display:inline-flex; border:1px solid var(--btn-line); border-radius:8px; overflow:hidden}
+  .seg button{
+    appearance:none; border:0; cursor:pointer;
+    background:var(--btn-bg); color:var(--btn-fg);
+    padding:7px 14px; font-size:13px; font-weight:500;
+  }
+  .seg button + button{border-left:1px solid var(--btn-line)}
+  .seg button[aria-pressed="true"]{background:var(--btn-on-bg); color:var(--btn-on-fg)}
+
+  .chk{display:flex; align-items:center; gap:6px; color:var(--muted); font-size:12px; cursor:pointer}
+
+  /* ---- step navigator sub-bar ---- */
+  .stepbar{
+    min-height:var(--step-h); flex:0 0 auto;
+    display:flex; align-items:center; justify-content:center; gap:10px;
+    padding:6px 18px; background:var(--bar-bg);
+    border-bottom:1px solid var(--bar-line);
+  }
+  .stepbar .nav{
+    appearance:none; cursor:pointer; background:var(--btn-bg); color:var(--btn-fg);
+    border:1px solid var(--btn-line); border-radius:8px; padding:6px 12px;
+    font-size:15px; line-height:1; font-weight:600;
+  }
+  .stepbar .nav:disabled{opacity:.35; cursor:default}
+  .steps{display:flex; gap:6px; flex-wrap:wrap; justify-content:center}
+  .step-chip{
+    appearance:none; cursor:pointer; font-size:12px; font-weight:500;
+    background:var(--btn-bg); color:var(--btn-fg);
+    border:1px solid var(--btn-line); border-radius:999px; padding:5px 13px;
+  }
+  .step-chip[aria-current="true"]{background:var(--btn-on-bg); color:var(--btn-on-fg); border-color:var(--btn-on-bg)}
+  .step-chip .num{opacity:.55; margin-right:5px}
+
+  /* ---- comparison stage ---- */
+  .stage{
+    flex:1 1 auto; overflow:auto;
+    display:flex; gap:var(--gap);
+    justify-content:center;
+    align-items:flex-start;
+    padding:var(--gap);
+  }
+  .panel{flex:0 0 auto; display:flex; flex-direction:column; width:var(--desktop-w)}
+  html[data-width="mobile"] .panel{width:var(--mobile-w)}
+
+  .panel-head{
+    background:var(--panel-bg); border:1px solid var(--panel-line);
+    border-radius:10px 10px 0 0; border-bottom:0;
+    padding:10px 12px; display:flex; flex-direction:column; gap:8px;
+  }
+  .panel-head .row1{display:flex; align-items:center; gap:8px}
+  .panel-head select{flex:1 1 auto; min-width:0}
+  .panel-head .row2{display:flex; align-items:center; gap:10px; min-height:18px}
+  .panel-head .stepname{font-weight:600; font-size:13px}
+  .panel-head .links{margin-left:auto; display:flex; gap:12px}
+  .panel-head .links a{color:var(--link); text-decoration:none; font-size:12px}
+  .panel-head .links a:hover{text-decoration:underline}
+
+  .badge{
+    font-size:11px; font-weight:600; border-radius:999px; padding:2px 9px;
+    border:1px solid transparent; white-space:nowrap;
+  }
+  .badge.live{background:#e6f6ec; color:#1f7a3d; border-color:#bfe6cd}
+  .badge.approved{background:#e7eefe; color:#2a52c4; border-color:#c6d6fb}
+  .badge.draft{background:#fdf1dc; color:#9a6a12; border-color:#f3dcae}
+  .badge.retired{background:#eceef1; color:#6b6f76; border-color:#dde0e5}
+  html[data-theme="dark"] .badge.live{background:#15301f; color:#62c98a; border-color:#1f5234}
+  html[data-theme="dark"] .badge.approved{background:#1a2547; color:#8fb0ff; border-color:#27376e}
+  html[data-theme="dark"] .badge.draft{background:#352a14; color:#e0b15c; border-color:#574420}
+  html[data-theme="dark"] .badge.retired{background:#26282d; color:#9a9ea6; border-color:#3a3d44}
+  .badge.unapproved{background:transparent; color:var(--muted); border-color:var(--btn-line)}
+
+  .canvas{
+    background:var(--canvas);
+    border:1px solid var(--canvas-line);
+    border-radius:0 0 10px 10px;
+    overflow:hidden;
+  }
+  .canvas iframe{display:block; width:100%; height:72vh; border:0; background:transparent}
+  .empty{
+    display:flex; align-items:center; justify-content:center; text-align:center;
+    height:240px; padding:24px; color:var(--muted); font-size:13px;
+  }
+  #globalEmpty{
+    flex:1 1 auto; display:flex; align-items:center; justify-content:center;
+    color:var(--muted); font-size:14px; text-align:center;
+  }
+  #globalEmpty[hidden]{display:none}
+</style>
+</head>
+<body>
+  <header class="bar">
+    <h1>Stasis Design Review</h1>
+
+    <div class="group">
+      <span class="lbl">Design</span>
+      <select id="flowPicker" aria-label="Design"></select>
+    </div>
+
+    <div class="spacer"></div>
+
+    <div class="group">
+      <span class="lbl">Width</span>
+      <div class="seg" id="widthSeg" role="group" aria-label="Width mode">
+        <button data-width="mobile"  aria-pressed="false">Mobile</button>
+        <button data-width="desktop" aria-pressed="true">Desktop</button>
+      </div>
+    </div>
+
+    <div class="group">
+      <span class="lbl">Theme</span>
+      <div class="seg" id="themeSeg" role="group" aria-label="Theme mode">
+        <button data-theme="light" aria-pressed="true">Light</button>
+        <button data-theme="dark"  aria-pressed="false">Dark</button>
+      </div>
+    </div>
+
+    <label class="chk"><input type="checkbox" id="syncScroll"> Sync scroll</label>
+  </header>
+
+  <nav class="stepbar" id="stepbar" hidden>
+    <button class="nav" id="prevStep" aria-label="Previous step">&#8249;</button>
+    <div class="steps" id="steps"></div>
+    <button class="nav" id="nextStep" aria-label="Next step">&#8250;</button>
+  </nav>
+
+  <main class="stage" id="stage">
+    <div id="globalEmpty">Loading manifest&hellip;</div>
+
+    <section class="panel" data-side="left" hidden>
+      <div class="panel-head">
+        <div class="row1">
+          <select data-side="left" aria-label="Left variant"></select>
+        </div>
+        <div class="row2">
+          <span class="stepname" data-role="stepname"></span>
+          <span class="links" data-role="links"></span>
+        </div>
+      </div>
+      <div class="canvas" data-role="canvas"></div>
+    </section>
+
+    <section class="panel" data-side="right" hidden>
+      <div class="panel-head">
+        <div class="row1">
+          <select data-side="right" aria-label="Right variant"></select>
+        </div>
+        <div class="row2">
+          <span class="stepname" data-role="stepname"></span>
+          <span class="links" data-role="links"></span>
+        </div>
+      </div>
+      <div class="canvas" data-role="canvas"></div>
+    </section>
+  </main>
+
+<script>
+(() => {
+  const root = document.documentElement;
+  const SIDES = ['left', 'right'];
+
+  const state = {
+    flow: null, left: null, right: null, step: 1,
+    width: 'desktop', theme: 'light', sync: false,
+  };
+  let MANIFEST = null;
+  let FLOW = null;                 // currently selected flow object
+  const frames = {};               // side -> {el, file, raw}
+  const htmlCache = {};            // file path -> raw html text
+
+  /* ---------------- hash (deep-link) state ---------------- */
+  function parseHash(){
+    const h = new URLSearchParams(location.hash.replace(/^#/, ''));
+    const out = {};
+    if(h.has('flow')) out.flow = h.get('flow');
+    if(h.has('l')) out.left = h.get('l');
+    if(h.has('r')) out.right = h.get('r');
+    if(h.has('step')) out.step = Math.max(1, parseInt(h.get('step'), 10) || 1);
+    if(h.has('w')) out.width = h.get('w') === 'mobile' ? 'mobile' : 'desktop';
+    if(h.has('t')) out.theme = h.get('t') === 'dark' ? 'dark' : 'light';
+    if(h.has('sync')) out.sync = h.get('sync') === '1';
+    return out;
+  }
+  function writeHash(){
+    const h = new URLSearchParams();
+    if(state.flow) h.set('flow', state.flow);
+    if(state.left) h.set('l', state.left);
+    if(state.right) h.set('r', state.right);
+    h.set('step', String(state.step));
+    h.set('w', state.width);
+    h.set('t', state.theme);
+    h.set('sync', state.sync ? '1' : '0');
+    history.replaceState(null, '', '#' + h.toString());
+  }
+
+  /* ---------------- toggles ---------------- */
+  function wireSeg(segId, attr, key){
+    const seg = document.getElementById(segId);
+    seg.addEventListener('click', e => {
+      const btn = e.target.closest('button'); if(!btn) return;
+      const val = btn.dataset[key === 'width' ? 'width' : 'theme'];
+      state[key] = val;
+      applyToggles();
+      if(key === 'theme') applyThemeToFrames();
+      writeHash();
+    });
+  }
+  function applyToggles(){
+    root.setAttribute('data-width', state.width);
+    root.setAttribute('data-theme', state.theme);
+    syncSegUI('widthSeg', 'width', state.width);
+    syncSegUI('themeSeg', 'theme', state.theme);
+    document.getElementById('syncScroll').checked = state.sync;
+  }
+  function syncSegUI(segId, key, val){
+    const seg = document.getElementById(segId);
+    [...seg.children].forEach(b => b.setAttribute('aria-pressed', String(b.dataset[key] === val)));
+  }
+  wireSeg('widthSeg', 'data-width', 'width');
+  wireSeg('themeSeg', 'data-theme', 'theme');
+  document.getElementById('syncScroll').addEventListener('change', e => {
+    state.sync = e.target.checked; writeHash();
+  });
+
+  /* ---------------- rendering email into a frame ---------------- */
+  function themed(html){
+    const theme = state.theme;
+    // Emails that pin `color-scheme: light only` render UNCHANGED in dark mode,
+    // matching Apple Mail / iOS Mail (the majority of opens), which honor the
+    // declaration. Everything else gets the aggressive full-inversion model
+    // below. Neither is a faithful per-client preview — Gmail app dark ignores
+    // the declaration and partially recolors; confirm real dark rendering in
+    // Litmus / a live client before shipping.
+    const pinsLight = /content=["']light only["']|color-scheme\s*:\s*light\s*only/i.test(html);
+    if(theme === 'dark' && pinsLight) return html;
+    let inject = `<meta name="color-scheme" content="${theme}">`
+               + `<style>:root{color-scheme:${theme}}</style>`;
+    if(theme === 'dark'){
+      inject += `<style id="__darksim">`
+        + `html{filter:invert(1) hue-rotate(180deg)!important;background:#ffffff!important;}`
+        + `img,picture,video,svg,canvas,[style*="background-image"],[background]{`
+        + `filter:invert(1) hue-rotate(180deg)!important;}`
+        + `</style>`;
+    }
+    return /<head[\s>]/i.test(html)
+      ? html.replace(/<head([^>]*)>/i, `<head$1>${inject}`)
+      : inject + html;
+  }
+  function mount(side, raw, file){
+    const canvas = document.querySelector(`.panel[data-side="${side}"] [data-role="canvas"]`);
+    canvas.innerHTML = '';
+    const f = document.createElement('iframe');
+    f.title = side + ' design';
+    f.srcdoc = themed(raw);
+    canvas.appendChild(f);
+    frames[side] = { el: f, file, raw };
+    wireSync();
+  }
+  function showPanelEmpty(side, msg){
+    const canvas = document.querySelector(`.panel[data-side="${side}"] [data-role="canvas"]`);
+    canvas.innerHTML = `<div class="empty">${msg}</div>`;
+    delete frames[side];
+  }
+  function applyThemeToFrames(){
+    for(const s of SIDES){
+      const fr = frames[s];
+      if(fr && fr.el.srcdoc) fr.el.srcdoc = themed(fr.raw);
+    }
+  }
+
+  /* ---------------- step navigator ---------------- */
+  function maxSteps(){
+    let m = 0;
+    for(const side of SIDES){
+      const v = variantOf(side);
+      if(v) for(const s of v.steps) m = Math.max(m, s.step);
+    }
+    return m;
+  }
+  function buildStepbar(){
+    const bar = document.getElementById('stepbar');
+    const stepsEl = document.getElementById('steps');
+    const n = maxSteps();
+    bar.hidden = n === 0;
+    stepsEl.innerHTML = '';
+    const labels = (FLOW && FLOW.step_labels) || [];
+    for(let i = 1; i <= n; i++){
+      const chip = document.createElement('button');
+      chip.className = 'step-chip';
+      chip.setAttribute('aria-current', String(i === state.step));
+      const label = labels[i - 1] || `Step ${i}`;
+      chip.innerHTML = `<span class="num">${i}</span>${label}`;
+      chip.addEventListener('click', () => setStep(i));
+      stepsEl.appendChild(chip);
+    }
+    document.getElementById('prevStep').disabled = state.step <= 1;
+    document.getElementById('nextStep').disabled = state.step >= n;
+  }
+  function setStep(n){
+    const n2 = Math.min(Math.max(1, n), maxSteps() || 1);
+    if(n2 === state.step){ return; }
+    state.step = n2;
+    renderPanels();
+    buildStepbar();
+    writeHash();
+  }
+  document.getElementById('prevStep').addEventListener('click', () => setStep(state.step - 1));
+  document.getElementById('nextStep').addEventListener('click', () => setStep(state.step + 1));
+
+  /* ---------------- panels ---------------- */
+  function variantOf(side){
+    if(!FLOW) return null;
+    return FLOW.variants.find(v => v.id === state[side]) || null;
+  }
+  function stepOf(variant, n){
+    return variant ? variant.steps.find(s => s.step === n) || null : null;
+  }
+  function renderPanels(){
+    for(const side of SIDES) renderPanel(side);
+  }
+  function renderPanel(side){
+    const panel = document.querySelector(`.panel[data-side="${side}"]`);
+    const variant = variantOf(side);
+    const nameEl = panel.querySelector('[data-role="stepname"]');
+    const linksEl = panel.querySelector('[data-role="links"]');
+
+    if(!variant){
+      nameEl.textContent = ''; linksEl.innerHTML = '';
+      showPanelEmpty(side, 'No variant selected.');
+      return;
+    }
+
+    const step = stepOf(variant, state.step);
+    if(!step){
+      nameEl.textContent = '';
+      linksEl.innerHTML = '';
+      showPanelEmpty(side, `<b>${variant.label}</b> has no step ${state.step}.<br>This variant is shorter than the other side.`);
+      return;
+    }
+
+    nameEl.textContent = step.name;
+
+    linksEl.innerHTML = '';
+    if(step.claude_design_url) linksEl.appendChild(link('Claude Design', step.claude_design_url));
+    if(step.klaviyo_url) linksEl.appendChild(link('Klaviyo', step.klaviyo_url));
+
+    loadDesign(side, step.file);
+  }
+  function link(text, href){
+    const a = document.createElement('a');
+    a.textContent = text; a.href = href; a.target = '_blank'; a.rel = 'noopener';
+    return a;
+  }
+  function loadDesign(side, file){
+    if(htmlCache[file]){ mount(side, htmlCache[file], file); return; }
+    showPanelEmpty(side, 'Loading&hellip;');
+    fetch(file, {cache: 'no-store'}).then(r => {
+      if(!r.ok) throw new Error(r.status);
+      return r.text();
+    }).then(txt => {
+      htmlCache[file] = txt;
+      mount(side, txt, file);
+    }).catch(() => showPanelEmpty(side, `Could not load <code>${file}</code>.`));
+  }
+
+  /* ---------------- variant pickers ---------------- */
+  function populateVariantPicker(side){
+    const sel = document.querySelector(`select[data-side="${side}"]`);
+    sel.innerHTML = '';
+    for(const v of FLOW.variants){
+      const o = document.createElement('option');
+      o.value = v.id;
+      o.textContent = v.label;
+      sel.appendChild(o);
+    }
+    sel.value = state[side];
+  }
+  SIDES.forEach(side => {
+    document.querySelector(`select[data-side="${side}"]`).addEventListener('change', e => {
+      state[side] = e.target.value;
+      renderPanel(side);
+      buildStepbar();   // step count may change with a shorter/longer variant
+      writeHash();
+    });
+  });
+
+  /* ---------------- flow/campaign picker (grouped + sorted) ---------------- */
+  // The picker holds both flows and one-off campaigns. Group them by `type`
+  // ("campaign" | "flow"; default "flow") under sorted optgroups so the list
+  // stays legible as more designs land. Falls back to a flat sorted list if
+  // only one kind is present.
+  const TYPE_GROUPS = [
+    { type: 'campaign', label: 'Campaigns' },
+    { type: 'flow',     label: 'Flows' },
+  ];
+  function buildFlowPicker(picker, flows){
+    picker.innerHTML = '';
+    const byType = new Map();
+    for(const f of flows){
+      const t = f.type === 'campaign' ? 'campaign' : 'flow';
+      (byType.get(t) || byType.set(t, []).get(t)).push(f);
+    }
+    const groupsPresent = TYPE_GROUPS.filter(g => byType.get(g.type)?.length);
+    const sortByName = (a, b) => (a.name || a.id).localeCompare(b.name || b.id);
+    const addOption = (parent, f) => {
+      const o = document.createElement('option');
+      o.value = f.id; o.textContent = f.name || f.id;
+      parent.appendChild(o);
+    };
+    if(groupsPresent.length <= 1){
+      [...flows].sort(sortByName).forEach(f => addOption(picker, f));
+      return;
+    }
+    for(const g of groupsPresent){
+      const og = document.createElement('optgroup');
+      og.label = g.label;
+      byType.get(g.type).sort(sortByName).forEach(f => addOption(og, f));
+      picker.appendChild(og);
+    }
+  }
+
+  /* ---------------- flow selection ---------------- */
+  function selectFlow(flowId){
+    FLOW = MANIFEST.flows.find(f => f.id === flowId) || MANIFEST.flows[0];
+    state.flow = FLOW.id;
+    document.getElementById('flowPicker').value = FLOW.id;
+
+    const ids = FLOW.variants.map(v => v.id);
+    if(!ids.includes(state.left)) state.left = ids[0] || null;
+    if(!ids.includes(state.right)) state.right = ids[1] || ids[0] || null;
+
+    SIDES.forEach(populateVariantPicker);
+    if(state.step > maxSteps()) state.step = 1;
+
+    document.getElementById('globalEmpty').hidden = true;
+    document.querySelectorAll('.panel').forEach(p => p.hidden = false);
+
+    buildStepbar();
+    renderPanels();
+    writeHash();
+  }
+  document.getElementById('flowPicker').addEventListener('change', e => {
+    state.step = 1;
+    selectFlow(e.target.value);
+  });
+
+  /* ---------------- vertical scroll-sync (same-origin frames) ---------------- */
+  let syncing = false;
+  function wireSync(){
+    const sync = document.getElementById('syncScroll');
+    for(const k of SIDES){
+      const fr = frames[k]; if(!fr) continue;
+      fr.el.addEventListener('load', () => {
+        let w; try { w = fr.el.contentWindow; } catch(_) { return; }
+        if(!w) return;
+        w.addEventListener('scroll', () => {
+          if(!sync.checked || syncing) return;
+          syncing = true;
+          const ratio = w.scrollY / Math.max(1, w.document.body.scrollHeight - w.innerHeight);
+          for(const j of SIDES){
+            if(j === k || !frames[j]) continue;
+            try{
+              const ow = frames[j].el.contentWindow;
+              ow.scrollTo(0, ratio * (ow.document.body.scrollHeight - ow.innerHeight));
+            }catch(_){}
+          }
+          syncing = false;
+        });
+      });
+    }
+  }
+
+  /* ---------------- boot ---------------- */
+  function fail(msg){
+    document.getElementById('globalEmpty').innerHTML = msg;
+  }
+  function init(){
+    Object.assign(state, parseHash());
+    applyToggles();
+    fetch('manifest.json', {cache: 'no-store'}).then(r => {
+      if(!r.ok) throw new Error(r.status);
+      return r.json();
+    }).then(m =>
+      // Drafts manifest is gitignored (local-only): parked / pre-send-prep flows that hotlink
+      // source-CDN assets. A 404 on the public site is expected and harmless; locally it merges in.
+      fetch('manifest.drafts.json', {cache: 'no-store'})
+        .then(r => r.ok ? r.json() : null).catch(() => null)
+        .then(d => { if(d && d.flows && d.flows.length){ m.flows = (m.flows || []).concat(d.flows); } return m; })
+    ).then(m => {
+      MANIFEST = m;
+      const picker = document.getElementById('flowPicker');
+      if(!m.flows || !m.flows.length){ fail('Manifest has no flows yet.'); return; }
+      buildFlowPicker(picker, m.flows);
+      const startFlow = m.flows.some(f => f.id === state.flow) ? state.flow : m.flows[0].id;
+      selectFlow(startFlow);
+      // Re-apply when a shared link is pasted into this tab, or on back/forward.
+      window.addEventListener('hashchange', () => {
+        Object.assign(state, parseHash());
+        applyToggles();
+        selectFlow(state.flow);
+        applyThemeToFrames();
+      });
+    }).catch(() => fail(
+      'Could not load <code>manifest.json</code>.<br>'
+      + 'Serve the repo over HTTP (e.g. <code>python3 -m http.server</code>) rather than opening the file directly.'
+    ));
+  }
+  init();
+})();
+</script>
+</body>
+</html>

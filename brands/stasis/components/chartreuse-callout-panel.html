@@ -1,0 +1,41 @@
+<!--
+component: chartreuse-callout-panel  [PROPOSED — Bryce design review 2026-06-18; in-review, locks verbatim on first approved-build ship]
+PURPOSE: Full-width solid chartreuse/lime (#EEEF78) emphasis panel — a high-emphasis surface for an offer headline or a testimonial: bold uppercase headline + subcopy + optional orange CTA pill. Rounded 18px panel inset on white with side gutters. Single-column, centered.
+SOURCE: PROPOSED 2026-06-17 — built to tokens.json + the Figma mining reference (figma-component-catalog.json "chartreuse-callout-panel", category Offer/Commerce, freq 16, "Solid chartreuse/yellow block used as an emphasis surface for an offer headline or a testimonial"; module-inventory variant_notes across 16 pages: 'WE'RE HERE FOR YOU' support/CTA panels with an orange button, price/offer callouts like '$59/month — our biggest discount of the year', and inset testimonial quote panels e.g. Krissy / 'SUSTAINED FOCUS' / 'IF YOU'RE CONSIDERING TRYING STASIS, JUST DO IT ALREADY!'). No exact salvage slice exists in salvage/klaviyo/ (those are stat/ingredient/science modules), so geometry is built to tokens, not measured from a slice. NOT yet extracted from a Bryce-approved build — locks verbatim after it ships in one.
+SLOTS:
+  {{PANEL_BG}}        — panel background; appears TWICE (bgcolor attribute + inline background-color); fill both identically. Default/approved direction: lime #EEEF78. A choice slot: keep on-brand (lime is the canonical chartreuse surface). Use a single solid color — light-only, no gradients/dark-mode colors.
+  {{HEADLINE_COLOR}}  — headline + subcopy ink color; choose for contrast on {{PANEL_BG}}. On lime use ink #0E1A38 (default). Appears on the headline and subcopy paragraphs.
+  {{HEADLINE_HTML}}   — inner HTML of the headline p.h-lg (bold offer/testimonial line). Uppercase reads as the offer variant (e.g. $59/MONTH — OUR BIGGEST DISCOUNT OF THE YEAR); emphasis spans use inline <strong style="font-weight:700;">. Display weight 500 (NOT 900 — font-map).
+  {{SUBCOPY_HTML}}    — inner HTML of the supporting subcopy p.cc-sub (one or two short lines under the headline). OPTIONAL: if unused, delete the entire <p class="cc-sub" ...> line (the headline then sits directly above the CTA / panel padding handles the bottom).
+  {{CTA_TEXT}}        — CTA pill label, uppercase: VML <center> + <a> (2 occurrences). OPTIONAL block — if no CTA, delete the whole "OPTIONAL CTA PILL" region (both the [if mso] roundrect and the [if !mso] table, and the 26px spacer <div> above it). Approved geometry is the standard 264px pill; re-measure the VML width if the label differs materially from ~10 chars or Outlook clips it.
+  {{CTA_HREF}}        — CTA destination: VML href + <a> href (2 occurrences). Part of the OPTIONAL CTA block above.
+REQUIRED MEDIA CLASSES (host must include inside @media only screen and (max-width:480px){...}):
+  .px{padding-left:24px !important;padding-right:24px !important;}        (outer row side gutters -> 24px on mobile)
+  .cc-pad{padding-left:28px !important;padding-right:28px !important;}      (panel inner side padding -> 28px on mobile)
+  .h-lg{font-size:26px !important;}                                        (headline reflow -> 26px on mobile)
+  .cta-link{white-space:normal !important;}                                (only present when the CTA pill is kept)
+DEPENDENCIES:
+  - Light-only pin (§8.6) in host head: <meta name="color-scheme" content="light only"> + <meta name="supported-color-schemes" content="light only"> + :root,body{color-scheme:light only;}. This module ships no dark-mode-dependent colors.
+  - Sans stack: font-family:'Antarctica','Helvetica Neue',Arial,sans-serif; headline weight 500 with inline 700 emphasis, subcopy weight 500. Host must ship the Antarctica @font-face kit.
+  - border-collapse:separate on the panel table is required for border-radius:18px to render.
+  - CTA pill (when kept): fill spice #FF541E, label black #000000, weight 700, letter-spacing 0.18em (3px in VML), uppercase — keep the [if mso] roundrect and the [if !mso] table as a PAIR (Outlook sees only the VML, everything else only the HTML pill). Same pattern as cta-pill.html.
+  - Panel bg lime #EEEF78 and ink #0E1A38 are the approved default colorway; both are slots only so an alt offer surface can be chosen on-brand. No images in this fragment (a testimonial that needs a photo uses a testimonial-card-photo* component instead).
+-->
+<tr><td class="px" bgcolor="#FFFFFF" style="background-color:#FFFFFF;padding:8px 40px 8px 40px;">
+  <table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0" bgcolor="{{PANEL_BG}}" style="width:100%;background-color:{{PANEL_BG}};border-radius:18px;border-collapse:separate;"><tbody>
+    <tr><td class="cc-pad" align="center" style="padding:40px 48px 40px 48px;">
+      <p class="h-lg" style="margin:0;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:32px;line-height:1.1;letter-spacing:-0.02em;color:{{HEADLINE_COLOR}};text-align:center;">{{HEADLINE_HTML}}</p>
+      <p class="cc-sub" style="margin:16px 0 0 0;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:16px;line-height:1.5;letter-spacing:-0.01em;color:{{HEADLINE_COLOR}};text-align:center;">{{SUBCOPY_HTML}}</p>
+      <!-- ===== OPTIONAL CTA PILL — delete this whole region (spacer div + both MSO branches) if no CTA ===== -->
+      <div style="font-size:0;line-height:0;height:26px;mso-line-height-rule:exactly;">&nbsp;</div>
+      <!--[if mso]>
+      <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="{{CTA_HREF}}" style="height:56px;v-text-anchor:middle;width:264px;" arcsize="50%" stroke="false" fillcolor="#FF541E"><w:anchorlock/>
+      <center style="color:#000000;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-size:20px;font-weight:700;letter-spacing:3px;text-transform:uppercase;">{{CTA_TEXT}}</center></v:roundrect>
+      <![endif]-->
+      <!--[if !mso]><!-->
+      <table align="center" role="presentation" border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse;margin:0 auto;"><tbody><tr><td align="center" bgcolor="#FF541E" style="background-color:#FF541E;border-radius:999px;"><a class="cta-link" href="{{CTA_HREF}}" target="_blank" style="display:inline-block;padding:18px 40px;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:700;font-size:20px;line-height:1;letter-spacing:0.18em;text-transform:uppercase;color:#000000;text-decoration:none;border-radius:999px;white-space:nowrap;">{{CTA_TEXT}}</a></td></tr></tbody></table>
+      <!--<![endif]-->
+      <!-- ===== /OPTIONAL CTA PILL ===== -->
+    </td></tr>
+  </tbody></table>
+</td></tr>

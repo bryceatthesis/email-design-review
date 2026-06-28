@@ -1,0 +1,20 @@
+<!--
+component: wordmark-row-white  [PROPOSED — Bryce design review 2026-06-18; in-review, locks verbatim on first approved-build ship]
+PURPOSE: Centered WHITE (reversed) Stasis wordmark inside a full-width DARK band (navy/ink/black) — the dark-masthead variant of wordmark-row. The white-on-dark logo row that opens ~48 of 294 emails (the dark-masthead emails, e.g. PPF Email #1, 5.26, 5.27, Browse Abandon, Email3_20%Off_R2). Mirrors wordmark-row.html exactly but swaps the black wordmark image for the white rendition and pins a dark band background.
+SOURCE: PROPOSED 2026-06-17 — built to tokens.json (wordmark.white_url 169x38; color.ink/navy/black) + real Figma frames (asset-accounting-2026-06/figma-frames). Studied frames: idx0 "PPF Email #1 - Updated" (white STASIS on band measured RGB 7,11,20 ≈ ink #0E1A38, wordmark centered ~28% of 1200 ≈ 168px, ~44px top pad scaled to 600), idx115 "Browse Abandon_Email1-1" (white STASIS on pure black #000000), idx60 "Email3_20%Off_R2-1" (white STASIS centered on black band). Verbatim mirror of the approved wordmark-row.html structure (cc-from-spec/03 L94-96), with the §4-approved WHITE rendition + a dark {{BG}}. NOT yet extracted from a Bryce-approved build — locks verbatim once it ships in one.
+SLOTS:
+  {{WORDMARK_URL}} — the WHITE wordmark image source. §4 logo-is-the-logo rule: the wordmark is ALWAYS the approved image asset (white rendition), NEVER typed text. tokens.json wordmark.white_url = https://d3k81ch9hvuctc.cloudfront.net/company/YsCgQB/images/02b774d0-8762-42c7-9dfd-1cea2705eb0b.png (169x38). Approved builds may embed it as a base64 data URI; send copies use the production-hosted URL per send-prep.
+  {{BG}} — dark row background. Closed set (real-frame colorways): #011D59 (navy) / #0E1A38 (ink — the measured idx0 band) / #000000 (black — idx115/idx60). A new value is a Bryce call, not a fill-in.
+  {{PADDING}} — td padding. Proposed dark-masthead pair: 44px 40px 44px 40px (symmetric, matches the measured idx0 band; the dark band typically opens the email as a masthead so it sits a touch taller than the white inter-band wordmark-row's 35px 40px 47px 40px). Mobile override via .wm-td below.
+REQUIRED MEDIA CLASSES (host must include inside @media only screen and (max-width:480px){...}):
+  .wm{width:106px !important;height:24px !important;}
+  .wm-td{padding:26px 24px 26px 24px !important;}
+DEPENDENCIES:
+  - Light-only pin (§8.6): host head carries <meta name="color-scheme" content="light only">, <meta name="supported-color-schemes" content="light only">, and :root/body{color-scheme:light only;}. The dark band is a LIGHT-mode color baked via bgcolor + background-color (not a dark-mode-only token), so it renders identically regardless of client dark mode — no dark-mode-only colors used.
+  - No font dependency (image only). Keep width="169" height="38", alt="Stasis", display:block, margin:0 auto exactly; mobile size is the .wm 106x24 rule.
+  - No VML/MSO requirements (image-only row, no CTA). Host wrap table is the standard 600px .wrap with MSO ghost table.
+  - Email-safe interpretation note: in several source frames the white wordmark sits OVER a dark hero photo rather than a solid band (e.g. idx20/idx25 "white STASIS wordmark over photo"). That photo-overlay treatment is a DIFFERENT component (hero-art-overlay.html, which carries WORDMARK_URL over text-free background art). THIS component is only the solid dark-band masthead; for the over-photo case use hero-art-overlay.
+-->
+<tr><td class="wm-td" align="center" bgcolor="{{BG}}" style="background-color:{{BG}};padding:{{PADDING}};">
+  <a href="https://takestasis.com/" target="_blank" style="text-decoration:none;"><img class="wm" src="{{WORDMARK_URL}}" width="169" height="38" alt="Stasis" border="0" style="display:block;width:169px;height:38px;margin:0 auto;"/></a>
+</td></tr>

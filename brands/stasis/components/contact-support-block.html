@@ -1,0 +1,40 @@
+<!--
+component: contact-support-block  [PROPOSED — Bryce design review 2026-06-18; in-review, locks verbatim on first approved-build ship]
+PURPOSE: Sign-off / support closer with TWO variants in one file, choose ONE per build:
+  VARIANT A — letter sign-off: a "Warmly, {name}" line, a role line, and a "Follow us on Instagram" link line (left-aligned, baked brand lockup copy). Used at the foot of the letter/founder-voice emails.
+  VARIANT B — centered "Questions? Email us at {addr}" line with the address as a royal link. Used as the cream/tinted support band above the footer (welcome / quiz / review-request / transactional / subscription-reminder closers).
+  Both are full 600px-wrap <tr><td> row fragments. Keep exactly ONE variant in a host build; delete the other <tr>.
+SOURCE: PROPOSED 2026-06-17 — built to tokens.json + the Figma mining reference; NOT yet from an approved build.
+  Mining: figma-component-catalog.json module_type "contact-support-block" (category Footer/Closer, frequency 16, n_pages 16; sample_description "Signature/sign-off block in the letter emails: 'Warmly, Camille' / 'Stasis Community Manager' plus a 'Follow us on Instagram' line").
+  Per-page descriptions: centered "For any questions, you can contact our Customer Service Team at hello@takestasis.com" with the email as a royal link, on a cream/tinted band (review-request-email, transactional-emails, abandoned-series, subscription-reminder, 26-footers, welcome-flow); quiz-flow phrases it "Have other questions? We're here to help…". The letter sign-off is the catalog sample_description above.
+  No salvage slice matches (the asset-accounting salvage/klaviyo set is stat/ingredient/science cards only) — geometry is built to tokens, not measured. Locks verbatim after it ships in one Bryce-approved build.
+SLOTS:
+  VARIANT A (letter sign-off):
+    {{SIGNOFF_LINE}} — sign-off line, e.g. Warmly, Camille (serif Tiempos Text, upright). Emphasis spans use inline <strong style="font-weight:600;">.
+    {{SIGNOFF_ROLE}} — role line under the name, e.g. Stasis Community Manager.
+    {{INSTAGRAM_URL}} — href for the "Follow us on Instagram" link (royal, underlined). The link TEXT "Follow us on Instagram" is baked brand lockup copy.
+  VARIANT B (centered support line):
+    {{SUPPORT_PREFIX}} — copy before the address, e.g. For any questions, you can contact our Customer Service Team at (centered). For the quiz variant use Have other questions? We're here to help you reclaim your life. and put the address on its own following sentence inside this same slot if desired.
+    {{SUPPORT_EMAIL}} — the support address, e.g. hello@takestasis.com — used as BOTH the visible text and (with the mailto: prefix already in the href) the link target. Royal #3D72E6, underlined.
+  SHARED (both variants):
+    {{BAND_BG}} — panel background color: a CHOICE token. Variant A approved-intent = creme #F4EFEB or white #FFFFFF; Variant B band = creme #F4EFEB. Pass the hex from tokens.json (creme #F4EFEB / white #FFFFFF), never a new value.
+REQUIRED MEDIA CLASSES (host must include inside @media only screen and (max-width:480px){...}):
+  .px{padding-left:24px !important;padding-right:24px !important;}   /* side padding on small screens, both variants */
+DEPENDENCIES:
+  - Light-only pin (§8.6) in host head — the band bg + text colors are baked light; do NOT add dark-mode overrides.
+  - Antarctica @font-face kit (sans) AND the Tiempos Text kit (serif, UPRIGHT — never italic) shipped by the host. Variant A sign-off line is serif; role line + Instagram link + Variant B copy are sans.
+  - Links use Royal #3D72E6 (canonical; legacy #197BBD is RETIRED — design-language §52/§77). text-decoration:underline on the address + Instagram link.
+  - No CTA pill in either variant, so NO VML/MSO roundrect is required. (A "GET IN TOUCH" CTA closer — seen on the sub-post-purchase / cancellation chartreuse panels — is the SEPARATE cta-pill component, not part of this block.)
+-->
+
+<!-- ===================== VARIANT A — letter sign-off (delete if using B) ===================== -->
+<tr><td class="px" bgcolor="{{BAND_BG}}" style="background-color:{{BAND_BG}};padding:28px 40px 32px 40px;">
+  <p style="margin:0 0 4px 0;font-family:'Tiempos Text',Georgia,'Times New Roman',serif;font-weight:400;font-style:normal;font-size:20px;line-height:1.34;letter-spacing:-0.01em;color:#0E1A38;text-align:left;">{{SIGNOFF_LINE}}</p>
+  <p style="margin:0 0 14px 0;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:14px;line-height:1.3;letter-spacing:-0.01em;color:#222427;text-align:left;">{{SIGNOFF_ROLE}}</p>
+  <p style="margin:0;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:14px;line-height:1.3;letter-spacing:-0.01em;color:#222427;text-align:left;"><a href="{{INSTAGRAM_URL}}" target="_blank" style="color:#3D72E6;text-decoration:underline;font-weight:500;">Follow us on Instagram</a></p>
+</td></tr>
+
+<!-- ===================== VARIANT B — centered support line (delete if using A) ===================== -->
+<tr><td class="px" align="center" bgcolor="{{BAND_BG}}" style="background-color:{{BAND_BG}};padding:24px 40px;">
+  <p style="margin:0;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:14px;line-height:1.5;letter-spacing:-0.01em;color:#222427;text-align:center;">{{SUPPORT_PREFIX}} <a href="mailto:{{SUPPORT_EMAIL}}" target="_blank" style="color:#3D72E6;text-decoration:underline;font-weight:500;">{{SUPPORT_EMAIL}}</a></p>
+</td></tr>

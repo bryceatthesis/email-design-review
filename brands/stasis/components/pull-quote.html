@@ -1,0 +1,42 @@
+<!--
+component: pull-quote  [PROPOSED — Bryce design review 2026-06-18; in-review, locks verbatim on first approved-build ship]
+PURPOSE: Large decorative editorial pull-quote — an oversized quotation mark above a short, punchy quote, optionally with an attribution line. The standalone-editorial sibling of testimonial-card-centered: it sets a single voice as a section break, not a customer-review card. Two real treatments, one fragment:
+    OPEN (default)  — bare on the body background (creme/white), royal mark + royal display quote, used as a section opener. Real frames: idx 255 + idx 93 ("Stasis gave me my life back!", oversized royal quote mark, centered royal display); idx 206 ("Clear your mind." / "Just focus on your breath." — a near-black double-mark problem-statement opener).
+    CARD            — lime panel, royal mark top-center, navy quote with inline bold emphasis spans, right/centered attribution. Real frame: idx 222 / idx 55 (lime card, big royal quote mark, bolded review, "– Lacey G.").
+SOURCE: PROPOSED 2026-06-17 — built to brands/stasis/tokens.json + real Figma frames (asset-accounting-2026-06: idx 255 "9.2_ Extension Announcement…", idx 93 "9.2", idx 222 "6.29 Complete Your Summer System", idx 206 "Jan12_Meditation Without the Guilt"). Mined as pull-quote across ~7 of 294 emails. NOT yet extracted from a Bryce-approved build — header/markup mirror ingredient-spotlight-card.html + testimonial-card-centered.html; locks verbatim after it ships in one approved build.
+SLOTS:
+  {{ROW_PADDING}}       — outer td padding (side gutters live here). OPEN approved: 8px 50px 24px 50px. CARD approved: 8px 40px 32px 40px (gutter outside the panel).
+  {{ROW_BG}}            — outer row background; appears TWICE (bgcolor attr + inline). OPEN: #F4EFEB (creme) or #FFFFFF — match the host body. CARD: still the body bg here; the lime is on the inner panel below.
+  {{PANEL_BG}}          — inner panel background; appears TWICE (bgcolor + inline). OPEN variant: set BOTH this and {{ROW_BG}} to the SAME body color (no visible card). CARD variant: #EEEF78 (lime).
+  {{PANEL_RADIUS}}      — inner panel border-radius. OPEN: 0. CARD: 20px.
+  {{PANEL_PADDING}}     — inner panel td padding (desktop). OPEN: 0. CARD: 40px 44px 32px 44px. (Mobile: .qpad forces 28px 24px 24px 24px on the CARD variant only — harmless at 0 for OPEN.)
+  {{MARK_COLOR}}        — color of the oversized quotation mark. Royal #3D72E6 for idx 255/93/222; near-ink #0E1A38 for the idx 206 problem-statement flavor. Never invent a hex.
+  {{QUOTE_COLOR}}       — color of the quote text. OPEN: #3D72E6 (royal display, matches the mark in idx 255/93). CARD: #011D59 (navy, idx 222).
+  {{QUOTE_SIZE}}        — quote font-size (desktop). OPEN big-display approved: 30px. CARD running-quote approved: 18px. (Mobile: .pq-q forces a smaller size — see media classes.)
+  {{QUOTE_WEIGHT}}      — 500 for the OPEN display quote (Antarctica display weight, idx 255/93); 500 for the CARD body with inline <strong style="font-weight:700;"> emphasis spans (idx 222 bolds key phrases).
+  {{QUOTE_ALIGN}}       — text-align for the quote + mark. center for OPEN and CARD short quotes; left for the longer idx 206 / idx 222 running quotes.
+  {{QUOTE_HTML}}        — inner HTML of the quote. Keep it short for OPEN (one line, e.g. Stasis gave me my life back!). For the idx 206 double-statement flavor, put two &ldquo;…&rdquo; lines separated by <br>. Curly quotes travel with the copy. CARD emphasis uses inline <strong style="font-weight:700;">…</strong>.
+  {{ATTRIBUTION}}       — attribution line (e.g. – Kate W.). The WHOLE attribution block is optional: delete the entire attribution <p> (and its leading comment) when the quote is anonymous/editorial (idx 255/93/206 ship WITHOUT attribution; idx 222 ships WITH it).
+REQUIRED MEDIA CLASSES (host must include verbatim inside @media only screen and (max-width:480px){...}):
+  .px{padding-left:24px !important;padding-right:24px !important;}
+  .pq-mark{font-size:64px !important;line-height:0.7 !important;}
+  .pq-q{font-size:22px !important;}        /* OPEN display quote shrinks; for CARD running-quote use 17px — host picks one per instance */
+  .qpad{padding:28px 24px 24px 24px !important;}   /* only bites on the CARD variant; no-op at 0 padding */
+DEPENDENCIES:
+  - Light-only pin (§8.6) in host head: <meta name="color-scheme" content="light only"> + <meta name="supported-color-schemes" content="light only"> + :root,body{color-scheme:light only;}.
+  - Antarctica @font-face kit (400/500/600/700) from the Stasis Shopify CDN; inline sans stack 'Antarctica','Helvetica Neue',Arial,sans-serif. Display weight 500 per spec §3.
+  - The oversized mark is a LIVE-TEXT glyph (&ldquo;), not an image — it renders as the brand quote mark in the sans face, scales cleanly, adds zero KB, and is light-only safe. (Figma draws it as a vector; live text is the email-safe equivalent and stays editable.)
+  - border-collapse:separate on the inner panel table is required for border-radius to render (only matters on the CARD variant; harmless at radius 0).
+  - All colors pinned from tokens.json: royal #3D72E6, navy #011D59, ink #0E1A38, lime #EEEF78, creme #F4EFEB, white #FFFFFF. No spice/CTA in this fragment — pull-quote is a typographic break; a following CTA (idx 93/255 pair this with a SAVE/SHOP pill) is a SEPARATE row (cta-pill.html), not part of this component.
+  - No VML/MSO in this fragment (no button). If a build wants a CTA directly under the quote, paste cta-pill.html in its own <tr> after this row.
+-->
+<tr><td class="px" bgcolor="{{ROW_BG}}" style="background-color:{{ROW_BG}};padding:{{ROW_PADDING}};">
+  <table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0" bgcolor="{{PANEL_BG}}" style="width:100%;background-color:{{PANEL_BG}};border-radius:{{PANEL_RADIUS}};border-collapse:separate;"><tbody>
+    <tr><td class="qpad" align="{{QUOTE_ALIGN}}" style="padding:{{PANEL_PADDING}};text-align:{{QUOTE_ALIGN}};">
+      <p class="pq-mark" aria-hidden="true" style="margin:0 0 4px 0;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:700;font-size:84px;line-height:0.6;letter-spacing:-0.02em;color:{{MARK_COLOR}};text-align:{{QUOTE_ALIGN}};">&ldquo;</p>
+      <p class="pq-q" style="margin:0 0 18px 0;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:{{QUOTE_WEIGHT}};font-size:{{QUOTE_SIZE}};line-height:1.18;letter-spacing:-0.02em;color:{{QUOTE_COLOR}};text-align:{{QUOTE_ALIGN}};">{{QUOTE_HTML}}</p>
+      <!-- attribution: delete this entire <p> for anonymous/editorial quotes (idx 255/93/206 ship without it) -->
+      <p style="margin:0;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:600;font-size:16px;line-height:1.3;letter-spacing:-0.01em;color:{{QUOTE_COLOR}};text-align:{{QUOTE_ALIGN}};">{{ATTRIBUTION}}</p>
+    </td></tr>
+  </tbody></table>
+</td></tr>

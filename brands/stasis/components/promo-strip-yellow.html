@@ -1,0 +1,32 @@
+<!-- ============================================================
+promo-strip-yellow — Stasis component library (brands/stasis)
+
+PURPOSE: Full-width yellow announcement strip (module 1) — one line of centered Antarctica-500 copy on brand yellow.
+
+SOURCE: designs/welcome-quiz/cc-from-spec/02-smarter-balance-backed-by-science.html
+(E2, Bryce-approved build), lines 110-113. Extracted verbatim 2026-06-12; only the
+slot value below was swapped for a {{SLOT}} marker.
+
+SLOTS:
+  {{STRIP_COPY}} — strip copy, one line. Approved E2 value: Save an extra 10% with code
+                   NOTE: if the copy references a discount code, the coupon zone is
+                   governed by reference/send-prep-spec.md §2 at send-prep time.
+
+REQUIRED MEDIA CLASSES — host document must include, verbatim, inside
+@media only screen and (max-width:480px){ … }:
+  .px{padding-left:24px !important;padding-right:24px !important;}
+  .m-banner-td{padding-top:9px !important;padding-bottom:9px !important;}
+  .m-banner{font-size:15px !important;}
+
+DEPENDENCIES:
+  - Paste as a direct <tr> child of the host 600px wrap table.
+  - Light-only pin in host head (see hero-art-overlay header for the exact lines).
+  - Font kit: Antarctica @font-face from the Stasis Shopify CDN; inline sans stack
+    font-family:'Antarctica','Helvetica Neue',Arial,sans-serif; weight 500.
+  - Strip yellow #EEEF78 is pinned — this component IS the yellow variant.
+  - No VML required; plain td bgcolor carries the strip in Outlook.
+============================================================ -->
+<!-- 1 · promo strip (yellow) · module-map e2-01 -->
+<tr><td align="center" bgcolor="#EEEF78" class="px m-banner-td" style="background-color:#EEEF78;padding:14px 24px;text-align:center;">
+  <p class="m-banner" style="margin:0;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:24px;line-height:1.3;letter-spacing:0;color:#000000;text-align:center;">{{STRIP_COPY}}</p>
+</td></tr>

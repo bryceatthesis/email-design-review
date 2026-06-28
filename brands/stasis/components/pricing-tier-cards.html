@@ -1,0 +1,149 @@
+<!--
+component: pricing-tier-cards  [PROPOSED — Bryce design review 2026-06-18; in-review, locks verbatim on first approved-build ship]
+PURPOSE: Three supply-tier pricing cards (1-/2-/3-month) shown as a 33/33/33 grid that
+         stacks on mobile. Each white rounded card carries: a term label, a struck "was"
+         price, a royal-blue "% OFF" pill, a big bold "now" price, and its own CTA pill
+         (VML roundrect + HTML anchor pair). The highest tier gets a BEST VALUE tab.
+         This is the bundle/anniversary "pricing tier comparison" module mined across the
+         email set (~26 of 294 emails: pricing-cards-3col / tiered pricing cards / bundle
+         pricing comparison grid).
+SOURCE: PROPOSED 2026-06-17 — built to brands/stasis/tokens.json (color/type/CTA values
+        only; no invented hex) AND to the REAL Figma frames in
+        the Stasis email-system frames/: idx 262 "9.11 Bundle Focus"
+        (3-col white cards on creme, struck $129→$63 / $258→$118 / $387→$166, BEST VALUE
+        on 3-month), idx 192 "7.13 Bundle & Save Deep Dive" + idx 199 "7.23 24-Hour
+        Warning" + idx 205 "11.16 Social Proof" (card anatomy: term label, gray
+        strikethrough, royal-blue "51% / 54% / 57% OFF" pill, big bold price, orange/lime
+        BEST VALUE tab). Markup format/header conventions follow pricing-cards-2col.html,
+        ingredient-spotlight-card.html, two-col-list.html and cta-pill.html.
+        NOT yet extracted from a Bryce-approved build — locks verbatim after it ships in one.
+SLOTS (card 1 = left / 1-month, card 2 = middle / 2-month, card 3 = right / 3-month):
+  {{CARDn_TERM}}        — term label, e.g. 1-month<br>supply  (or "1 Month"). n = 1,2,3.
+  {{CARDn_WAS_PRICE}}   — struck "was" price, e.g. $129 / $258 / $387.
+  {{CARDn_OFF_PCT}}     — royal-blue pill copy, e.g. 51% OFF / 54% OFF / 57% OFF.
+                          Remove the whole pill row if a tier has no % pill (see note).
+  {{CARDn_NOW_PRICE}}   — big bold "now" price, e.g. $63 / $118 / $166.
+  {{CARDn_CTA_TEXT}}    — per-card CTA label, uppercase (appears TWICE per card: VML
+                          <center> + <a>). Approved-style value: GET BUNDLE / SHOP 3-MONTH.
+  {{CARDn_CTA_HREF}}    — per-card CTA destination (appears TWICE per card: VML href + <a>
+                          href — fill both with the same URL). e.g. https://takestasis.com/
+  Highlight tab: card 3 ships a BEST VALUE tab baked as the dominant pattern. To move the
+  highlight, cut the "BEST VALUE tab" comment block from card 3 and paste it as the first
+  child of another card's inner cell; edit the {{BEST_VALUE_LABEL}} text if needed.
+  {{BEST_VALUE_LABEL}}  — tab copy. Approved-style value: BEST VALUE.
+REQUIRED MEDIA CLASSES (host MUST include, verbatim, inside @media only screen and (max-width:480px){ … }):
+  .px{padding-left:24px !important;padding-right:24px !important;}
+  .col-stack{display:block !important;width:100% !important;}
+  .col-gap{padding:0 0 16px 0 !important;}          (collapses the 3-col side gutters to a vertical gap when stacked)
+  .ptc-now{font-size:40px !important;}               (keeps the big price readable when full-width)
+  .btn{padding:16px 28px !important;letter-spacing:0.12em !important;}
+DEPENDENCIES:
+  - Light-only pin (§8.6) in host head; Antarctica @font-face kit from the Stasis Shopify CDN.
+  - Sans stack everywhere: font-family:'Antarctica','Helvetica Neue',Arial,sans-serif.
+    Weights — term label 600, was-price 400 (strikethrough), %-off pill 700, now-price 700
+    (display), BEST VALUE tab 700, CTA 700. Compact card CTA: 13px / padding 14px 22px / tracking 0.14em (VML 2px, 0.12em mobile) — intentionally below the 0.18em standalone standard, per tokens.cta.compact_card_variant; do not normalize.
+  - Colors pinned from tokens.json — card bg white #FFFFFF; host band creme #F4EFEB (swap
+    for #F7F7F7 panel or a dark band per host); term/now-price ink #0E1A38; was-price
+    charcoal #222427 (strikethrough); %-off pill royal #3D72E6 with white text; BEST VALUE
+    tab spice #FF541E with white text (lime #EEEF78 + ink text is the alt seen in idx 262 —
+    swap fill to #EEEF78 and text to #0E1A38 for that variant); CTA fill spice #FF541E,
+    CTA text black #000000.
+  - Card tables use border-collapse:separate (required for border-radius:14px).
+  - VML/MSO: each card's CTA is a §5.1 bulletproof pair — Outlook gets the [if mso]
+    v:roundrect (arcsize 50%, fill #FF541E); everything else gets the [if !mso] table+anchor.
+    Keep BOTH halves and all four conditional-comment markers per card intact. The VML pill
+    is a fixed pixel box (width:150px fits a ~10-char label at 3-up); re-measure VML width
+    if {{CARDn_CTA_TEXT}} is materially longer or Outlook will clip the label.
+  - EMAIL-SAFE INTERPRETATIONS: the live store renders these tiers with interactive
+    radio/quantity selectors and a live price/countdown. There is NO live behavior here —
+    this is a static styled grid: prices are baked text, the "% OFF" and "BEST VALUE"
+    chips are styled <td>/<span> (no images required), and selection happens by clicking a
+    tier's own CTA. If the host email runs an offer countdown, render it as a separate
+    static styled block or a hosted countdown image above this grid — do not embed a timer.
+  - Static, no JS, no <form>, no background-image; safe in Outlook/Apple Mail/Gmail.
+-->
+<tr><td class="px" bgcolor="#F4EFEB" style="background-color:#F4EFEB;padding:28px 24px 32px 24px;">
+  <table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0" style="width:100%;border-collapse:collapse;"><tbody><tr>
+
+    <!-- ===== CARD 1 — 1-month ===== -->
+    <td class="col-stack col-gap" valign="top" width="33.33%" style="width:33.33%;padding:0 6px 0 0;vertical-align:top;">
+      <table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0" style="width:100%;background-color:#FFFFFF;border-radius:14px;border-collapse:separate;"><tbody><tr><td style="padding:22px 18px;">
+        <!-- reserve the BEST VALUE tab's height so all three cards align -->
+        <div style="height:33px;font-size:0;line-height:0;mso-line-height-rule:exactly;">&nbsp;</div>
+        <p style="margin:0 0 10px 0;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:600;font-size:16px;line-height:1.15;letter-spacing:-0.01em;color:#0E1A38;text-align:left;">{{CARD1_TERM}}</p>
+        <!-- % OFF pill (remove this whole <table> if tier has no % pill) -->
+        <table role="presentation" border="0" cellpadding="0" cellspacing="0" style="border-collapse:separate;margin:0 0 12px 0;"><tbody><tr>
+          <td bgcolor="#3D72E6" style="background-color:#3D72E6;border-radius:999px;padding:5px 12px;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:700;font-size:12px;line-height:1;letter-spacing:0.04em;color:#FFFFFF;text-transform:uppercase;white-space:nowrap;">{{CARD1_OFF_PCT}}</td>
+        </tr></tbody></table>
+        <p style="margin:0 0 2px 0;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:400;font-size:15px;line-height:1;letter-spacing:0;color:#222427;text-decoration:line-through;text-align:left;">{{CARD1_WAS_PRICE}}</p>
+        <p class="ptc-now" style="margin:0 0 18px 0;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:700;font-size:34px;line-height:1;letter-spacing:-0.03em;color:#0E1A38;text-align:left;">{{CARD1_NOW_PRICE}}</p>
+        <!--[if mso]>
+<v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="{{CARD1_CTA_HREF}}" style="height:44px;v-text-anchor:middle;width:150px;" arcsize="50%" stroke="false" fillcolor="#FF541E"><w:anchorlock/>
+<center style="color:#000000;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase;">{{CARD1_CTA_TEXT}}</center>
+</v:roundrect>
+<![endif]-->
+        <!--[if !mso]><!-->
+        <table role="presentation" border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse;"><tbody><tr>
+        <td align="center" bgcolor="#FF541E" style="background-color:#FF541E;border-radius:999px;">
+        <a class="btn" href="{{CARD1_CTA_HREF}}" target="_blank" style="display:inline-block;padding:14px 22px;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:700;font-size:13px;line-height:1;letter-spacing:0.14em;text-transform:uppercase;color:#000000;text-decoration:none;border-radius:999px;white-space:nowrap;">{{CARD1_CTA_TEXT}}</a>
+        </td></tr></tbody></table>
+        <!--<![endif]-->
+      </td></tr></tbody></table>
+    </td>
+
+    <!-- ===== CARD 2 — 2-month ===== -->
+    <td class="col-stack col-gap" valign="top" width="33.33%" style="width:33.33%;padding:0 6px 0 6px;vertical-align:top;">
+      <table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0" style="width:100%;background-color:#FFFFFF;border-radius:14px;border-collapse:separate;"><tbody><tr><td style="padding:22px 18px;">
+        <!-- reserve the BEST VALUE tab's height so all three cards align -->
+        <div style="height:33px;font-size:0;line-height:0;mso-line-height-rule:exactly;">&nbsp;</div>
+        <p style="margin:0 0 10px 0;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:600;font-size:16px;line-height:1.15;letter-spacing:-0.01em;color:#0E1A38;text-align:left;">{{CARD2_TERM}}</p>
+        <!-- % OFF pill (remove this whole <table> if tier has no % pill) -->
+        <table role="presentation" border="0" cellpadding="0" cellspacing="0" style="border-collapse:separate;margin:0 0 12px 0;"><tbody><tr>
+          <td bgcolor="#3D72E6" style="background-color:#3D72E6;border-radius:999px;padding:5px 12px;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:700;font-size:12px;line-height:1;letter-spacing:0.04em;color:#FFFFFF;text-transform:uppercase;white-space:nowrap;">{{CARD2_OFF_PCT}}</td>
+        </tr></tbody></table>
+        <p style="margin:0 0 2px 0;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:400;font-size:15px;line-height:1;letter-spacing:0;color:#222427;text-decoration:line-through;text-align:left;">{{CARD2_WAS_PRICE}}</p>
+        <p class="ptc-now" style="margin:0 0 18px 0;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:700;font-size:34px;line-height:1;letter-spacing:-0.03em;color:#0E1A38;text-align:left;">{{CARD2_NOW_PRICE}}</p>
+        <!--[if mso]>
+<v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="{{CARD2_CTA_HREF}}" style="height:44px;v-text-anchor:middle;width:150px;" arcsize="50%" stroke="false" fillcolor="#FF541E"><w:anchorlock/>
+<center style="color:#000000;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase;">{{CARD2_CTA_TEXT}}</center>
+</v:roundrect>
+<![endif]-->
+        <!--[if !mso]><!-->
+        <table role="presentation" border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse;"><tbody><tr>
+        <td align="center" bgcolor="#FF541E" style="background-color:#FF541E;border-radius:999px;">
+        <a class="btn" href="{{CARD2_CTA_HREF}}" target="_blank" style="display:inline-block;padding:14px 22px;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:700;font-size:13px;line-height:1;letter-spacing:0.14em;text-transform:uppercase;color:#000000;text-decoration:none;border-radius:999px;white-space:nowrap;">{{CARD2_CTA_TEXT}}</a>
+        </td></tr></tbody></table>
+        <!--<![endif]-->
+      </td></tr></tbody></table>
+    </td>
+
+    <!-- ===== CARD 3 — 3-month (BEST VALUE) ===== -->
+    <td class="col-stack col-gap" valign="top" width="33.33%" style="width:33.33%;padding:0 0 0 6px;vertical-align:top;">
+      <table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0" style="width:100%;background-color:#FFFFFF;border-radius:14px;border-collapse:separate;"><tbody><tr><td style="padding:22px 18px;">
+        <!-- BEST VALUE tab (cut + paste into another card's inner td to move the highlight) -->
+        <table role="presentation" border="0" cellpadding="0" cellspacing="0" style="border-collapse:separate;margin:0 0 12px 0;"><tbody><tr>
+          <td bgcolor="#FF541E" style="background-color:#FF541E;border-radius:6px;padding:5px 12px;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:700;font-size:11px;line-height:1;letter-spacing:0.08em;color:#FFFFFF;text-transform:uppercase;white-space:nowrap;">{{BEST_VALUE_LABEL}}</td>
+        </tr></tbody></table>
+        <p style="margin:0 0 10px 0;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:600;font-size:16px;line-height:1.15;letter-spacing:-0.01em;color:#0E1A38;text-align:left;">{{CARD3_TERM}}</p>
+        <!-- % OFF pill (remove this whole <table> if tier has no % pill) -->
+        <table role="presentation" border="0" cellpadding="0" cellspacing="0" style="border-collapse:separate;margin:0 0 12px 0;"><tbody><tr>
+          <td bgcolor="#3D72E6" style="background-color:#3D72E6;border-radius:999px;padding:5px 12px;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:700;font-size:12px;line-height:1;letter-spacing:0.04em;color:#FFFFFF;text-transform:uppercase;white-space:nowrap;">{{CARD3_OFF_PCT}}</td>
+        </tr></tbody></table>
+        <p style="margin:0 0 2px 0;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:400;font-size:15px;line-height:1;letter-spacing:0;color:#222427;text-decoration:line-through;text-align:left;">{{CARD3_WAS_PRICE}}</p>
+        <p class="ptc-now" style="margin:0 0 18px 0;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:700;font-size:34px;line-height:1;letter-spacing:-0.03em;color:#0E1A38;text-align:left;">{{CARD3_NOW_PRICE}}</p>
+        <!--[if mso]>
+<v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="{{CARD3_CTA_HREF}}" style="height:44px;v-text-anchor:middle;width:150px;" arcsize="50%" stroke="false" fillcolor="#FF541E"><w:anchorlock/>
+<center style="color:#000000;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase;">{{CARD3_CTA_TEXT}}</center>
+</v:roundrect>
+<![endif]-->
+        <!--[if !mso]><!-->
+        <table role="presentation" border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse;"><tbody><tr>
+        <td align="center" bgcolor="#FF541E" style="background-color:#FF541E;border-radius:999px;">
+        <a class="btn" href="{{CARD3_CTA_HREF}}" target="_blank" style="display:inline-block;padding:14px 22px;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:700;font-size:13px;line-height:1;letter-spacing:0.14em;text-transform:uppercase;color:#000000;text-decoration:none;border-radius:999px;white-space:nowrap;">{{CARD3_CTA_TEXT}}</a>
+        </td></tr></tbody></table>
+        <!--<![endif]-->
+      </td></tr></tbody></table>
+    </td>
+
+  </tr></tbody></table>
+</td></tr>

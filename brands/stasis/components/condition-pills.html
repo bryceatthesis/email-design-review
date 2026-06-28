@@ -1,0 +1,16 @@
+<!--
+component: condition-pills
+PURPOSE: Left-aligned stack of single-color uppercase condition pills (one pill per single-cell table, stacked vertically).
+SOURCE: designs/welcome-quiz/cc-from-spec/03-the-science-that-powers-stasis.html line 124 (module 6 · they-come-with + condition pills) — the three pill tables only, verbatim on their original single line. The module-6 host row and its lead-in paragraph (lines 122-123,125) are NOT part of this component: paste this fragment inside a host td (E3 used <td style="padding:24px 40px 0 40px;"> with the lead-in <p> above the stack).
+SLOTS:
+  {{PILL_1_COPY}} / {{PILL_2_COPY}} / {{PILL_3_COPY}} — pill copy list, short uppercase phrases (approved: INCREASED OXIDATIVE STRESS / DOPAMINE CRASHES / ELEVATED CORTISOL LEVELS). Repeating unit: one single-cell table per pill; every pill EXCEPT the last carries margin:0 0 14px 0, the LAST pill carries margin:0 — to change the count, duplicate a non-last unit and keep the margin pattern.
+  {{PILL_BG}} — pill background, one color for the whole stack (appears twice per pill: bgcolor attr + background-color style; fill all). Approved: #c3d4ff (periwinkle, E3 instance).
+REQUIRED MEDIA CLASSES (host must include inside @media only screen and (max-width:480px){...}):
+  .pill{font-size:13px !important;padding:12px 18px !important;letter-spacing:0.04em !important;}
+DEPENDENCIES:
+  - Light-only pin (§8.6) in host head.
+  - Sans stack: font-family:'Antarctica','Helvetica Neue',Arial,sans-serif; weight 600 (host must ship the Antarctica @font-face kit; Gmail/Outlook fall back to the tuned stack).
+  - Pill text color #0E1A38, radius 999px, white-space:nowrap are part of the approved pattern — do not unpin.
+  - No VML/MSO requirements.
+-->
+  <table role="presentation" border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse;margin:0 0 14px 0;"><tbody><tr><td class="pill" bgcolor="{{PILL_BG}}" style="background-color:{{PILL_BG}};border-radius:999px;padding:15px 30px;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:600;font-size:16px;line-height:1;letter-spacing:0.07em;text-transform:uppercase;color:#0E1A38;white-space:nowrap;">{{PILL_1_COPY}}</td></tr></tbody></table><table role="presentation" border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse;margin:0 0 14px 0;"><tbody><tr><td class="pill" bgcolor="{{PILL_BG}}" style="background-color:{{PILL_BG}};border-radius:999px;padding:15px 30px;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:600;font-size:16px;line-height:1;letter-spacing:0.07em;text-transform:uppercase;color:#0E1A38;white-space:nowrap;">{{PILL_2_COPY}}</td></tr></tbody></table><table role="presentation" border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse;margin:0;"><tbody><tr><td class="pill" bgcolor="{{PILL_BG}}" style="background-color:{{PILL_BG}};border-radius:999px;padding:15px 30px;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:600;font-size:16px;line-height:1;letter-spacing:0.07em;text-transform:uppercase;color:#0E1A38;white-space:nowrap;">{{PILL_3_COPY}}</td></tr></tbody></table>

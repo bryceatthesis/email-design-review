@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="en" data-theme="light" data-width="desktop">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Design Compare — Original vs Updated</title>
+<style>
+  :root{
+    --desktop-w: 600px;   /* standard email body width */
+    --mobile-w: 375px;    /* iPhone-class single-column width */
+    --gap: 24px;
+    --bar-h: 56px;
+  }
+
+  /* ---- page chrome themes (the app shell, not the email) ---- */
+  html[data-theme="light"]{
+    --bg:#f4f5f7; --fg:#1c1d21; --muted:#6b6f76;
+    --panel-bg:#ffffff; --panel-line:#e3e5e9;
+    --bar-bg:#ffffff; --bar-line:#e3e5e9;
+    --btn-bg:#ffffff; --btn-fg:#1c1d21; --btn-line:#cfd2d8;
+    --btn-on-bg:#1c1d21; --btn-on-fg:#ffffff;
+    --canvas:#ffffff;            /* simulated email-client background */
+    --canvas-line:#e3e5e9;
+  }
+  html[data-theme="dark"]{
+    --bg:#16171a; --fg:#f1f2f4; --muted:#9a9ea6;
+    --panel-bg:#1f2125; --panel-line:#2c2f35;
+    --bar-bg:#1f2125; --bar-line:#2c2f35;
+    --btn-bg:#26282d; --btn-fg:#f1f2f4; --btn-line:#3a3d44;
+    --btn-on-bg:#f1f2f4; --btn-on-fg:#16171a;
+    --canvas:#1a1a1a;            /* simulated dark-mode client background */
+    --canvas-line:#33363c;
+  }
+
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0;
+    font:14px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:var(--bg); color:var(--fg);
+    display:flex; flex-direction:column;
+  }
+
+  /* ---- top toolbar ---- */
+  .bar{
+    height:var(--bar-h); flex:0 0 auto;
+    display:flex; align-items:center; gap:18px;
+    padding:0 18px; background:var(--bar-bg);
+    border-bottom:1px solid var(--bar-line);
+    position:sticky; top:0; z-index:10;
+  }
+  .bar h1{font-size:14px; font-weight:600; margin:0; white-space:nowrap}
+  .bar .spacer{flex:1 1 auto}
+  .group{display:flex; align-items:center; gap:8px}
+  .group .lbl{color:var(--muted); font-size:12px; text-transform:uppercase; letter-spacing:.04em}
+
+  .seg{display:inline-flex; border:1px solid var(--btn-line); border-radius:8px; overflow:hidden}
+  .seg button{
+    appearance:none; border:0; cursor:pointer;
+    background:var(--btn-bg); color:var(--btn-fg);
+    padding:7px 14px; font-size:13px; font-weight:500;
+  }
+  .seg button + button{border-left:1px solid var(--btn-line)}
+  .seg button[aria-pressed="true"]{background:var(--btn-on-bg); color:var(--btn-on-fg)}
+
+  .chk{display:flex; align-items:center; gap:6px; color:var(--muted); font-size:12px; cursor:pointer}
+
+  /* ---- comparison stage: side-by-side, horizontal scroll if needed ---- */
+  .stage{
+    flex:1 1 auto; overflow:auto;
+    display:flex; gap:var(--gap);
+    justify-content:center;            /* both fit -> centered; overflow -> scroll */
+    align-items:flex-start;
+    padding:var(--gap);
+  }
+  .panel{flex:0 0 auto; display:flex; flex-direction:column}
+  .panel-head{
+    display:flex; align-items:center; gap:10px;
+    margin-bottom:10px; min-height:30px;
+  }
+  .panel-head .name{font-weight:600; font-size:13px}
+  .panel-head .tag{
+    font-size:11px; color:var(--muted);
+    border:1px solid var(--panel-line); border-radius:999px; padding:2px 8px;
+  }
+  .panel-head .loader{margin-left:auto; display:flex; gap:6px}
+  .panel-head .loader button, .panel-head .loader label{
+    appearance:none; cursor:pointer; font-size:12px;
+    background:var(--btn-bg); color:var(--btn-fg);
+    border:1px solid var(--btn-line); border-radius:6px; padding:4px 9px;
+  }
+  .panel-head input[type=file]{display:none}
+
+  /* the email "canvas" — sized by width mode, themed by theme mode */
+  .canvas{
+    width:var(--desktop-w);
+    background:var(--canvas);
+    border:1px solid var(--canvas-line);
+    border-radius:10px;
+    overflow:hidden;
+    transition:width .18s ease;
+  }
+  html[data-width="mobile"] .canvas{width:var(--mobile-w)}
+  .canvas iframe{
+    display:block; width:100%; height:78vh; border:0; background:transparent;
+  }
+  .empty{
+    display:flex; align-items:center; justify-content:center; text-align:center;
+    height:200px; padding:24px; color:var(--muted); font-size:13px;
+  }
+  .empty code{font-size:12px}
+</style>
+</head>
+<body>
+  <header class="bar">
+    <h1>Design Compare</h1>
+
+    <div class="group">
+      <span class="lbl">Width</span>
+      <div class="seg" id="widthSeg" role="group" aria-label="Width mode">
+        <button data-width="mobile"  aria-pressed="false">Mobile</button>
+        <button data-width="desktop" aria-pressed="true">Desktop</button>
+      </div>
+    </div>
+
+    <div class="group">
+      <span class="lbl">Theme</span>
+      <div class="seg" id="themeSeg" role="group" aria-label="Theme mode">
+        <button data-theme="light" aria-pressed="true">Light</button>
+        <button data-theme="dark"  aria-pressed="false">Dark</button>
+      </div>
+    </div>
+
+    <div class="spacer"></div>
+
+    <label class="chk"><input type="checkbox" id="syncScroll"> Sync scroll</label>
+  </header>
+
+  <main class="stage" id="stage">
+    <section class="panel" data-key="original">
+      <div class="panel-head">
+        <span class="name">Original</span>
+        <span class="tag">source send</span>
+        <span class="loader">
+          <label>Load file<input type="file" accept=".html,.htm,text/html" data-target="original"></label>
+          <button data-url="original">URL…</button>
+        </span>
+      </div>
+      <div class="canvas"><div class="empty" id="empty-original">
+        No design loaded.<br>Drop a file with <b>Load file</b>, paste a <b>URL…</b>,<br>
+        or place <code>original.html</code> next to this page.
+      </div></div>
+    </section>
+
+    <section class="panel" data-key="updated">
+      <div class="panel-head">
+        <span class="name">Updated</span>
+        <span class="tag">v8 hardened loop</span>
+        <span class="loader">
+          <label>Load file<input type="file" accept=".html,.htm,text/html" data-target="updated"></label>
+          <button data-url="updated">URL…</button>
+        </span>
+      </div>
+      <div class="canvas"><div class="empty" id="empty-updated">
+        No design loaded.<br>Drop a file with <b>Load file</b>, paste a <b>URL…</b>,<br>
+        or place <code>updated.html</code> next to this page.
+      </div></div>
+    </section>
+  </main>
+
+<script>
+(() => {
+  const root = document.documentElement;
+
+  /* ---------- toggles ---------- */
+  function wireSeg(segId, attr){
+    const seg = document.getElementById(segId);
+    seg.addEventListener('click', e => {
+      const btn = e.target.closest('button'); if(!btn) return;
+      root.setAttribute(attr, btn.dataset[attr === 'data-width' ? 'width' : 'theme']);
+      [...seg.children].forEach(b => b.setAttribute('aria-pressed', String(b === btn)));
+      if(attr === 'data-theme') applyThemeToFrames();
+    });
+  }
+  wireSeg('widthSeg', 'data-width');
+  wireSeg('themeSeg', 'data-theme');
+
+  /* ---------- loading designs ---------- */
+  // Email HTML loads into an iframe. Two routes:
+  //   1) local file  -> read as text, render via srcdoc (same-origin, fully controllable)
+  //   2) URL         -> iframe.src (only works if the host allows framing; claude.ai
+  //                     design + many Klaviyo views block framing via X-Frame-Options/CSP)
+  const frames = {}; // key -> {el, sameOrigin}
+
+  function mount(key, mode, value){
+    const panel = document.querySelector(`.panel[data-key="${key}"] .canvas`);
+    panel.innerHTML = '';
+    const f = document.createElement('iframe');
+    f.title = key + ' design';
+    if(mode === 'srcdoc'){ f.srcdoc = themed(value); frames[key] = {el:f, sameOrigin:true}; }
+    else { f.src = value; frames[key] = {el:f, sameOrigin:false}; }
+    panel.appendChild(f);
+    wireSync();
+  }
+
+  // For srcdoc (same-origin) content, inject a color-scheme hint so the email's own
+  // prefers-color-scheme rules respond to the Light/Dark toggle.
+  function themed(html){
+    const theme = root.getAttribute('data-theme');
+    const meta = `<meta name="color-scheme" content="${theme}">`
+               + `<style>:root{color-scheme:${theme}}</style>`;
+    return /<head[\s>]/i.test(html)
+      ? html.replace(/<head([^>]*)>/i, `<head$1>${meta}`)
+      : meta + html;
+  }
+  function applyThemeToFrames(){
+    for(const k in frames){
+      const fr = frames[k];
+      if(fr && fr.sameOrigin && fr.el.srcdoc){ fr.el.srcdoc = themed(stripMeta(fr.el.srcdoc)); }
+    }
+  }
+  function stripMeta(html){
+    return html.replace(/<meta name="color-scheme"[^>]*>/i,'')
+               .replace(/<style>:root\{color-scheme:[^}]*\}<\/style>/i,'');
+  }
+
+  // file pickers
+  document.querySelectorAll('input[type=file]').forEach(inp => {
+    inp.addEventListener('change', () => {
+      const file = inp.files[0]; if(!file) return;
+      const r = new FileReader();
+      r.onload = () => mount(inp.dataset.target, 'srcdoc', r.result);
+      r.readAsText(file);
+    });
+  });
+
+  // URL buttons
+  document.querySelectorAll('button[data-url]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const key = btn.dataset.url;
+      const url = prompt(`Paste a URL for the "${key}" design.\n\nNote: pages that block framing (claude.ai design, some Klaviyo web-views) will not render here — use Load file for those.`);
+      if(url) mount(key, 'src', url.trim());
+    });
+  });
+
+  // drag & drop onto a panel
+  document.querySelectorAll('.panel').forEach(p => {
+    p.addEventListener('dragover', e => { e.preventDefault(); });
+    p.addEventListener('drop', e => {
+      e.preventDefault();
+      const file = e.dataTransfer.files[0]; if(!file) return;
+      const r = new FileReader();
+      r.onload = () => mount(p.dataset.key, 'srcdoc', r.result);
+      r.readAsText(file);
+    });
+  });
+
+  /* ---------- optional vertical scroll sync (same-origin frames only) ---------- */
+  let syncing = false;
+  function wireSync(){
+    const sync = document.getElementById('syncScroll');
+    for(const k in frames){
+      const fr = frames[k]; if(!fr || !fr.sameOrigin) continue;
+      const win = () => { try { return fr.el.contentWindow; } catch(_) { return null; } };
+      fr.el.addEventListener('load', () => {
+        const w = win(); if(!w) return;
+        w.addEventListener('scroll', () => {
+          if(!sync.checked || syncing) return;
+          syncing = true;
+          const ratio = w.scrollY / Math.max(1, w.document.body.scrollHeight - w.innerHeight);
+          for(const j in frames){
+            if(j === k || !frames[j].sameOrigin) continue;
+            try{
+              const ow = frames[j].el.contentWindow;
+              ow.scrollTo(0, ratio * (ow.document.body.scrollHeight - ow.innerHeight));
+            }catch(_){}
+          }
+          syncing = false;
+        });
+      });
+    }
+  }
+
+  /* ---------- auto-load co-located files if present ---------- */
+  ['original','updated'].forEach(key => {
+    fetch(key + '.html').then(r => {
+      if(r.ok) return r.text();
+      throw 0;
+    }).then(txt => mount(key, 'srcdoc', txt)).catch(() => {/* leave empty state */});
+  });
+})();
+</script>
+</body>
+</html>

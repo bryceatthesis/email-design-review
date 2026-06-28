@@ -1,0 +1,54 @@
+<!--
+component: stats-panel-light
+PURPOSE: Light (#F7F7F7) two-cell stat panel, §6.2 pattern: per cell, a flat brand-icon crop above a 1px BLACK rule, a BLACK 75px/500 numeral, and a black 21px/500 label with designed line breaks. Same cell pattern as the dark §6.2 panel; light = black rules/numerals/labels on the pale gray panel.
+SOURCE: designs/welcome-quiz/cc-from-spec/05-your-first-30-days-on-stasis.html lines 193-224 (module 7 · stats panel 1 §6.2, RESOLVED 2026-06-10; designed grid measured from sha-verified slice e5-07 @2x: cells 202px at x58/x317, gutters 58/57/81), verbatim. The in-body crop comments (e5-07 crop boxes + shas) describe the approved-instance icons and are kept as provenance.
+SLOTS (per cell; cell 1 = left, cell 2 = right):
+  {{CELL1_ICON_URL}} / {{CELL2_ICON_URL}} — brand-icon crop image sources (§8.5 derived crops, kit crops-manifest.md). Approved instance: cell 1 = e5-07 crop (115,98,204,151) sha 29882776..., displayed 44x26; cell 2 = e5-07 crop (637,77,714,153) sha 49e3ce4c..., displayed 38x38. The icon display width/height attrs AND the icon-row paddings (cell 1: 49px 0 28px 0; cell 2: 38px 0 27px 2px) are a matched pair measured from the slice — they keep the two 1px rules level. They are deliberately NOT slots; a different icon requires re-measuring both together.
+  {{CELL1_STAT}} / {{CELL2_STAT}} — the numerals (approved: 96% / 88%). BLACK 75px/500; glyph height 58px is baked in the design (royal-blue was recreation drift — stay black).
+  {{CELL1_LABEL_HTML}} / {{CELL2_LABEL_HTML}} — inner HTML of div.slabel. Approved instances pin the designed line breaks with <br class="dbr"/> (hidden on mobile, where .slabel rewraps) and close with <sup style="font-size:13px;line-height:0;">&dagger;</sup>; the dagger requires a matching disclaimer module in the host email.
+REQUIRED MEDIA CLASSES (host must include inside @media only screen and (max-width:480px){...}):
+  .stat-num{font-size:56px !important;}
+  .sgut{width:18px !important;}
+  .sgap{width:14px !important;}
+  .scell{width:auto !important;}
+  .slabel{width:auto !important;white-space:normal !important;}
+  .dbr{display:none !important;}
+DEPENDENCIES:
+  - Light-only pin (§8.6) in host head.
+  - Sans stack: font-family:'Antarctica','Helvetica Neue',Arial,sans-serif; numerals and labels weight 500 (NOT 900 — font-map.md). Host must ship the Antarctica @font-face kit.
+  - Panel bg #F7F7F7 baked (this module's icons are flat crops on transparent/panel-matched bg; module 9's variant bakes #F4F4F4 into its crops — do not mix the two panels' icons).
+  - mso-line-height-rule:exactly on the 1px rule rows and spacer row is load-bearing for Outlook; keep it. No VML.
+  - Trailing 36px spacer row (colspan=5) is part of the module; E5 pairs it with the next module's own top padding.
+-->
+<tr><td align="center" bgcolor="#F7F7F7" style="padding:0;background-color:#F7F7F7;">
+  <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="width:100%;border-collapse:collapse;background-color:#F7F7F7;"><tbody>
+    <tr>
+      <td class="sgut" width="58" style="width:58px;font-size:0;line-height:0;">&nbsp;</td>
+      <td class="scell" width="202" valign="top" style="width:202px;vertical-align:top;">
+        <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="width:100%;border-collapse:collapse;"><tbody>
+          <tr><td style="padding:49px 0 28px 0;font-size:0;line-height:0;">
+            <!-- e5-07 crop (115,98,204,151) sha 29882776... -->
+            <img alt="" width="44" height="26" src="{{CELL1_ICON_URL}}" style="display:block;width:44px;height:26px;"/>
+          </td></tr>
+          <tr><td height="1" bgcolor="#000000" style="height:1px;background-color:#000000;font-size:0;line-height:0;mso-line-height-rule:exactly;">&nbsp;</td></tr>
+          <tr><td style="padding:27px 0 0 0;mso-line-height-rule:exactly;"><span class="stat-num" style="font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:75px;line-height:0.9;letter-spacing:-0.01em;color:#000000;">{{CELL1_STAT}}</span></td></tr>
+          <tr><td style="padding:17px 0 0 0;font-size:0;line-height:0;"><div class="slabel" style="width:202px;white-space:nowrap;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:21px;line-height:26px;letter-spacing:-0.01em;color:#000000;text-align:left;">{{CELL1_LABEL_HTML}}</div></td></tr>
+        </tbody></table>
+      </td>
+      <td class="sgap" width="57" style="width:57px;font-size:0;line-height:0;">&nbsp;</td>
+      <td class="scell" width="202" valign="top" style="width:202px;vertical-align:top;">
+        <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="width:100%;border-collapse:collapse;"><tbody>
+          <tr><td style="padding:38px 0 27px 2px;font-size:0;line-height:0;">
+            <!-- e5-07 crop (637,77,714,153) sha 49e3ce4c... -->
+            <img alt="" width="38" height="38" src="{{CELL2_ICON_URL}}" style="display:block;width:38px;height:38px;"/>
+          </td></tr>
+          <tr><td height="1" bgcolor="#000000" style="height:1px;background-color:#000000;font-size:0;line-height:0;mso-line-height-rule:exactly;">&nbsp;</td></tr>
+          <tr><td style="padding:27px 0 0 0;mso-line-height-rule:exactly;"><span class="stat-num" style="font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:75px;line-height:0.9;letter-spacing:-0.01em;color:#000000;">{{CELL2_STAT}}</span></td></tr>
+          <tr><td style="padding:17px 0 0 0;font-size:0;line-height:0;"><div class="slabel" style="width:202px;white-space:nowrap;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:21px;line-height:26px;letter-spacing:-0.01em;color:#000000;text-align:left;">{{CELL2_LABEL_HTML}}</div></td></tr>
+        </tbody></table>
+      </td>
+      <td class="sgut" width="81" style="width:81px;font-size:0;line-height:0;">&nbsp;</td>
+    </tr>
+    <tr><td colspan="5" height="36" style="height:36px;font-size:0;line-height:0;mso-line-height-rule:exactly;">&nbsp;</td></tr>
+  </tbody></table>
+</td></tr>

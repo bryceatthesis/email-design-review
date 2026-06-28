@@ -1,0 +1,60 @@
+<!--
+component: before-after-transformation  [PROPOSED — Bryce design review 2026-06-18; in-review, locks verbatim on first approved-build ship]
+PURPOSE: Directional before-to-after transformation module — a single progression (NOT a side-by-side comparison). Each row pairs a bold "from / mechanism" label (ink, on white) with a soft-tinted rounded pill below it that carries a left-pointing arrow glyph (&rarr;, royal) plus the "to / outcome" copy. Repeatable: stack N rows to walk a reader from a starting state to an improved state (e.g. "Supports healthy dopamine levels" &rarr; "So you follow through on plans"). Optional eyebrow + headline lead. Distinct from comparison-with-without: that contrasts two columns (✓ vs ✗) at one moment; THIS shows one thing changing over a progression.
+SOURCE: PROPOSED 2026-06-17 — built to tokens.json + real Figma frames. Grounded in the directional arrow-pill rows seen in "4.3 More Plans. Actually Show Up." (manifest idx 180: "before/after transformation rows", outlined-to-blue pills with arrows), "6.24 Longer Days, Better Nights" (idx 210), and the NERVOUS JITTERS &rarr; STEADY CALM / BURNOUT &rarr; BALANCE arrow bands (idx 66, 222, 246). Surfaced by the email-system component mining (shipped ~15× across the catalog). NOT yet extracted from a Bryce-approved build — locks verbatim after it ships in one.
+SLOTS:
+  {{EYEBROW}} — small uppercase royal eyebrow above the headline (e.g. THE SHIFT). Remove the whole eyebrow <p> if unused.
+  {{HEADLINE_HTML}} — inner HTML of the section headline (ink). Approved-style instance: Be the version of you that goes out. Inline emphasis uses <strong style="font-weight:700;">. Remove the headline <p> if the module is used as a bare row stack.
+  {{FROM_1}} / {{FROM_2}} / {{FROM_3}} — the bold "from / mechanism" label for each row (ink). Real instance: Supports healthy dopamine levels / Helps defend against oxidative stress / Supports a steadier stress response.
+  {{TO_1}} / {{TO_2}} / {{TO_3}} — the "to / outcome" copy inside each tinted pill (ink). Real instance: So you follow through on plans / Less mental fatigue so you stay engaged / So you feel like yourself later in the day.
+  To change the row count, duplicate one full row <tr> (the FROM-label <tr> + the pill <tr> are paired inside the same inner table) and renumber. To run it as a bare NERVOUS JITTERS &rarr; STEADY CALM band, drop the eyebrow + headline and keep one short row.
+REQUIRED MEDIA CLASSES (host must include inside @media only screen and (max-width:480px){...}):
+  .px{padding-left:24px !important;padding-right:24px !important;}
+  .baf-from{font-size:17px !important;}
+  .baf-pill{padding:14px 16px !important;}
+  .baf-to{font-size:15px !important;}
+DEPENDENCIES:
+  - Light-only pin (§8.6) in host head; Antarctica @font-face kit (sans stack baked: 'Antarctica','Helvetica Neue',Arial,sans-serif).
+  - Arrow is a TEXT glyph (&rarr;), never an image; rendered royal #3D72E6, the directional cue.
+  - Colors all from tokens.json, baked: section bg white #FFFFFF · FROM label ink #0E1A38 · eyebrow + arrow royal #3D72E6 · pill fill #EEF1FC (a light royal tint; if the brand prefers, swap to creme #F4EFEB — both are light-only) · pill text ink #0E1A38. No dark-mode-only colors.
+  - No VML/MSO in this fragment (no CTA inside the module). If a build wants a trailing CTA, append the §5.1 cta-pill component as a SEPARATE row after this one (it carries its own v:roundrect + anchor pair).
+  - This is a <tr><td> row fragment for the 600px wrap table — paste directly into the wrap, not inside a panel.
+-->
+<tr><td class="px" bgcolor="#FFFFFF" style="background-color:#FFFFFF;padding:34px 50px 38px;">
+  <!-- optional eyebrow + headline lead (remove either <p> if unused) -->
+  <p style="margin:0 0 8px;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:700;font-size:13px;line-height:1.2;letter-spacing:0.2em;text-transform:uppercase;color:#3D72E6;">{{EYEBROW}}</p>
+  <p style="margin:0 0 26px;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:30px;line-height:1.08;letter-spacing:-0.03em;color:#0E1A38;">{{HEADLINE_HTML}}</p>
+
+  <table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0" style="width:100%;border-collapse:collapse;"><tbody>
+
+    <!-- ROW 1 -->
+    <tr><td class="baf-from" style="padding:0 0 8px;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:700;font-size:18px;line-height:1.25;letter-spacing:-0.01em;color:#0E1A38;">{{FROM_1}}</td></tr>
+    <tr><td class="baf-pill" bgcolor="#EEF1FC" style="background-color:#EEF1FC;border-radius:12px;padding:15px 18px;">
+      <table role="presentation" border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse;"><tbody><tr>
+        <td valign="middle" width="28" style="width:28px;vertical-align:middle;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:700;font-size:18px;line-height:1;color:#3D72E6;">&rarr;</td>
+        <td class="baf-to" valign="middle" style="vertical-align:middle;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:16px;line-height:1.4;letter-spacing:-0.01em;color:#0E1A38;">{{TO_1}}</td>
+      </tr></tbody></table>
+    </td></tr>
+    <tr><td style="height:16px;line-height:16px;font-size:0;">&nbsp;</td></tr>
+
+    <!-- ROW 2 -->
+    <tr><td class="baf-from" style="padding:0 0 8px;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:700;font-size:18px;line-height:1.25;letter-spacing:-0.01em;color:#0E1A38;">{{FROM_2}}</td></tr>
+    <tr><td class="baf-pill" bgcolor="#EEF1FC" style="background-color:#EEF1FC;border-radius:12px;padding:15px 18px;">
+      <table role="presentation" border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse;"><tbody><tr>
+        <td valign="middle" width="28" style="width:28px;vertical-align:middle;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:700;font-size:18px;line-height:1;color:#3D72E6;">&rarr;</td>
+        <td class="baf-to" valign="middle" style="vertical-align:middle;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:16px;line-height:1.4;letter-spacing:-0.01em;color:#0E1A38;">{{TO_2}}</td>
+      </tr></tbody></table>
+    </td></tr>
+    <tr><td style="height:16px;line-height:16px;font-size:0;">&nbsp;</td></tr>
+
+    <!-- ROW 3 -->
+    <tr><td class="baf-from" style="padding:0 0 8px;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:700;font-size:18px;line-height:1.25;letter-spacing:-0.01em;color:#0E1A38;">{{FROM_3}}</td></tr>
+    <tr><td class="baf-pill" bgcolor="#EEF1FC" style="background-color:#EEF1FC;border-radius:12px;padding:15px 18px;">
+      <table role="presentation" border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse;"><tbody><tr>
+        <td valign="middle" width="28" style="width:28px;vertical-align:middle;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:700;font-size:18px;line-height:1;color:#3D72E6;">&rarr;</td>
+        <td class="baf-to" valign="middle" style="vertical-align:middle;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:16px;line-height:1.4;letter-spacing:-0.01em;color:#0E1A38;">{{TO_3}}</td>
+      </tr></tbody></table>
+    </td></tr>
+
+  </tbody></table>
+</td></tr>

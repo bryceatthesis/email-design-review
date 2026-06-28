@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="x-apple-disable-message-reformatting">
+  <meta name="color-scheme" content="light only">
+  <meta name="supported-color-schemes" content="light only">
+  <title>Stasis — Self-ID nano-bar</title>
+  <style type="text/css">
+    @font-face{font-family:'Antarctica';font-style:normal;font-weight:400;src:url(https://cdn.shopify.com/s/files/1/0639/3511/9576/files/Antarctica-Regular.woff2) format('woff2');}
+    @font-face{font-family:'Antarctica';font-style:normal;font-weight:500;src:url(https://cdn.shopify.com/s/files/1/0639/3511/9576/files/Antarctica-Medium.woff2) format('woff2');}
+    :root,body{color-scheme:light only;}
+    body{margin:0;padding:0;background:#FFFFFF;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;}
+    table,td{border-collapse:collapse;mso-table-lspace:0pt;mso-table-rspace:0pt;}
+    a{text-decoration:none;}
+    .sid-line{font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-size:11px;line-height:1.5;letter-spacing:-0.015em;color:#0E1A38;}
+    .sid-q{font-weight:500;}
+    .sid-link{color:#3D72E6;font-weight:500;text-decoration:underline;text-underline-offset:2px;white-space:nowrap;}
+    .sid-gap{display:inline-block;width:6px;}
+    .sid-sep{color:#9AA6BF;padding:0 5px;}
+    @media only screen and (max-width:480px){
+      .wrap{width:100%!important;max-width:100%!important;}
+      .sid-line{font-size:11px!important;line-height:1.4!important;}
+      .sid-q{display:block!important;margin:0 0 7px 0!important;}      /* break after the question on mobile */
+      .sid-gap{width:6px!important;}
+      .sid-sep{padding:0 4px!important;}
+      .sid-link{padding:2px 0!important;}
+    }
+  </style>
+</head>
+<body style="margin:0;padding:0;background:#FFFFFF;">
+  <center style="width:100%;background:#FFFFFF;">
+  <!--[if mso]><table role="presentation" align="center" width="600" border="0" cellspacing="0" cellpadding="0"><tr><td><![endif]-->
+
+  <!-- =========================================================================
+       STASIS SELF-ID NANO-BAR  (prepend above the email body)
+       One click -> takestasis.com?self_id=<stage>. Klaviyo logs the click; a flow
+       sets profile property diagnosis_stage = suspecting | newly | veteran (latest
+       click wins). Segments target on that property; the bar auto-hides once answered.
+       One line desktop, question-then-options on mobile.
+
+       DEPLOYED as the Klaviyo universal content block "Stasis · Self-ID nano-bar",
+       where the whole bar is wrapped in:
+           {% if not person.diagnosis_stage %} ...bar... {% endif %}
+       so it disappears for anyone who already self-identified. (The wrapper is omitted
+       here so this file still renders standalone for review.)
+       ========================================================================= -->
+  <table role="presentation" align="center" width="600" border="0" cellpadding="0" cellspacing="0" class="wrap" style="width:600px;max-width:600px;margin:0 auto;background:#F4EFEB;">
+    <tr>
+      <td align="center" style="padding:12px 10px;background:#F4EFEB;border-bottom:1px solid #E6DDD2;text-align:center;">
+        <span class="sid-line"><span class="sid-q">Quick question: How new are you to ADHD?</span><span class="sid-gap">&nbsp;</span><a class="sid-link" href="https://takestasis.com/?self_id=suspecting&amp;utm_source=klaviyo&amp;utm_medium=self_id_nanobar">Think I might have it</a><span class="sid-sep">&middot;</span><a class="sid-link" href="https://takestasis.com/?self_id=newly&amp;utm_source=klaviyo&amp;utm_medium=self_id_nanobar">Recently diagnosed</a><span class="sid-sep">&middot;</span><a class="sid-link" href="https://takestasis.com/?self_id=veteran&amp;utm_source=klaviyo&amp;utm_medium=self_id_nanobar">Diagnosed years ago</a></span>
+      </td>
+    </tr>
+  </table>
+  <!-- ===================== END SELF-ID NANO-BAR ===================== -->
+
+  <table role="presentation" align="center" width="600" border="0" cellpadding="0" cellspacing="0" class="wrap" style="width:600px;max-width:600px;margin:0 auto;background:#FFFFFF;">
+    <tr><td align="center" style="padding:30px 24px;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-size:13px;color:#9AA6BF;text-align:center;">↓ your normal email (wordmark, hero, body…) starts here</td></tr>
+  </table>
+
+  <!--[if mso]></td></tr></table><![endif]-->
+  </center>
+</body>
+</html>

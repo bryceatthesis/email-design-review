@@ -1,0 +1,24 @@
+<!--
+component: product-shot  [PROPOSED — Bryce design review 2026-06-18; in-review, locks verbatim on first approved-build ship]
+PURPOSE: Isolated single-product photo row on white — a centered product/packshot image with an optional fine caption below. The brand's simplest image module: studio jar/capsule/SKU photography presented standalone on a clean white surface (no card, no border, no CTA). Repeatable as a hero or mid-body product feature.
+SOURCE: PROPOSED 2026-06-17 — built to tokens.json + the Figma mining reference; NOT yet from an approved build. Surfaced by the email-system component mining as the most frequent content module (figma-component-catalog.json: module_type "product-shot", frequency 19, on 19 pages; sample_description "Isolated single-product photo on white: STASIS tube, travel case with spilled capsules, Mindshift book cover, Open Breathwork phone screen"). Variant notes across the mined pages: centered studio jar/pedestal shots (Welcome Flow Scraps Day 5, [26] Quiz Flow centered pedestal, [26] Stasis Flows 20%-off), day+night two-jar group shots, and packshot pairs. This candidate captures the centered single-isolate-on-white base; grouped/paired SKUs reuse the same row with a wider composite image. Locks verbatim after it ships in a Bryce-approved build.
+SLOTS:
+  {{ROW_BG}} — row background color; approved/default for this isolated module is white #FFFFFF (the "on white" base). A different surface (cream #F4EFEB, the dark #000000 hero variant) is a Bryce call from the closed palette, not a free fill.
+  {{IMAGE_URL}} — centered product photo (production-hosted; sourced via email-image-source — canonical masters only, gaps stop the build). For review it may point at a served-local image.
+  {{IMAGE_ALT}} — image alt text (a11y + image-off fallback), e.g. Stasis Daytime jar.
+  {{IMAGE_HREF}} — link target for the product photo (e.g. the PDP). If the shot is non-clickable, remove the wrapping <a> and keep the bare <img>.
+  {{CAPTION}} — optional fine caption line below the image (e.g. THE DAY & NIGHT SET). Remove the caption <p> entirely if unused.
+REQUIRED MEDIA CLASSES (host must include inside @media only screen and (max-width:480px){...}):
+  .px{padding-left:24px !important;padding-right:24px !important;}
+  .ps-img{width:100% !important;max-width:100% !important;height:auto !important;}
+DEPENDENCIES:
+  - Light-only pin (§8.6) in host head: both color-scheme metas + :root, body { color-scheme: light only; }. The default #FFFFFF surface and #222427 caption are light-only safe.
+  - Antarctica @font-face kit (caption is Antarctica; weights 500 for label-style caption — NOT 900).
+  - Image sourced via email-image-source (canonical masters only); the isolate must be photographed/cropped on a surface matching {{ROW_BG}} so it reads as "on white".
+  - bg white #FFFFFF and caption charcoal #222427 are from tokens.json; no spice/lime/royal baked.
+  - No VML/MSO: this is a plain centered <img> (optionally linked) and degrades cleanly. No CTA pill, so no roundrect fallback needed.
+-->
+<tr><td class="px" align="center" bgcolor="{{ROW_BG}}" style="background-color:{{ROW_BG}};padding:40px 50px;text-align:center;">
+  <a href="{{IMAGE_HREF}}" style="text-decoration:none;border:0;"><img class="ps-img" src="{{IMAGE_URL}}" alt="{{IMAGE_ALT}}" width="400" style="width:400px;max-width:400px;height:auto;display:block;margin:0 auto;border:0;"/></a>
+  <p style="margin:18px 0 0;font-family:'Antarctica','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:13px;line-height:1.4;letter-spacing:0.04em;text-transform:uppercase;color:#222427;text-align:center;">{{CAPTION}}</p>
+</td></tr>
